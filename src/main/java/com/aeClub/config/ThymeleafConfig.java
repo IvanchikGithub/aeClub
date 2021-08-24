@@ -15,7 +15,7 @@ public class ThymeleafConfig {
 	
 	@Autowired
 	private ApplicationContext applicationContext;
-	
+	@Bean
 	public SpringResourceTemplateResolver templateResolver(){
 	    // SpringResourceTemplateResolver automatically integrates with Spring's own
 	    // resource resolution infrastructure, which is highly recommended.
