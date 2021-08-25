@@ -12,9 +12,9 @@ public class CurrentProfile extends User {
 	private static final long serialVersionUID = 3850489832510630519L;
 	private final Long id;
 
-	public CurrentProfile(EmailPass loginPass) {
-		super(loginPass.getEmail(), loginPass.getPassword(), true, true, true, true, Collections.singleton(new SimpleGrantedAuthority(Constants.USER)));
-		this.id = loginPass.getId();
+	public CurrentProfile(EmailPass emailPass) {
+		super(emailPass.getEmail(), emailPass.getPassword(), true, true, true, true, Collections.singleton(new SimpleGrantedAuthority(Constants.USER)));
+		this.id = emailPass.getId();
 	}
 
 	public Long getId() {
