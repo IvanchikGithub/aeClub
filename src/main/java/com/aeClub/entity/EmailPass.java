@@ -6,15 +6,28 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
-public class LoginPass {
+public class EmailPass {
 	@Id
 	@GeneratedValue
-	private int id;
+	private long id;
 	
 	@Column
 	private String email;
 	
 	@Column
 	private String password;
+
+	public long getId() {
+		return id;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+	
 	
 }
