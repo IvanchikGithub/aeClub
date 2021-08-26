@@ -34,4 +34,7 @@ public class FindService implements UserDetailsService{
 		return emailPassRepository.findByEmail(email);
 	}
 	
+	public long giveMeIdForEmail (String email) {
+		return findEmailPass(email).getId();
+	}
 }

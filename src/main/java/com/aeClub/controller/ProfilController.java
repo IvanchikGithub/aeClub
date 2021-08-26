@@ -10,6 +10,6 @@ public class ProfilController {
 	
 	@GetMapping (value = "/profile/home")
 	public ModelAndView getProfilHome () {
-		return new ModelAndView("home");
+		return new ModelAndView("/home2");
 	}
 }

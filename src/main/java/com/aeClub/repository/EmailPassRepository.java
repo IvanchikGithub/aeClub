@@ -7,4 +7,5 @@ import com.aeClub.entity.EmailPass;
 @RepositoryDefinition(domainClass = EmailPass.class, idClass = Long.class)
 public interface EmailPassRepository {
 	EmailPass findByEmail(String email);
+	void save(EmailPass emailPass);
 }

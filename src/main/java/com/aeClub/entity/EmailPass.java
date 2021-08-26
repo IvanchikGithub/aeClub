@@ -17,6 +17,17 @@ public class EmailPass {
 	@Column
 	private String password;
 
+	
+	
+	public EmailPass() {
+	}
+
+	public EmailPass(String email, String password) {
+		super();
+		this.email = email;
+		this.password = password;
+	}
+
 	public long getId() {
 		return id;
 	}
