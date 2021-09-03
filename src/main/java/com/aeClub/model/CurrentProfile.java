@@ -13,7 +13,8 @@ public class CurrentProfile extends User {
 	private final Long id;
 
 	public CurrentProfile(EmailPass emailPass) {
-		super(emailPass.getEmail(), emailPass.getPassword(), true, true, true, true, Collections.singleton(new SimpleGrantedAuthority(Constants.USER)));
+		super(emailPass.getEmail(), emailPass.getPassword(), true, true, true, true,
+				Collections.singleton(new SimpleGrantedAuthority(Constants.USER)));
 		this.id = emailPass.getId();
 	}
 

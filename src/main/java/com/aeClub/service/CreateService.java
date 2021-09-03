@@ -1,6 +1,7 @@
 package com.aeClub.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.aeClub.entity.EmailPass;
@@ -13,9 +14,12 @@ public class CreateService {
 	@Autowired
 	private EmailPassRepository emailPassRepository;
 	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	
 public void createNewUser (String email, String password) {
-	EmailPass emailPass = new EmailPass(email, password);
-	SecurityUtil.authentificate(emailPass);//Liegen wir User in den Spring Security Context
+	EmailPass emailPass = new EmailPass(email, passwordEncoder.encode(password));
 	emailPassRepository.save(emailPass);
+	SecurityUtil.authentificate(emailPass);
 }
 }

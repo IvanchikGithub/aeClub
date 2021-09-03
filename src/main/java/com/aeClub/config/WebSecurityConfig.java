@@ -1,5 +1,7 @@
 package com.aeClub.config;
 
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,6 +12,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
 import com.aeClub.Constants;
 
@@ -19,11 +23,15 @@ import com.aeClub.Constants;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private UserDetailsService userDetailsService;
+	
+	@Autowired
+	private DataSource dataSource;
+	
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
             .authorizeRequests()
-                .antMatchers("/profile/*").hasAuthority(Constants.USER)
+                .antMatchers("/profile","/profile/*").hasAuthority(Constants.USER)
                 .anyRequest().permitAll();
         http
             .formLogin()
@@ -40,29 +48,26 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .logoutSuccessUrl("/home")
             .deleteCookies("JSESSIONID")
                 .permitAll();
+        http.rememberMe()
+		.rememberMeParameter("remember-me")
+		.key("app-online")
+		.tokenRepository(persistentTokenRepository());
     }
+    
+    @Bean
+	public PersistentTokenRepository persistentTokenRepository(){
+		JdbcTokenRepositoryImpl persistentTokenRepository = new JdbcTokenRepositoryImpl();
+		persistentTokenRepository.setDataSource(dataSource);
+		return persistentTokenRepository;
+	}
     
     @Bean
 	public PasswordEncoder passwordEncoder() {
 		return  PasswordEncoderFactories.createDelegatingPasswordEncoder();
 	}
-//	
+	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
 	}
-
-//    @Configuration
-//    protected static class AuthenticationConfiguration extends
-//            GlobalAuthenticationConfigurerAdapter {
-//
-//        @Override
-//        public void init(AuthenticationManagerBuilder auth) throws Exception {
-//            auth
-//                    .inMemoryAuthentication()
-//                    .withUser("login").password("password").roles("USER");
-//        }
-//
-//    }
-
 }

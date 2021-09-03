@@ -24,7 +24,7 @@ public final class SecurityUtil {
 
 	public static Long getCurrentIdProfile() {
 		CurrentProfile currentProfile = getCurrentProfile();
-		return currentProfile != null ? currentProfile.getId() : null;
+		return currentProfile != null ? currentProfile.getId() : 0;
 	}
 
 	public static void authentificate(EmailPass emailPass) {
@@ -32,6 +32,7 @@ public final class SecurityUtil {
 		Authentication authentication = new UsernamePasswordAuthenticationToken(currentProfile,
 				currentProfile.getPassword(), currentProfile.getAuthorities());
 		SecurityContextHolder.getContext().setAuthentication(authentication);
+		
 	}
 
 	public static boolean isCurrentProfileAuthentificated() {
