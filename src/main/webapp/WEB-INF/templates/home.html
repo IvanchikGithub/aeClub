@@ -11,6 +11,9 @@
         <div th:if="${param.logout}">
             You have been logged out.
         </div>
+        
+       
+        
         <form th:action="@{/login-handler}" method="post">
             <div><label> Email : <input type="text" name="email"/> </label></div>
             <div><label> Password: <input type="password" name="password"/> </label></div>

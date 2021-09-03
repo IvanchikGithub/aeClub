@@ -18,4 +18,7 @@ public class ProfilController {
 		return new ModelAndView("/profile/newuser");
 
 	}
+
+	
+	
 }

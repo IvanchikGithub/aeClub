@@ -8,5 +8,11 @@
         
             <div><label> User : ${currentProfile} </label></div>
             
+            
+<div sec:authorize="isAuthenticated()">
+  <a th:href="@{/logout}">Logout</a>  
+</div>
+
+            
     </body>
 </html>

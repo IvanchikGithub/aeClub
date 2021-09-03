@@ -44,10 +44,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll();
         http
             .logout()
-            .logoutUrl("/login-out")
             .logoutSuccessUrl("/home")
-            .deleteCookies("JSESSIONID")
-                .permitAll();
+            .invalidateHttpSession(true)
+            .deleteCookies("JSESSIONID");
+        http.csrf().disable();
         http.rememberMe()
 		.rememberMeParameter("remember-me")
 		.key("app-online")
