@@ -6,9 +6,11 @@ import javax.sql.DataSource;
 
 import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -60,4 +62,14 @@ public class JPAConfig {
 		transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());
 		return transactionManager;
 	}
+	
+	 @Bean
+	    public MessageSource messageSource() {
+	        ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+	        // Load file: validation.properties
+	        messageSource.setBasename("classpath:validation");
+	        messageSource.setDefaultEncoding("UTF-8");
+	        return messageSource;
+	    }
+	
 }

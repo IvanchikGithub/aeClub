@@ -1,6 +1,6 @@
 package com.aeClub.form;
 
-public class NewUserForm1 {
+public class EmailPassForm {
 	private String email1;
 	private String email2;
 	private String password1;

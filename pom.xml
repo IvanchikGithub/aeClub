@@ -38,7 +38,7 @@
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
-			<version>42.2.23</version><!--$NO-MVN-MAN-VER$-->
+			<version>42.2.23</version><!--$NO-MVN-MAN-VER$ -->
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-entitymanager -->
 		<dependency>
@@ -46,12 +46,12 @@
 			<artifactId>hibernate-entitymanager</artifactId>
 			<version>5.5.6.Final</version><!--$NO-MVN-MAN-VER$ -->
 		</dependency>
-<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security -->
-<dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-security</artifactId>
-    <version>2.5.4</version>
-</dependency>
+		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+			<version>2.5.4</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
