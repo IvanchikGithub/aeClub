@@ -22,7 +22,7 @@
      <div th:if="${errorMessage != null}"
            th:utext="${errorMessage}" class="error">...</div>
 
-	<form th:action="@{/registration}" th:object="${emailPassForm}"
+	<form th:action="@{/registration}" th:object="${createEmailPassForm}"
 		method="post">
 		<table>
 			<tr>
@@ -59,10 +59,6 @@
             </tr>
 		</table>
 
-
-		<div>
-			<input type="submit" value="Sign In" />
-		</div>
 	</form>
 </body>
 </html>

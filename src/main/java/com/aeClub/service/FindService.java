@@ -34,7 +34,22 @@ public class FindService implements UserDetailsService{
 		return emailPassRepository.findByEmail(email);
 	}
 	
-	public long giveMeIdForEmail (String email) {
-		return findEmailPass(email).getId();
+	
+	
+	
+	
+//	public long giveMeIdForEmail (String email) {
+//		Long userId = findEmailPass(email).getId();
+//		 if (userId!=null) {
+//			return userId;
+//		}
+//	}
+	
+	public boolean isEmailRegistred(String email) {
+		if (emailPassRepository.countByEmail(email)>0) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }
