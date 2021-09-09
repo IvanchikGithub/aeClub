@@ -18,33 +18,37 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.aeClub.form.CreateEmailPassForm;
 import com.aeClub.model.CurrentProfile;
+import com.aeClub.service.CreateService;
 import com.aeClub.util.SecurityUtil;
 import com.aeClub.validator.CreateEmailPassValidator;
 
 @Controller
 public class HomeController {
-	//private static final Logger LOGGER = LoggerFactory.getLogger(HomeController.class);
+	// private static final Logger LOGGER =
+	// LoggerFactory.getLogger(HomeController.class);
 
-	
+	@Autowired
+	private CreateService createService;
+
 	@Autowired
 	private CreateEmailPassValidator createEmailPassValidator;
 
 	// Set a form validator
-	   @InitBinder
-	   protected void initBinder(WebDataBinder dataBinder) {
-	      // Form target
-	      Object target = dataBinder.getTarget();
-	      if (target == null) {
-	         return;
-	      }
-	 
-	      if (target.getClass() == CreateEmailPassForm.class) {
-	         dataBinder.setValidator(createEmailPassValidator);
-	      }
-	      
-	      // ...
-	   }
-	
+	@InitBinder
+	protected void initBinder(WebDataBinder dataBinder) {
+		// Form target
+		Object target = dataBinder.getTarget();
+		if (target == null) {
+			return;
+		}
+
+		if (target.getClass() == CreateEmailPassForm.class) {
+			dataBinder.setValidator(createEmailPassValidator);
+		}
+
+		// ...
+	}
+
 	@GetMapping(value = "/home")
 	public ModelAndView getHome(@AuthenticationPrincipal CurrentProfile currentProfile, Model model) {
 		if (SecurityUtil.isCurrentProfileAuthentificated()) {
@@ -68,14 +72,15 @@ public class HomeController {
 	}
 
 	@PostMapping(value = "/registration")
-	public ModelAndView createNewEmailPassPost(@ModelAttribute("createEmailPassForm") @Validated CreateEmailPassForm form, BindingResult result, 
+	public ModelAndView createNewEmailPassPost(
+			@ModelAttribute("createEmailPassForm") @Validated CreateEmailPassForm form, BindingResult result,
 			final RedirectAttributes redirectAttributes) {
-		
-		 if (result.hasErrors()) {
-	         return  new ModelAndView("/registration");
-	      }
-		
-		return new ModelAndView("redirect:/profile/newuser");
+
+		if (result.hasErrors()) {
+			return new ModelAndView("/registration");
+		}
+		createService.createNewUser(form.getEmail1(), form.getPassword1());
+		return new ModelAndView("redirect:/profile/registrationMainInfo");
 
 	}
 
