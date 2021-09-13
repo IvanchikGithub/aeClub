@@ -6,7 +6,9 @@
     </head>
     <body>
         
-            <div><label> User : ${currentProfile} </label></div>
+        
+        	<nav th:insert="/fragments/navbar"></nav>
+        	
             
             
 <div sec:authorize="isAuthenticated()">

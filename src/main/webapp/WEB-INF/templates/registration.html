@@ -1,64 +1,91 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
-   <head>
-      <title th:utext="${title}"></title>
-      <style>
-         th, td {
-         padding: 5px;
-         }
-         td span  {
-         font-size:90%;
-         font-style: italic;
-         color: red;
-         }
-         .error {
-         color: red;
-         font-style: italic;
-         }
-      </style>
-   </head>
-   <body>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>Registration</title>
 
-     <div th:if="${errorMessage != null}"
-           th:utext="${errorMessage}" class="error">...</div>
+<link th:rel="stylesheet"
+	th:href="@{webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} " />
+<link th:rel="stylesheet"
+	th:href="@{webjars/font-awesome/5.11.2/css/all.css} " />
+</head>
+<body>
 
-	<form th:action="@{/registration}" th:object="${createEmailPassForm}"
-		method="post">
-		<table>
-			<tr>
-				<td>Email1</td>
-				<td><input type="text" th:field="*{email1}" /></td>
-				<td><span th:if="${#fields.hasErrors('email1')}"
-					th:errors="*{email1}">..</span></td>
-			</tr>
-			<tr>
-				<td>Email2</td>
-				<td><input type="text" th:field="*{email2}" /></td>
-				<td><span th:if="${#fields.hasErrors('email2')}"
-					th:errors="*{email2}">..</span></td>
-			</tr>
-			<tr>
-				<td>Password1</td>
-				<td><input type="password" th:field="*{password1}" /></td>
-				<td><span th:if="${#fields.hasErrors('password1')}"
-					th:errors="*{password1}">..</span></td>
-			</tr>
-			<tr>
-				<td>Password2</td>
-				<td><input type="password" th:field="*{password2}" /></td>
-				<td><span th:if="${#fields.hasErrors('password2')}"
-					th:errors="*{password2}">..</span></td>
-			</tr>
-            <tr>
-               <td>&nbsp;</td>
-               <td>
-                  <input type="submit" value="Submit" />
-                  <a th:href="@{/}">Cancel</a>
-               </td>
-               <td>&nbsp;</td>
-            </tr>
-		</table>
+	<nav th:insert="/fragments/navbar"></nav>
 
-	</form>
+	<div class="container">
+		<form method="post" th:object="${createEmailPassForm}">
+
+			<div class="form-group row">
+				<div class="col-md-4 mt-5">
+					<label for="birthdate">Email address</label>
+					<div class="input-group">
+						<input type="email" class="form-control" id="email1"
+							autocomplete="off" th:field="*{email1}" />
+						<div class="input-group-append">
+							<span class="input-group-text"><i class="fas fa-at"></i></span>
+						</div>
+						<div th:if="${#fields.hasErrors('email1')}" th:errors="*{email1}"></div>
+					</div>
+				</div>
+			</div>
+			<div class="form-group row">
+				<div class="col-md-4 mt-5">
+					<label for="birthdate">Email address once again</label>
+					<div class="input-group">
+						<input type="email" class="form-control" id="email2"
+							autocomplete="off" th:field="*{email2}" />
+						<div class="input-group-append">
+							<span class="input-group-text"><i class="fas fa-at"></i></span>
+						</div>
+						<div th:if="${#fields.hasErrors('email2')}" th:errors="*{email2}"></div>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<div class="col-md-4 mt-5">
+					<label for="password">Password</label>
+					<div class="input-group">
+						<input type="password" class="form-control" id="password1"
+							autocomplete="off" th:field="*{password1}" />
+						<div class="input-group-append">
+							<span class="input-group-text"><i class="fa fa-eye-slash"
+								aria-hidden="true"></i></span>
+						</div>
+						<div th:if="${#fields.hasErrors('password1')}"
+							th:errors="*{password1}"></div>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<div class="col-md-4 mt-5">
+					<label for="password">Password</label>
+					<div class="input-group">
+						<input type="password" class="form-control" id="password2"
+							autocomplete="off" th:field="*{password2}" />
+						<div class="input-group-append">
+							<span class="input-group-text"><i class="fa fa-eye-slash"
+								aria-hidden="true"></i></span>
+						</div>
+						<div th:if="${#fields.hasErrors('password2')}"
+							th:errors="*{password2}"></div>
+					</div>
+				</div>
+			</div>
+
+
+
+			<button class="btn btn-primary" type="submit">Submit form</button>
+			<a th:href="@{/home}">Cancel</a>
+		</form>
+	</div>
+
+
+	<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+	<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+
 </body>
 </html>

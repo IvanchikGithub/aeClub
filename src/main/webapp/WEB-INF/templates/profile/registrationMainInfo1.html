@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Spring Boot Thymeleaf Application - Bootstrap Input Date</title>
+
+    <link th:rel="stylesheet" th:href="@{/assets/bootstrap-datepicker/css/bootstrap-datepicker.css}"/>
+    <link th:rel="stylesheet" th:href="@{/assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.css}"/>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+    <link th:rel="stylesheet" th:href="@{/webjars/font-awesome/5.11.2/css/all.css} "/>
+</head>
+<body>
+
+	<nav th:insert="/fragments/navbar"></nav>
+	
+
+<div class="container">
+    <form method="post" th:object="${accountForm}">
+        <div class="form-group row">
+            <div class="col-md-4 mt-5">
+                <label for="birthdate">Date of birth</label>
+                <div class="input-group date">
+                    <input type="text" class="form-control" id="birthdate" autocomplete="off" th:field="*{birthdate}"/>
+                    <div class="input-group-append">
+                        <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button class="btn btn-primary" type="submit">Submit form</button>
+    </form>
+
+</div>
+
+
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{/assets/bootstrap-datepicker/js/bootstrap-datepicker.js}"></script>
+
+
+
+</body>
+</html>

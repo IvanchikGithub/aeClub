@@ -84,10 +84,5 @@ public class HomeController {
 
 	}
 
-	@GetMapping(value = "/profile/newuser")
-	public ModelAndView formNewUser(@AuthenticationPrincipal CurrentProfile currentProfile, Model model) {
-		System.out.println(currentProfile);
-		return new ModelAndView("/profile/newuser");
 
-	}
 }
