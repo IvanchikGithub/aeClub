@@ -2,6 +2,8 @@ package com.aeClub.controller;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -29,6 +31,8 @@ import com.aeClub.validator.AccountFormValidator;
 
 @Controller
 public class ProfilController {
+	 private static final Logger LOG = LoggerFactory.getLogger(ProfilController.class);
+
 	
 	@Autowired
 	CreateService createService;
@@ -79,16 +83,22 @@ public class ProfilController {
 	@PostMapping(value = "/profile/registrationMainInfo")
 	public ModelAndView uploadUsersData(@AuthenticationPrincipal CurrentProfile currentProfile,
 			Model model, @ModelAttribute("accountForm") @Validated AccountForm accountForm,
-			BindingResult result, @RequestParam("file") MultipartFile fileUsersPhoto,
+			BindingResult result, @RequestParam("file") MultipartFile fileWithUsersPhoto,
 			RedirectAttributes redirectAttributes) {
 		
-		if (result.hasErrors()) {
-			return new ModelAndView("/profile/registrationMainInfo");
-		}
-		createService.createUsersMainInformation(currentProfile.getId(), accountForm, fileUsersPhoto);
+//		if (result.hasErrors()) {
+//			return new ModelAndView("/profile/registrationMainInfo");
+//		}
+
+		createService.savePhoto(fileWithUsersPhoto, "");
+		
+		//createService.createUsersMainInformation(currentProfile.getId(), accountForm, fileWithUsersPhoto);
 		
 		redirectAttributes.addFlashAttribute("message",
-				"You successfully uploaded " + fileUsersPhoto.getOriginalFilename() + "!");
+				"You successfully uploaded " + fileWithUsersPhoto.getOriginalFilename() + "!");
 		return new ModelAndView("redirect:/profile/newuser");
 	}
+	
+
+	
 }

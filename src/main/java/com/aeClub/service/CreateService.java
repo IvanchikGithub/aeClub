@@ -8,4 +8,5 @@ public interface CreateService {
 	
 	public void createNewPaarEmailPassAndIdUser (String email, String password);
 	public void createUsersMainInformation (int idUser, AccountForm accountForm, MultipartFile fileUsersPhoto);
+	public void savePhoto (MultipartFile fileWithUsersPhoto, String nameOfPicture);
 }

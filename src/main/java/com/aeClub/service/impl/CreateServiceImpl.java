@@ -1,8 +1,12 @@
 package com.aeClub.service.impl;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Random;
 
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,6 +33,9 @@ public class CreateServiceImpl implements CreateService {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
+	@Value("${spring.servlet.multipart.max-file-size}")
+	long MAXIMUM_FILE_SIZE_ALLOWED;
+
 	public void createNewPaarEmailPassAndIdUser(String email, String password) {
 		EmailPass emailPass = new EmailPass(email, passwordEncoder.encode(password));
 		emailPass.setIdUser(getIdForNewUser());
@@ -46,14 +53,11 @@ public class CreateServiceImpl implements CreateService {
 	}
 
 	public void createUsersMainInformation(int idUser, AccountForm accountForm,
-			MultipartFile fileUsersPhoto) {
+			MultipartFile fileWithUsersPhoto) {
 		AccountBilder accountBilder = new AccountBilder();
-		accountBilder.putIdUser(idUser)
-		.putNameForClub(accountForm.getNameForClub())
-		.putBirthday(accountForm.getBirthdate())
-		.putCountry(accountForm.getCountry())
-		.putCity(accountForm.getCity())
-		.putDenomination(accountForm.getDenomination());
+		accountBilder.putIdUser(idUser).putNameForClub(accountForm.getNameForClub())
+				.putBirthday(accountForm.getBirthdate()).putCountry(accountForm.getCountry())
+				.putCity(accountForm.getCity()).putDenomination(accountForm.getDenomination());
 		if (accountForm.getGender().equals(GenderType.MAN.getName())) {
 			accountBilder.setManGender();
 		} else {
@@ -62,5 +66,30 @@ public class CreateServiceImpl implements CreateService {
 		Account account = accountBilder.create();
 		accountRepository.save(account);
 	}
+
+	public void savePhoto(MultipartFile fileWithUsersPhoto, String nameOfPicture) {
+		if (!fileWithUsersPhoto.isEmpty()) {
+			if (validateExtension(fileWithUsersPhoto)) {
+				try {
+					fileWithUsersPhoto.transferTo(new File(
+							"C:\\Java\\NewRepo\\aeClub\\src\\main\\webapp\\media\\photo\\profile\\1.jpg"));
+				} catch (IllegalStateException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			} else {
+				System.out.println("Errrrorrrrrrrrrrrrrrrrrr");
+			}
+		}
+	}
+
+	private boolean validateExtension(MultipartFile file) {
+		String extension = FilenameUtils.getExtension(file.getOriginalFilename());
+		return "png".equals(extension) || "jpeg".equals(extension) || "jpg".equals(extension);
+	}
+
 
 }
