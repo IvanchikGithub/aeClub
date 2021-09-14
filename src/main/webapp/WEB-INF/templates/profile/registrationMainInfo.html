@@ -3,13 +3,15 @@
 <head>
 <meta charset="UTF-8" />
 <title>Main info</title>
-
+<link rel="shortcut icon" href="/favicon.ico">
 <link th:rel="stylesheet"
 	th:href="@{/assets/bootstrap-datepicker/css/bootstrap-datepicker.css}" />
 <link th:rel="stylesheet"
 	th:href="@{/assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.css}" />
 <link th:rel="stylesheet"
 	th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} " />
+<link th:rel="stylesheet"
+	th:href="@{/assets/jquery-steps/jquery.steps.css} " />
 <link th:rel="stylesheet"
 	th:href="@{/webjars/font-awesome/5.11.2/css/all.css} " />
 </head>
@@ -18,56 +20,205 @@
 	<nav th:insert="/fragments/navbar"></nav>
 
 	<div class="container">
+
 		<div class="row">
-			<div class="col-sm-10 mt-5">
-				<form method="post" th:object="${accountForm}">
-					<div class="form-group row">
-						<label for="email" class="col-sm-4 col-form-label">Name
-							for club</label>
-						<div class="col-sm-8">
-							<input type="text" class="form-control" id="nameForClub"
-								data-inputmask="'alias': 'nameForClub'" autocomplete="off"
-								th:field="*{nameForClub}" />
-						</div>
-					</div>
+			<div class="col">
+				<h2 class="mt-5">Create account</h2>
 
-					<div class="form-group">
-						<label for="gendertype">Gender</label> <select id="gendertype"
-							th:field="*{gender}">
-							<option value="">Search gender</option>
-							<option th:each="item : ${listGender}" th:value="${item.getName}"
-								th:text="${item}"></option>
-						</select>
-					</div>
+				<form id="example-advanced-form" action="/account" method="post"
+					th:object="${accountForm}">
+					<h3>Account</h3>
+					<fieldset>
+						<legend>Account Information</legend>
 
-					<div class="form-group row">
-						<div class="col-md-4 mt-5">
-							<label for="birthdate">Date of birth</label>
-							<div class="input-group date">
-								<input type="text" class="form-control" id="birthdate"
-									autocomplete="off" th:field="*{birthdate}" />
-								<div class="input-group-append">
-									<span class="input-group-text"><i
-										class="far fa-calendar-alt"></i></span>
+						<div class="row">
+							<div class="col-5">
+								<div class="form-group">
+									<label for="email" class="col-sm-6 col-form-label">Name
+										for club* </label>
+									<div class="col-sm-8">
+										<input type="text" class="form-control" id="nameForClub"
+											data-inputmask="'alias': 'nameForClub'" autocomplete="off"
+											th:field="*{nameForClub}" />
+									</div>
 								</div>
+
+								<div class="form-group">
+									<label for="gendertype">Gender*</label> <select id="gendertype"
+										th:field="*{gender}">
+										<option value="">Get your gender</option>
+										<option th:each="item : ${listGender}"
+											th:value="${item.getName}" th:text="${item}"></option>
+									</select>
+								</div>
+
+								<div class="form-group ">
+									<label for="birthdate">Date of birth*</label>
+									<div class="input-group date">
+										<input type="text" class="form-control" id="birthdate"
+											autocomplete="off" th:field="*{birthdate}" />
+										<div class="input-group-append">
+											<span class="input-group-text"><i
+												class="far fa-calendar-alt"></i></span>
+										</div>
+									</div>
+								</div>
+								
+								<div class="form-group">
+									<label for="gendertype">Country*</label> <select id="gendertype"
+										th:field="*{country}">
+										<option value="">Get your country</option>
+										<option th:each="item : ${listCountry}"
+											th:value="${item.getName}" th:text="${item}"></option>
+									</select>
+								</div>
+								
+								<div class="form-group">
+									<label for="gendertype">Denomination*</label> <select id="gendertype"
+										th:field="*{denomination}">
+										<option value="">Get your denomination</option>
+										<option th:each="item : ${listDenomination}"
+											th:value="${item.getName}" th:text="${item}"></option>
+									</select>
+								</div>
+								
+								
+								
 							</div>
 						</div>
-					</div>
+						<p>(*) Mandatory</p>
+					</fieldset>
 
+					<h3>Profile</h3>
+					<fieldset>
+						<legend>Profile Information</legend>
 
-					<button class="btn btn-primary" type="submit">Submit form</button>
+						<!-- 						<div class="row">
+							<div class="col-5">
+								<div class="form-group">
+									<label for="name-2">First name *</label> <input id="name-2"
+										name="name" th:field="*{name}" type="text"
+										class="form-control required">
+								</div>
+
+								<div class="form-group">
+									<label for="surname-2">Last name *</label> <input
+										id="surname-2" name="surname" th:field="*{surname}"
+										type="text" class="form-control required">
+								</div>
+
+								<div class="form-group">
+									<label for="email-2">Email *</label> <input id="email-2"
+										name="email" th:field="*{email}" type="text"
+										class="form-control required email">
+								</div>
+
+								<div class="form-group">
+									<label for="address-2">Address</label> <input id="address-2"
+										name="address" th:field="*{address}" type="text"
+										class="form-control">
+								</div>
+
+								<div class="form-group">
+									<label for="age-2">Age *</label> <input id="age-2" name="age"
+										type="text" th:field="*{age}"
+										class="form-control required number"> <small
+										class="form-text text-muted">The warning step will
+										show up if age is less than 18</small>
+								</div>
+							</div>
+						</div> -->
+						<p>(*) Mandatory</p>
+					</fieldset>
+
+					<h3>Warning</h3>
+					<fieldset>
+						<legend>You are to young</legend>
+
+						<p>Please go away ;-)</p>
+					</fieldset>
+
+					<h3>Finish</h3>
+					<fieldset>
+						<legend>Terms and Conditions</legend>
+
+						<!-- 						<input id="acceptTerms-2" name="acceptTerms"
+							th:field="*{termsAccepted}" type="checkbox" class="required">
+						<label for="acceptTerms-2">I agree with the Terms and
+							Conditions.</label> -->
+					</fieldset>
 				</form>
+
 			</div>
 		</div>
 	</div>
 
+
 	<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 	<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
 	<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+	<script th:src="@{/assets/jquery-steps/jquery.steps.min.js}"></script>
+	<script th:src="@{/assets/jquery-validate/jquery.validate.min.js}"></script>
 	<script
 		th:src="@{/assets/bootstrap-datepicker/js/bootstrap-datepicker.js}"></script>
 
+	<script>
+		var form = $("#example-advanced-form").show();
 
+		form.steps(
+				{
+					headerTag : "h3",
+					bodyTag : "fieldset",
+					transitionEffect : "slideLeft",
+					onStepChanging : function(event, currentIndex, newIndex) {
+						// Allways allow previous action even if the current form is not valid!
+						if (currentIndex > newIndex) {
+							return true;
+						}
+						// Forbid next action on "Warning" step if the user is to young
+						if (newIndex === 3 && Number($("#age-2").val()) < 18) {
+							return false;
+						}
+						// Needed in some cases if the user went back (clean up)
+						if (currentIndex < newIndex) {
+							// To remove error styles
+							form.find(".body:eq(" + newIndex + ") label.error")
+									.remove();
+							form.find(".body:eq(" + newIndex + ") .error")
+									.removeClass("error");
+						}
+						form.validate().settings.ignore = ":disabled,:hidden";
+						return form.valid();
+					},
+					onStepChanged : function(event, currentIndex, priorIndex) {
+						// Used to skip the "Warning" step if the user is old enough.
+						if (currentIndex === 2
+								&& Number($("#age-2").val()) >= 18) {
+							form.steps("next");
+						}
+						// Used to skip the "Warning" step if the user is old enough and wants to the previous step.
+						if (currentIndex === 2 && priorIndex === 3) {
+							form.steps("previous");
+						}
+					},
+					onFinishing : function(event, currentIndex) {
+						form.validate().settings.ignore = ":disabled";
+						return form.valid();
+					},
+					onFinished : function(event, currentIndex) {
+						form.submit();
+					}
+				}).validate({
+			errorPlacement : function errorPlacement(error, element) {
+				element.before(error);
+			},
+			rules : {
+				confirm : {
+					equalTo : "#password-2"
+				}
+			}
+		});
+	</script>
 	<script>
 		$('.input-group.date').datepicker({
 			autoclose : true,

@@ -7,6 +7,25 @@ public class AccountForm {
 	private String nameForClub;
 	private String Gender;
 	private Date birthdate;
+	private String country;
+	private String denomination;
+	
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	public String getDenomination() {
+		return denomination;
+	}
+
+	public void setDenomination(String denomination) {
+		this.denomination = denomination;
+	}
 
 	public String getNameForClub() {
 		return nameForClub;

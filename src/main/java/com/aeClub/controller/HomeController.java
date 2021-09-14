@@ -51,11 +51,13 @@ public class HomeController {
 
 	@GetMapping(value = "/home")
 	public ModelAndView getHome(@AuthenticationPrincipal CurrentProfile currentProfile, Model model) {
+
 		if (SecurityUtil.isCurrentProfileAuthentificated()) {
-			return new ModelAndView("redirect:/profile/newuser");
+			return new ModelAndView("redirect:profile/registrationMainInfo");
 		} else {
 			return new ModelAndView("/home");
 		}
+
 	}
 
 	@GetMapping(value = "/login-failed")
@@ -83,6 +85,5 @@ public class HomeController {
 		return new ModelAndView("redirect:/profile/registrationMainInfo");
 
 	}
-
 
 }
