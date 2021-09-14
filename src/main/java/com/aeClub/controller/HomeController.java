@@ -61,7 +61,7 @@ public class HomeController {
 	}
 
 	@GetMapping(value = "/login-failed")
-	public ModelAndView getLoginFailed(HttpSession session, Model model) {
+	public ModelAndView getLoginFailed(Model model) {
 		model.addAttribute("errorMessage", "Data are not correct");
 		return new ModelAndView("/home");
 	}
@@ -75,13 +75,12 @@ public class HomeController {
 
 	@PostMapping(value = "/registration")
 	public ModelAndView createNewEmailPassPost(
-			@ModelAttribute("createEmailPassForm") @Validated CreateEmailPassForm form, BindingResult result,
-			final RedirectAttributes redirectAttributes) {
+			@ModelAttribute("createEmailPassForm") @Validated CreateEmailPassForm form, BindingResult result) {
 
 		if (result.hasErrors()) {
 			return new ModelAndView("/registration");
 		}
-		createService.createNewUser(form.getEmail1(), form.getPassword1());
+		createService.createNewPaarEmailPassAndIdUser(form.getEmail1(), form.getPassword1());
 		return new ModelAndView("redirect:/profile/registrationMainInfo");
 
 	}

@@ -5,11 +5,21 @@ import java.util.Date;
 public class AccountForm {
 
 	private String nameForClub;
-	private String Gender;
+	private String gender;
 	private Date birthdate;
 	private String country;
 	private String denomination;
+	private String city;
+	private Boolean termsAccepted;
 	
+
+	public Boolean getTermsAccepted() {
+		return termsAccepted;
+	}
+
+	public void setTermsAccepted(Boolean termsAccepted) {
+		this.termsAccepted = termsAccepted;
+	}
 
 	public String getCountry() {
 		return country;
@@ -36,11 +46,11 @@ public class AccountForm {
 	}
 
 	public String getGender() {
-		return Gender;
+		return gender;
 	}
 
 	public void setGender(String gender) {
-		Gender = gender;
+		this.gender = gender;
 	}
 
 	public Date getBirthdate() {
@@ -49,6 +59,14 @@ public class AccountForm {
 
 	public void setBirthdate(Date birthdate) {
 		this.birthdate = birthdate;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
 	}
 
 }

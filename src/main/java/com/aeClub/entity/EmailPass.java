@@ -17,6 +17,8 @@ public class EmailPass {
 	@Column
 	private String password;
 
+	@Column (name = "id_user")
+	private int idUser;
 	
 	
 	public EmailPass() {
@@ -26,6 +28,7 @@ public class EmailPass {
 		super();
 		this.email = email;
 		this.password = password;
+		
 	}
 
 	public long getId() {
@@ -39,6 +42,15 @@ public class EmailPass {
 	public String getPassword() {
 		return password;
 	}
+
+	public int getIdUser() {
+		return idUser;
+	}
+
+	public void setIdUser(int idUser) {
+		this.idUser = idUser;
+	}
+	
 	
 	
 }

@@ -5,13 +5,13 @@
 <title>Main info</title>
 <link rel="shortcut icon" href="/favicon.ico">
 <link th:rel="stylesheet"
-	th:href="@{/assets/bootstrap-datepicker/css/bootstrap-datepicker.css}" />
+	th:href="@{/static/assets/bootstrap-datepicker/css/bootstrap-datepicker.css}" />
 <link th:rel="stylesheet"
-	th:href="@{/assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.css}" />
+	th:href="@{/static/assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.css}" />
 <link th:rel="stylesheet"
 	th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} " />
 <link th:rel="stylesheet"
-	th:href="@{/assets/jquery-steps/jquery.steps.css} " />
+	th:href="@{/static/assets/jquery-steps/jquery.steps.css} " />
 <link th:rel="stylesheet"
 	th:href="@{/webjars/font-awesome/5.11.2/css/all.css} " />
 </head>
@@ -25,16 +25,17 @@
 			<div class="col">
 				<h2 class="mt-5">Create account</h2>
 
-				<form id="example-advanced-form" action="/account" method="post"
-					th:object="${accountForm}">
-					<h3>Account</h3>
+				<form id="example-advanced-form"
+					action="/profile/registrationMainInfo" method="post"
+					th:object="${accountForm}" enctype="multipart/form-data">
+					<h3>Main information</h3>
 					<fieldset>
-						<legend>Account Information</legend>
+						<legend>Information about you</legend>
 
 						<div class="row">
 							<div class="col-5">
 								<div class="form-group">
-									<label for="email" class="col-sm-6 col-form-label">Name
+									<label for="nameForClub" class="col-sm-6 col-form-label">Name
 										for club* </label>
 									<div class="col-sm-8">
 										<input type="text" class="form-control" id="nameForClub"
@@ -63,89 +64,65 @@
 										</div>
 									</div>
 								</div>
-								
+
 								<div class="form-group">
-									<label for="gendertype">Country*</label> <select id="gendertype"
-										th:field="*{country}">
+									<label for="gendertype">Country*</label> <select
+										id="gendertype" th:field="*{country}">
 										<option value="">Get your country</option>
 										<option th:each="item : ${listCountry}"
 											th:value="${item.getName}" th:text="${item}"></option>
 									</select>
 								</div>
-								
+
 								<div class="form-group">
-									<label for="gendertype">Denomination*</label> <select id="gendertype"
-										th:field="*{denomination}">
+									<label for="city" class="col-sm-6 col-form-label">City*
+									</label>
+									<div class="col-sm-8">
+										<input type="text" class="form-control" id="city"
+											data-inputmask="'alias': 'city'" autocomplete="off"
+											th:field="*{city}" />
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label for="gendertype">Religion Denomination*</label> <select
+										id="gendertype" th:field="*{denomination}">
 										<option value="">Get your denomination</option>
 										<option th:each="item : ${listDenomination}"
 											th:value="${item.getName}" th:text="${item}"></option>
 									</select>
 								</div>
-								
-								
-								
 							</div>
 						</div>
 						<p>(*) Mandatory</p>
 					</fieldset>
 
-					<h3>Profile</h3>
+					<h3>Photo</h3>
 					<fieldset>
-						<legend>Profile Information</legend>
+						<legend>Your photo</legend>
 
-						<!-- 						<div class="row">
+						<div class="row">
 							<div class="col-5">
 								<div class="form-group">
-									<label for="name-2">First name *</label> <input id="name-2"
-										name="name" th:field="*{name}" type="text"
-										class="form-control required">
-								</div>
-
-								<div class="form-group">
-									<label for="surname-2">Last name *</label> <input
-										id="surname-2" name="surname" th:field="*{surname}"
-										type="text" class="form-control required">
-								</div>
-
-								<div class="form-group">
-									<label for="email-2">Email *</label> <input id="email-2"
-										name="email" th:field="*{email}" type="text"
-										class="form-control required email">
-								</div>
-
-								<div class="form-group">
-									<label for="address-2">Address</label> <input id="address-2"
-										name="address" th:field="*{address}" type="text"
-										class="form-control">
-								</div>
-
-								<div class="form-group">
-									<label for="age-2">Age *</label> <input id="age-2" name="age"
-										type="text" th:field="*{age}"
-										class="form-control required number"> <small
-										class="form-text text-muted">The warning step will
-										show up if age is less than 18</small>
+									<div class="custom-file">
+										<input type="file" class="custom-file-input" id="customFile"
+											name="file"> <label class="custom-file-label"
+											for="customFile">Upload your photo</label>
+									</div>
 								</div>
 							</div>
-						</div> -->
+						</div>
+						-->
 						<p>(*) Mandatory</p>
 					</fieldset>
-
-					<h3>Warning</h3>
-					<fieldset>
-						<legend>You are to young</legend>
-
-						<p>Please go away ;-)</p>
-					</fieldset>
-
 					<h3>Finish</h3>
 					<fieldset>
 						<legend>Terms and Conditions</legend>
 
-						<!-- 						<input id="acceptTerms-2" name="acceptTerms"
+						<input id="acceptTerms-2" name="acceptTerms"
 							th:field="*{termsAccepted}" type="checkbox" class="required">
 						<label for="acceptTerms-2">I agree with the Terms and
-							Conditions.</label> -->
+							Conditions.</label>
 					</fieldset>
 				</form>
 
@@ -153,14 +130,16 @@
 		</div>
 	</div>
 
-
+	<script
+		th:src="@{/static/assets/custom-file-input/bs-custom-file-input.js}"></script>
 	<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 	<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
 	<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
-	<script th:src="@{/assets/jquery-steps/jquery.steps.min.js}"></script>
-	<script th:src="@{/assets/jquery-validate/jquery.validate.min.js}"></script>
+	<script th:src="@{/static/assets/jquery-steps/jquery.steps.min.js}"></script>
 	<script
-		th:src="@{/assets/bootstrap-datepicker/js/bootstrap-datepicker.js}"></script>
+		th:src="@{/static/assets/jquery-validate/jquery.validate.min.js}"></script>
+	<script
+		th:src="@{/static/assets/bootstrap-datepicker/js/bootstrap-datepicker.js}"></script>
 
 	<script>
 		var form = $("#example-advanced-form").show();

@@ -22,7 +22,7 @@ public final class SecurityUtil {
 		}
 	}
 
-	public static Long getCurrentIdProfile() {
+	public static int getCurrentIdProfile() {
 		CurrentProfile currentProfile = getCurrentProfile();
 		return currentProfile != null ? currentProfile.getId() : 0;
 	}

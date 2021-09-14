@@ -8,5 +8,7 @@ import com.aeClub.entity.EmailPass;
 public interface EmailPassRepository {
 	EmailPass findByEmail(String email);
 	void save(EmailPass emailPass);
-	long countByEmail (String email);
+	int countByEmail (String email);
+	int countByIdUser (int idUser);
+	
 }

@@ -10,15 +10,16 @@ import com.aeClub.entity.EmailPass;
 
 public class CurrentProfile extends User {
 	private static final long serialVersionUID = 3850489832510630519L;
-	private final Long id;
+	private final int id;
+	
 
 	public CurrentProfile(EmailPass emailPass) {
 		super(emailPass.getEmail(), emailPass.getPassword(), true, true, true, true,
 				Collections.singleton(new SimpleGrantedAuthority(Constants.USER)));
-		this.id = emailPass.getId();
+		this.id = emailPass.getIdUser();
 	}
 
-	public Long getId() {
+	public int getId() {
 		return id;
 	}
 
