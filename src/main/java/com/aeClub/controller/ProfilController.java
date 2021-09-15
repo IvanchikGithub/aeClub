@@ -86,14 +86,12 @@ public class ProfilController {
 			BindingResult result, @RequestParam("file") MultipartFile fileWithUsersPhoto,
 			RedirectAttributes redirectAttributes) {
 		
-//		if (result.hasErrors()) {
-//			return new ModelAndView("/profile/registrationMainInfo");
-//		}
+		if (result.hasErrors()) {
+			return new ModelAndView("/profile/registrationMainInfo");
+		}
 
 		createService.createUsersMainInformation(currentProfile.getId(), accountForm, fileWithUsersPhoto);
 		
-		redirectAttributes.addFlashAttribute("message",
-				"You successfully uploaded " + fileWithUsersPhoto.getOriginalFilename() + "!");
 		return new ModelAndView("redirect:/profile/newuser");
 	}
 	

@@ -23,6 +23,9 @@ import com.aeClub.service.CreateService;
 import com.aeClub.util.AccountBilder;
 import com.aeClub.util.SecurityUtil;
 
+import net.coobird.thumbnailator.Thumbnails;
+import net.coobird.thumbnailator.name.Rename;
+
 @Service
 public class CreateServiceImpl implements CreateService {
 
@@ -37,6 +40,9 @@ public class CreateServiceImpl implements CreateService {
 
 	@Value("${spring.servlet.multipart.max-file-size}")
 	long MAXIMUM_FILE_SIZE_ALLOWED;
+	
+	@Value("${rootPath}")
+	String rootPath;
 
 	public void createNewPairEmailAndPassForNewUser(String email, String password) {
 		EmailPass emailPass = new EmailPass(email, passwordEncoder.encode(password));
@@ -70,7 +76,7 @@ public class CreateServiceImpl implements CreateService {
 			accountBilder.putWomanGender();
 			accountBilder.putTemplateLinkOnPhotoProfileForWoman();
 		}
-		Optional<String> recievedLinkOnPhotoProfile = savePhotoInStorage(fileWithUsersPhoto);
+		Optional<String> recievedLinkOnPhotoProfile = saveUsersPhotoInStorage(fileWithUsersPhoto);
 		if (!recievedLinkOnPhotoProfile.isEmpty()) {
 			accountBilder.putLinkOnPhotoProfile(recievedLinkOnPhotoProfile.get());
 		}
@@ -78,36 +84,60 @@ public class CreateServiceImpl implements CreateService {
 		accountRepository.save(account);
 	}
 
-	private Optional<String> savePhotoInStorage(MultipartFile fileWithUsersPhoto) {
+	private Optional<String> saveUsersPhotoInStorage(MultipartFile fileWithUsersPhoto) {
 		if (fileWithUsersPhoto.isEmpty()) {
 			return Optional.empty();
 		}
 		if (!validateExtension(fileWithUsersPhoto)) {
 			return Optional.empty();
 		}
-		String generatedLinkOnPhotoProfile;
+		String generatedLinkOnPhotoProfile=UUID.randomUUID().toString();
+		if (!saveBigPhotoInStorage(fileWithUsersPhoto, generatedLinkOnPhotoProfile)) {
+			return Optional.empty();
+		}
+		if (!saveSmallCopyForPhoto(generatedLinkOnPhotoProfile)) {
+			return Optional.empty();
+		} 
+		return Optional.of(generatedLinkOnPhotoProfile);
+	}
+	
+	private boolean validateExtension(MultipartFile file) {
+		String extension = FilenameUtils.getExtension(file.getOriginalFilename());
+		return "png".equals(extension) || "jpeg".equals(extension) || "jpg".equals(extension) 
+				|| "bmp".equals(extension) || "wbmp".equals(extension);
+	}
+	
+	private boolean saveBigPhotoInStorage (MultipartFile fileWithUsersPhoto, String generatedLinkOnPhotoProfile) {
 		try {
-			generatedLinkOnPhotoProfile = UUID.randomUUID().toString() + ".jpg";
 			fileWithUsersPhoto.transferTo(
-					new File("C:\\Java\\NewRepo\\aeClub\\src\\main\\webapp\\media\\photo\\profile\\"
-							+ generatedLinkOnPhotoProfile));
+					new File(rootPath + generatedLinkOnPhotoProfile+".jpg"));
 		} catch (IllegalStateException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return Optional.empty();
+			return false;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return Optional.empty();
+			return false;
 		}
-		
-		return Optional.of(generatedLinkOnPhotoProfile);
+		return true;
 	}
+	
 
-	private boolean validateExtension(MultipartFile file) {
-		String extension = FilenameUtils.getExtension(file.getOriginalFilename());
-		return "png".equals(extension) || "jpeg".equals(extension) || "jpg".equals(extension);
+
+	private boolean saveSmallCopyForPhoto (String generatedLinkOnPhotoProfile) {
+		try {
+			Thumbnails.of(rootPath+generatedLinkOnPhotoProfile+".jpg")
+			.size(110, 110)
+			.outputFormat("JPEG")
+			.outputQuality(0.90)
+			.toFile(rootPath+"small\\"+generatedLinkOnPhotoProfile);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+		return true;
 	}
-
 
 }
