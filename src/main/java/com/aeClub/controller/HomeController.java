@@ -77,7 +77,7 @@ public class HomeController {
 		if (result.hasErrors()) {
 			return new ModelAndView("/registration");
 		}
-		createService.createNewPaarEmailPassAndIdUser(form.getEmail1(), form.getPassword1());
+		createService.createNewPairEmailAndPassForNewUser(form.getEmail(), form.getPassword1());
 		return new ModelAndView("redirect:/profile/registrationMainInfo");
 
 	}

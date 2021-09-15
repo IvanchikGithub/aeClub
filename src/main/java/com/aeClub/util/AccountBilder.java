@@ -6,6 +6,10 @@ import com.aeClub.entity.Account;
 import com.aeClub.model.GenderType;
 
 public class AccountBilder {
+	public String getLinkOnPhotoProfile() {
+		return linkOnPhotoProfile;
+	}
+
 	private int idUser;
 	private String nameForClub;
 	private String gender;
@@ -13,6 +17,7 @@ public class AccountBilder {
 	private String country;
 	private String city;
 	private String denomination;
+	private String linkOnPhotoProfile;
 
 	public Account create() {
 		return new Account(this);
@@ -28,12 +33,12 @@ public class AccountBilder {
 		return this;
 	}
 	
-	public AccountBilder setManGender () {
+	public AccountBilder putManGender () {
 		this.gender = GenderType.MAN.getName();
 		return this;
 	}
 	
-	public AccountBilder setWomanGender () {
+	public AccountBilder putWomanGender () {
 		this.gender = GenderType.WOMAN.getName();
 		return this;
 	}
@@ -55,6 +60,21 @@ public class AccountBilder {
 	
 	public AccountBilder putDenomination (String denomination) {
 		this.denomination = denomination;
+		return this;
+	}
+	
+	public AccountBilder putTemplateLinkOnPhotoProfileForMan() {
+		this.linkOnPhotoProfile="photoman.jpg";
+		return this;
+	}
+	
+	public AccountBilder putTemplateLinkOnPhotoProfileForWoman() {
+		this.linkOnPhotoProfile="photowoman.jpg";
+		return this;
+	}
+	
+	public AccountBilder putLinkOnPhotoProfile(String linkOnPhotoProfile) {
+		this.linkOnPhotoProfile=linkOnPhotoProfile;
 		return this;
 	}
 	

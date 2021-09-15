@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <title>Registration</title>
-
+<link rel="shortcut icon" href="/static/favicon.ico">
+<link th:rel="stylesheet" th:href="@{/static/assets/password-strength-meter/password.min.css}"/>
 <link th:rel="stylesheet"
 	th:href="@{webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} " />
 <link th:rel="stylesheet"
@@ -16,38 +17,25 @@
 	<div class="container">
 		<form method="post" th:object="${createEmailPassForm}">
 
-			<div class="form-group row">
+			<div class="form-group">
 				<div class="col-md-4 mt-5">
 					<label for="birthdate">Email address</label>
 					<div class="input-group">
-						<input type="email" class="form-control" id="email1"
-							autocomplete="off" th:field="*{email1}" />
+						<input type="email" class="form-control" id="email"
+							autocomplete="off" th:field="*{email}" />
 						<div class="input-group-append">
 							<span class="input-group-text"><i class="fas fa-at"></i></span>
 						</div>
-						<div th:if="${#fields.hasErrors('email1')}" th:errors="*{email1}"></div>
-					</div>
-				</div>
-			</div>
-			<div class="form-group row">
-				<div class="col-md-4 mt-5">
-					<label for="birthdate">Email address once again</label>
-					<div class="input-group">
-						<input type="email" class="form-control" id="email2"
-							autocomplete="off" th:field="*{email2}" />
-						<div class="input-group-append">
-							<span class="input-group-text"><i class="fas fa-at"></i></span>
-						</div>
-						<div th:if="${#fields.hasErrors('email2')}" th:errors="*{email2}"></div>
+						<div th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
 					</div>
 				</div>
 			</div>
 
-			<div class="form-group row">
+			<div class="form-group">
 				<div class="col-md-4 mt-5">
 					<label for="password">Password</label>
-					<div class="input-group">
-						<input type="password" class="form-control" id="password1"
+					<div class="input-group" id="show_hide_password">
+						<input type="password" class="form-control" id="password"
 							autocomplete="off" th:field="*{password1}" />
 						<div class="input-group-append">
 							<span class="input-group-text"><i class="fa fa-eye-slash"
@@ -59,11 +47,11 @@
 				</div>
 			</div>
 
-			<div class="form-group row">
+			<div class="form-group">
 				<div class="col-md-4 mt-5">
 					<label for="password">Password</label>
-					<div class="input-group">
-						<input type="password" class="form-control" id="password2"
+					<div class="input-group" id="show_hide_password">
+						<input type="password" class="form-control" id="password"
 							autocomplete="off" th:field="*{password2}" />
 						<div class="input-group-append">
 							<span class="input-group-text"><i class="fa fa-eye-slash"
@@ -86,6 +74,44 @@
 	<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 	<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
 	<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+	<script th:src="@{/static/assets/password-strength-meter/password.min.js}"></script>
+<script>
+    $('#password').password({
+        closestSelector: '.form-group',
+        shortPass: 'The password is too short',
+        badPass: 'Weak; try combining letters & numbers',
+        goodPass: 'Medium; try using special characters',
+        strongPass: 'Strong password',
+        containsField: 'The password contains your username',
+        enterPass: 'Type your password',
+        showPercent: false,
+        showText: true, // shows the text tips
+        animate: true, // whether or not to animate the progress bar on input blur/focus
+        animateSpeed: 'fast', // the above animation speed
+        field: false, // select the match field (selector or jQuery instance) for better password checks
+        fieldPartialMatch: true, // whether to check for partials in field
+        minimumLength: 8 // minimum password length (below this threshold, the score is 0)
+    });
+</script>
 
+<script>
+    var input = $("#show_hide_password input");
+    var icon = $("#show_hide_password i");
+
+    icon.on('click', function (event) {
+        event.preventDefault();
+
+        if (input.attr("type") === "text") {
+            input.attr('type', 'password');
+            icon.addClass("fa-eye-slash");
+            icon.removeClass("fa-eye");
+
+        } else if (input.attr("type") === "password") {
+            input.attr('type', 'text');
+            icon.removeClass("fa-eye-slash");
+            icon.addClass("fa-eye");
+        }
+    });
+</script>
 </body>
 </html>

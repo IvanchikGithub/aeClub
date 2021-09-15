@@ -27,28 +27,22 @@ public class CreateEmailPassValidator implements Validator {
 	@Override
 	public void validate(Object target, Errors errors) {
 		CreateEmailPassForm emailPassForm = (CreateEmailPassForm) target;
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email1", "NotEmpty.emailPassForm.email");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email2", "NotEmpty.emailPassForm.email");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "NotEmpty.emailPassForm.email");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password1", "NotEmpty.emailPassForm.password");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password2", "NotEmpty.emailPassForm.password");
-
-		if (!emailPassForm.getEmail1().equals(emailPassForm.getEmail2())) {
-			errors.rejectValue("email1", "Equals.emailPassForm.email");
-			errors.rejectValue("email2", "Equals.emailPassForm.email");
-		}
 
 		if (!emailPassForm.getPassword1().equals(emailPassForm.getPassword2())) {
 			errors.rejectValue("password1", "Equals.emailPassForm.password");
 			errors.rejectValue("password2", "Equals.emailPassForm.password");
 		}
 
-		if (!this.emailValidator.isValid(emailPassForm.getEmail1())) {
+		if (!this.emailValidator.isValid(emailPassForm.getEmail())) {
 			// Invalid email.
-			errors.rejectValue("email1", "Pattern.emailPassForm.email");
+			errors.rejectValue("email", "Pattern.emailPassForm.email");
 		} else {
 			// Check the same email in databank
-			if (findService.isEmailRegistred(emailPassForm.getEmail1())) {
-				errors.rejectValue("email1", "Duplicate.emailPassForm.email");
+			if (findService.isEmailRegistred(emailPassForm.getEmail())) {
+				errors.rejectValue("email", "Duplicate.emailPassForm.email");
 			}
 		}
 		

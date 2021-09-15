@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <title>Home</title>
 
-
+<link rel="shortcut icon" href="/static/favicon.ico">
 <link th:rel="stylesheet"
 	th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} " />
 <link th:rel="stylesheet"
@@ -65,6 +65,24 @@
 	<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 	<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
 	<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<script>
+    var input = $("#show_hide_password input");
+    var icon = $("#show_hide_password i");
 
+    icon.on('click', function (event) {
+        event.preventDefault();
+
+        if (input.attr("type") === "text") {
+            input.attr('type', 'password');
+            icon.addClass("fa-eye-slash");
+            icon.removeClass("fa-eye");
+
+        } else if (input.attr("type") === "password") {
+            input.attr('type', 'text');
+            icon.removeClass("fa-eye-slash");
+            icon.addClass("fa-eye");
+        }
+    });
+</script>
 </body>
 </html>

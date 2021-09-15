@@ -90,9 +90,7 @@ public class ProfilController {
 //			return new ModelAndView("/profile/registrationMainInfo");
 //		}
 
-		createService.savePhoto(fileWithUsersPhoto, "");
-		
-		//createService.createUsersMainInformation(currentProfile.getId(), accountForm, fileWithUsersPhoto);
+		createService.createUsersMainInformation(currentProfile.getId(), accountForm, fileWithUsersPhoto);
 		
 		redirectAttributes.addFlashAttribute("message",
 				"You successfully uploaded " + fileWithUsersPhoto.getOriginalFilename() + "!");

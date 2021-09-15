@@ -33,6 +33,10 @@ public class Account {
 	private String city;
 	@Column(name = "denomination", nullable = false, length = 64)
 	private String denomination;
+	@Column (name= "linkOnPhotoProfile", nullable = false, length = 64)
+	private String linkOnPhotoProfile;
+	
+	
 	
 	public Account() {
 	}
@@ -45,6 +49,7 @@ public class Account {
 		this.country=accountBuilder.getCountry();
 		this.city=accountBuilder.getCity();
 		this.denomination=accountBuilder.getDenomination();
+		this.linkOnPhotoProfile=accountBuilder.getLinkOnPhotoProfile();
 	}
 	
 	
