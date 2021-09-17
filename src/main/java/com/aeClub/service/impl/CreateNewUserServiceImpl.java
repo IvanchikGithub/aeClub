@@ -2,6 +2,8 @@ package com.aeClub.service.impl;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 import java.util.UUID;
@@ -16,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.aeClub.entity.Account;
 import com.aeClub.entity.AccountExtraInfo;
 import com.aeClub.entity.EmailPass;
+import com.aeClub.entity.Hobby;
 import com.aeClub.entity.Picture;
 import com.aeClub.form.AccountForm;
 import com.aeClub.model.GenderType;
@@ -66,23 +69,24 @@ public class CreateNewUserServiceImpl implements CreateNewUserService {
 	public void createUsersMainInformation(int idUser, AccountForm accountForm,
 			MultipartFile fileWithUsersPhoto, MultipartFile[] filesWithUsersExtraPhoto) {
 
-		Account account = buildAccountBuilderFromFormsData(idUser, accountForm, fileWithUsersPhoto,
+		Account account = createAccountBuilderFromFormsData(idUser, accountForm, fileWithUsersPhoto,
 				filesWithUsersExtraPhoto).create();
 
 		if (filesWithUsersExtraPhoto.length!=0) {
-			for (int i=0; i<filesWithUsersExtraPhoto.length; i++) {
-				Optional<String> recievedLinkOnPictureInAlbum = savePictureInStorage (filesWithUsersExtraPhoto[i], PicturesType.PHOTO_IN_ALBUM);
-				if (!recievedLinkOnPictureInAlbum.isEmpty()) {
-					Picture picture = new Picture(recievedLinkOnPictureInAlbum.get());
-					account.addPicture(picture);
-					System.out.println(picture);
-				}
+			List<Picture> pictures = handlingFilesWithUsersExtraPhoto(filesWithUsersExtraPhoto);
+			if (pictures.size()>0) {
+				pictures.stream().forEach(picture->account.addPicture(picture));
 			}
 		}
+		
+		if (accountForm.getHobbies().size()>0) {
+			accountForm.getHobbies().stream().forEach(hobby->account.addHobby(new Hobby(hobby)));
+		}
+		
 		accountRepository.save(account);
 	}
 
-	private AccountBilder buildAccountBuilderFromFormsData(int idUser, AccountForm accountForm,
+	private AccountBilder createAccountBuilderFromFormsData(int idUser, AccountForm accountForm,
 			MultipartFile fileWithUsersPhoto, MultipartFile[] filesWithUsersExtraPhoto) {
 		AccountBilder accountBilder = new AccountBilder();
 		accountBilder.putIdUser(idUser).putNameForClub(accountForm.getNameForClub())
@@ -131,6 +135,18 @@ public class CreateNewUserServiceImpl implements CreateNewUserService {
 			accountExtraInfoBuilder.putAmountChildren(accountForm.getAmountChildren());
 		}
 		return accountExtraInfoBuilder;
+	}
+	
+	private List<Picture> handlingFilesWithUsersExtraPhoto(MultipartFile[] filesWithUsersExtraPhoto) {
+		List<Picture> pictures = new ArrayList<Picture>();
+		for (int i=0; i<filesWithUsersExtraPhoto.length; i++) {
+			Optional<String> recievedLinkOnPictureInAlbum = savePictureInStorage (filesWithUsersExtraPhoto[i], PicturesType.PHOTO_IN_ALBUM);
+			if (!recievedLinkOnPictureInAlbum.isEmpty()) {
+				Picture picture = new Picture(recievedLinkOnPictureInAlbum.get());
+				pictures.add(picture);
+			}
+		}
+		return pictures;
 	}
 	
 	

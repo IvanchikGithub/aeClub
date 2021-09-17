@@ -1,6 +1,7 @@
 package com.aeClub.form;
 
 import java.util.Date;
+import java.util.List;
 
 public class AccountForm {
 
@@ -20,6 +21,18 @@ public class AccountForm {
 	private String aboutMe;
 	private String aboutYou;
 	
+	private List<String> hobbies;
+	
+
+
+
+	public List<String> getHobbies() {
+		return hobbies;
+	}
+
+	public void setHobbies(List<String> hobbies) {
+		this.hobbies = hobbies;
+	}
 
 	public String getRealName() {
 		return realName;

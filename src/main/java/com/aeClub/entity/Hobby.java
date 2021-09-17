@@ -2,15 +2,12 @@ package com.aeClub.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-
-import com.aeClub.model.HobbyType;
+import javax.persistence.Transient;
 
 @Entity
 public class Hobby {
@@ -18,19 +15,29 @@ public class Hobby {
 	@GeneratedValue
 	private long id;
 	
-	@Column
-	@Enumerated (value=EnumType.STRING)
-	private HobbyType hobbyType;
+	@Column(nullable = false)
+	private String hobbyType;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="id_profile", nullable=false)
 	private Account account;
+	
+	@Transient
+	private boolean isChecked;
+	
+	public Hobby () {
+	}
+	
+	public Hobby (String hobbyType) {
+		this.hobbyType=hobbyType;
+		this.isChecked=false;
+	}
 
-	public HobbyType getHobbyType() {
+	public String getHobbyType() {
 		return hobbyType;
 	}
 
-	public void setHobbyType(HobbyType hobbyType) {
+	public void setHobbyType(String hobbyType) {
 		this.hobbyType = hobbyType;
 	}
 
@@ -46,6 +53,14 @@ public class Hobby {
 
 	public long getId() {
 		return id;
+	}
+
+	public boolean isChecked() {
+		return isChecked;
+	}
+
+	public void setChecked(boolean isChecked) {
+		this.isChecked = isChecked;
 	}
 	
 	

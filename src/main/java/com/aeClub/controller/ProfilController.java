@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.aeClub.entity.Hobby;
 import com.aeClub.form.AccountForm;
 import com.aeClub.model.AmmountChildrenType;
 import com.aeClub.model.CountryList;
@@ -82,7 +83,8 @@ public class ProfilController {
 		model.addAttribute("educationLevelList", educationLevelList);
 		List<AmmountChildrenType> ammountChildrenTypeList = EnumUtil.getAmmountChildrenList();
 		model.addAttribute("ammountChildrenTypeList", ammountChildrenTypeList);
-		
+		List<Hobby> hobbies = EnumUtil.getHobbiesList();
+		model.addAttribute("hobbies", hobbies);
 		model.addAttribute("accountForm", new AccountForm());
 		return new ModelAndView("/profile/registrationMainInfo");
 	}

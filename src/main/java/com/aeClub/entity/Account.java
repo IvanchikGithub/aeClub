@@ -42,8 +42,8 @@ public class Account {
 	
 	@OneToMany (cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy="account")
 	private List<Picture> pictures;
-	@OneToMany (mappedBy="account")
-	private List<Hobby> listHobbys;
+	@OneToMany (cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy="account")
+	private List<Hobby> hobbies;
 	@OneToMany (mappedBy="account")
 	private List<Language> listLanguages;
 	
@@ -56,6 +56,17 @@ public class Account {
 			picture.setAccount(this);
 		}
 	}
+
+	public void addHobby (Hobby hobby) {
+		if (hobby!=null) {
+			if (this.hobbies == null) {
+				this.hobbies = new ArrayList<Hobby>();
+			} 
+			this.hobbies.add(hobby);
+			hobby.setAccount(this);
+		}
+	}
+	
 
 	public Account() {
 	}
