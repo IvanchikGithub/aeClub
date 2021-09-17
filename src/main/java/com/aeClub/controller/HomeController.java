@@ -15,7 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.aeClub.form.CreateEmailPassForm;
 import com.aeClub.model.CurrentProfile;
-import com.aeClub.service.CreateService;
+import com.aeClub.service.CreateNewUserService;
 import com.aeClub.util.SecurityUtil;
 import com.aeClub.validator.CreateEmailPassValidator;
 
@@ -25,7 +25,7 @@ public class HomeController {
 	// LoggerFactory.getLogger(HomeController.class);
 
 	@Autowired
-	private CreateService createService;
+	private CreateNewUserService createService;
 
 	@Autowired
 	private CreateEmailPassValidator createEmailPassValidator;
@@ -77,7 +77,7 @@ public class HomeController {
 		if (result.hasErrors()) {
 			return new ModelAndView("/registration");
 		}
-		createService.createNewPairEmailAndPassForNewUser(form.getEmail(), form.getPassword1());
+		createService.createNewPairEmailAndPass(form.getEmail(), form.getPassword1());
 		return new ModelAndView("redirect:/profile/registrationMainInfo");
 
 	}

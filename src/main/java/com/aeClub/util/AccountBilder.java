@@ -3,12 +3,10 @@ package com.aeClub.util;
 import java.util.Date;
 
 import com.aeClub.entity.Account;
+import com.aeClub.entity.AccountExtraInfo;
 import com.aeClub.model.GenderType;
 
 public class AccountBilder {
-	public String getLinkOnPhotoProfile() {
-		return linkOnPhotoProfile;
-	}
 
 	private int idUser;
 	private String nameForClub;
@@ -18,6 +16,7 @@ public class AccountBilder {
 	private String city;
 	private String denomination;
 	private String linkOnPhotoProfile;
+	private AccountExtraInfo accountExtraInfo;  
 
 	public Account create() {
 		return new Account(this);
@@ -78,6 +77,12 @@ public class AccountBilder {
 		return this;
 	}
 	
+	public AccountBilder putAccountExtraInfo (AccountExtraInfo accountExtraInfo) {
+		this.accountExtraInfo=accountExtraInfo;
+		return this;
+	}
+	
+	
 	public int getIdUser() {
 		return idUser;
 	}
@@ -105,5 +110,14 @@ public class AccountBilder {
 	public String getDenomination() {
 		return denomination;
 	}
+	
+	public String getLinkOnPhotoProfile() {
+		return linkOnPhotoProfile;
+	}
 
+	public AccountExtraInfo getAccountExtraInfo() {
+		return accountExtraInfo;
+	}
+
+	
 }

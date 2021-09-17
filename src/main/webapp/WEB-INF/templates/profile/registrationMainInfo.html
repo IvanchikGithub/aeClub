@@ -97,32 +97,124 @@
 						<p>(*) Mandatory</p>
 					</fieldset>
 
-					<h3>Photo</h3>
+					<h3>Photos</h3>
 					<fieldset>
-						<legend>Your photo</legend>
+						<legend>Your Avatar and other photos</legend>
 
 						<div class="row">
 							<div class="col-5">
 								<div class="form-group">
 									<div class="custom-file">
 										<input type="file" class="custom-file-input" id="customFile"
-											name="file"> <label class="custom-file-label"
-											for="customFile">Upload your photo</label>
+											name="fileWithUsersPhoto"> <label
+											class="custom-file-label" for="customFile">Upload
+											your photo</label>
 									</div>
 								</div>
 							</div>
 						</div>
-						-->
-						<p>(*) Mandatory</p>
+						<div class="row">
+							<div class="col-5">
+								<div class="form-group">
+									<div class="custom-file">
+										<input type="file" class="custom-file-input" id="customFile"
+											name="filesWithUsersExtraPhoto" multiple="multiple">
+										<label class="custom-file-label" for="customFile">Upload
+											your extra photos</label>
+									</div>
+								</div>
+							</div>
+						</div>
+
 					</fieldset>
+
+					<h3>Additional information</h3>
+					<fieldset>
+						<legend>More information about you</legend>
+
+						<div class="row">
+							<div class="col-5">
+								<div class="form-group">
+									<label for="realName" class="col-sm-6 col-form-label">Your
+										real name </label>
+									<div class="col-sm-8">
+										<input type="text" class="form-control" id="realName"
+											data-inputmask="'alias': 'realName'" autocomplete="off"
+											th:field="*{realName}" />
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label for="realSurname" class="col-sm-6 col-form-label">Your
+										real surname </label>
+									<div class="col-sm-8">
+										<input type="text" class="form-control" id="realSurname"
+											data-inputmask="'alias': 'realSurname'" autocomplete="off"
+											th:field="*{realSurname}" />
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label for="gendertype">Education</label> <select
+										id="gendertype" th:field="*{education}">
+										<option value="">Get your education</option>
+										<option th:each="item : ${educationLevelList}"
+											th:value="${item.getName}" th:text="${item}"></option>
+									</select>
+								</div>
+
+								<div class="form-group">
+									<label for="nameChurch" class="col-sm-6 col-form-label">Name
+										your church </label>
+									<div class="col-sm-8">
+										<input type="text" class="form-control" id="nameChurch"
+											data-inputmask="'alias': 'nameChurch'" autocomplete="off"
+											th:field="*{nameChurch}" />
+									</div>
+								</div>
+							</div>
+						</div>
+					</fieldset>
+
+
 					<h3>Finish</h3>
 					<fieldset>
-						<legend>Terms and Conditions</legend>
+						<legend>And the last step</legend>
 
-						<input id="acceptTerms-2" name="acceptTerms"
-							th:field="*{termsAccepted}" type="checkbox" class="required">
-						<label for="acceptTerms-2">I agree with the Terms and
-							Conditions.</label>
+
+						<div class="form-group">
+							<div class="col-5">
+								<label for="gendertype">Amount of children</label> <select
+									id="gendertype" th:field="*{amountChildren}">
+									<option value="">Have you children?</option>
+									<option th:each="item : ${ammountChildrenTypeList}"
+										th:value="${item.getName}" th:text="${item}"></option>
+								</select>
+							</div>
+							<div class="form-group">
+								<label for="city" class="col-sm-6 col-form-label">About
+									Me </label>
+								<div class="col-sm-8">
+									<textarea class="form-control input-sm" rows="1"
+										th:field="*{aboutMe}" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="city" class="col-sm-6 col-form-label">About
+									You </label>
+								<div class="col-sm-8">
+									<textarea class="form-control input-sm" rows="1"
+										th:field="*{aboutYou}" />
+								</div>
+							</div>
+							<input id="acceptTerms-2" name="acceptTerms"
+								th:field="*{termsAccepted}" type="checkbox" class="required">
+							<label for="acceptTerms-2">I agree with the Terms and
+								Conditions.</label>
+
+						</div>
+
+
 					</fieldset>
 				</form>
 

@@ -21,11 +21,13 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.aeClub.form.AccountForm;
+import com.aeClub.model.AmmountChildrenType;
 import com.aeClub.model.CountryList;
 import com.aeClub.model.CurrentProfile;
 import com.aeClub.model.DenominationType;
+import com.aeClub.model.EducationLevel;
 import com.aeClub.model.GenderType;
-import com.aeClub.service.CreateService;
+import com.aeClub.service.CreateNewUserService;
 import com.aeClub.util.EnumUtil;
 import com.aeClub.validator.AccountFormValidator;
 
@@ -35,7 +37,7 @@ public class ProfilController {
 
 	
 	@Autowired
-	CreateService createService;
+	CreateNewUserService createService;
 	@Autowired
 	private AccountFormValidator accountFormValidator;
 	
@@ -76,6 +78,11 @@ public class ProfilController {
 		model.addAttribute("listCountry", listCountry);
 		List<DenominationType> listDenomination = EnumUtil.getDenominationList();
 		model.addAttribute("listDenomination", listDenomination);
+		List<EducationLevel> educationLevelList = EnumUtil.getEducationLevelList();
+		model.addAttribute("educationLevelList", educationLevelList);
+		List<AmmountChildrenType> ammountChildrenTypeList = EnumUtil.getAmmountChildrenList();
+		model.addAttribute("ammountChildrenTypeList", ammountChildrenTypeList);
+		
 		model.addAttribute("accountForm", new AccountForm());
 		return new ModelAndView("/profile/registrationMainInfo");
 	}
@@ -83,14 +90,14 @@ public class ProfilController {
 	@PostMapping(value = "/profile/registrationMainInfo")
 	public ModelAndView uploadUsersData(@AuthenticationPrincipal CurrentProfile currentProfile,
 			Model model, @ModelAttribute("accountForm") @Validated AccountForm accountForm,
-			BindingResult result, @RequestParam("file") MultipartFile fileWithUsersPhoto,
-			RedirectAttributes redirectAttributes) {
+			BindingResult result, @RequestParam("fileWithUsersPhoto") MultipartFile fileWithUsersPhoto,
+			RedirectAttributes redirectAttributes, @RequestParam("filesWithUsersExtraPhoto") MultipartFile[] filesWithUsersExtraPhoto) {
 		
 		if (result.hasErrors()) {
 			return new ModelAndView("/profile/registrationMainInfo");
 		}
 
-		createService.createUsersMainInformation(currentProfile.getId(), accountForm, fileWithUsersPhoto);
+		createService.createUsersMainInformation(currentProfile.getId(), accountForm, fileWithUsersPhoto, filesWithUsersExtraPhoto);
 		
 		return new ModelAndView("redirect:/profile/newuser");
 	}
