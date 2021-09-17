@@ -16,8 +16,10 @@ import org.springframework.web.multipart.MultipartFile;
 import com.aeClub.entity.Account;
 import com.aeClub.entity.AccountExtraInfo;
 import com.aeClub.entity.EmailPass;
+import com.aeClub.entity.Picture;
 import com.aeClub.form.AccountForm;
 import com.aeClub.model.GenderType;
+import com.aeClub.model.PicturesType;
 import com.aeClub.repository.AccountRepository;
 import com.aeClub.repository.EmailPassRepository;
 import com.aeClub.service.CreateNewUserService;
@@ -66,6 +68,17 @@ public class CreateNewUserServiceImpl implements CreateNewUserService {
 
 		Account account = buildAccountBuilderFromFormsData(idUser, accountForm, fileWithUsersPhoto,
 				filesWithUsersExtraPhoto).create();
+
+		if (filesWithUsersExtraPhoto.length!=0) {
+			for (int i=0; i<filesWithUsersExtraPhoto.length; i++) {
+				Optional<String> recievedLinkOnPictureInAlbum = savePictureInStorage (filesWithUsersExtraPhoto[i], PicturesType.PHOTO_IN_ALBUM);
+				if (!recievedLinkOnPictureInAlbum.isEmpty()) {
+					Picture picture = new Picture(recievedLinkOnPictureInAlbum.get());
+					account.addPicture(picture);
+					System.out.println(picture);
+				}
+			}
+		}
 		accountRepository.save(account);
 	}
 
@@ -82,9 +95,9 @@ public class CreateNewUserServiceImpl implements CreateNewUserService {
 			accountBilder.putWomanGender();
 			accountBilder.putTemplateLinkOnPhotoProfileForWoman();
 		}
-		Optional<String> recievedLinkOnPhotoProfile = saveUsersPhotoInStorage(fileWithUsersPhoto);
-		if (!recievedLinkOnPhotoProfile.isEmpty()) {
-			accountBilder.putLinkOnPhotoProfile(recievedLinkOnPhotoProfile.get());
+		Optional<String> recievedLinkOnProfilesAvatar = savePictureInStorage(fileWithUsersPhoto, PicturesType.USERS_AVATAR);
+		if (!recievedLinkOnProfilesAvatar.isEmpty()) {
+			accountBilder.putLinkOnProfilesAvatar(recievedLinkOnProfilesAvatar.get());
 		}
 		
 		AccountExtraInfo accountExtraInfo= new AccountExtraInfo();
@@ -121,7 +134,7 @@ public class CreateNewUserServiceImpl implements CreateNewUserService {
 	}
 	
 	
-	private Optional<String> saveUsersPhotoInStorage(MultipartFile fileWithUsersPhoto) {
+	private Optional<String> savePictureInStorage(MultipartFile fileWithUsersPhoto, PicturesType pictureType) {
 		if (fileWithUsersPhoto.isEmpty()) {
 			return Optional.empty();
 		}
@@ -129,26 +142,27 @@ public class CreateNewUserServiceImpl implements CreateNewUserService {
 			return Optional.empty();
 		}
 		String generatedLinkOnPhotoProfile = UUID.randomUUID().toString();
-		if (!saveBigPhotoInStorage(fileWithUsersPhoto, generatedLinkOnPhotoProfile)) {
+		if (!savePictureFullSizeInStorage(fileWithUsersPhoto, generatedLinkOnPhotoProfile, pictureType)) {
 			return Optional.empty();
 		}
-		if (!saveSmallCopyForPhoto(generatedLinkOnPhotoProfile)) {
+		if (!savePictureSmallSizeInStorage(generatedLinkOnPhotoProfile, pictureType)) {
 			return Optional.empty();
 		}
 		return Optional.of(generatedLinkOnPhotoProfile);
 	}
-
+	
+	
 	private boolean validateExtension(MultipartFile file) {
 		String extension = FilenameUtils.getExtension(file.getOriginalFilename());
 		return "png".equals(extension) || "jpeg".equals(extension) || "jpg".equals(extension)
 				|| "bmp".equals(extension) || "wbmp".equals(extension);
 	}
 
-	private boolean saveBigPhotoInStorage(MultipartFile fileWithUsersPhoto,
-			String generatedLinkOnPhotoProfile) {
+	private boolean savePictureFullSizeInStorage(MultipartFile fileWithUsersPhoto,
+			String generatedLinkOnPhotoProfile, PicturesType picturesType) {
 		try {
 			fileWithUsersPhoto.transferTo(
-					new File(rootPath + "ProfileMainPhoto\\" + generatedLinkOnPhotoProfile + ".jpg"));
+					new File(rootPath + picturesType.getDirectory() + generatedLinkOnPhotoProfile + ".jpg"));
 		} catch (IllegalStateException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -161,11 +175,11 @@ public class CreateNewUserServiceImpl implements CreateNewUserService {
 		return true;
 	}
 
-	private boolean saveSmallCopyForPhoto(String generatedLinkOnPhotoProfile) {
+	private boolean savePictureSmallSizeInStorage(String generatedLinkOnPhotoProfile, PicturesType picturesType) {
 		try {
-			Thumbnails.of(rootPath + "ProfileMainPhoto\\" + generatedLinkOnPhotoProfile + ".jpg")
+			Thumbnails.of(rootPath + picturesType.getDirectory() + generatedLinkOnPhotoProfile + ".jpg")
 					.size(110, 110).outputFormat("JPEG").outputQuality(0.90)
-					.toFile(rootPath + "ProfileMainPhoto\\" + "small\\" + generatedLinkOnPhotoProfile);
+					.toFile(rootPath + picturesType.getDirectory() + "small\\" + generatedLinkOnPhotoProfile);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

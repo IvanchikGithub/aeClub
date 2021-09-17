@@ -1,11 +1,15 @@
 package com.aeClub.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.aeClub.util.AccountBilder;
@@ -34,6 +38,24 @@ public class Account {
 	private String linkOnPhotoProfile;
 	@Embedded
 	private AccountExtraInfo accountExtraInfo;
+	
+	
+	@OneToMany (cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy="account")
+	private List<Picture> pictures;
+	@OneToMany (mappedBy="account")
+	private List<Hobby> listHobbys;
+	@OneToMany (mappedBy="account")
+	private List<Language> listLanguages;
+	
+	public void addPicture (Picture picture) {
+		if (picture!=null) {
+			if (this.pictures == null) {
+				this.pictures = new ArrayList<Picture>();
+			} 
+			this.pictures.add(picture);
+			picture.setAccount(this);
+		}
+	}
 
 	public Account() {
 	}
@@ -122,13 +144,5 @@ public class Account {
 		this.denomination = denomination;
 	}
 
-//
-//	/**
-//	 * 
-//	 */
-//
-//	@Column(name = "photo_link", nullable = false, length = 64)
-//	private String photoLink;
-//
 
 }

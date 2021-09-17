@@ -1,8 +1,10 @@
 package com.aeClub.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.OneToMany;
@@ -26,13 +28,6 @@ public class AccountExtraInfo implements Serializable {
 	private String aboutMe;
 	@Column(nullable = false)
 	private String aboutYou;
-	
-	@OneToMany (mappedBy="account")
-	private List<Photo> photos;
-	@OneToMany (mappedBy="account")
-	private List<Hobby> listHobbys;
-	@OneToMany (mappedBy="account")
-	private List<Language> listLanguages;
 
 	public AccountExtraInfo() {
 	}
@@ -47,6 +42,7 @@ public class AccountExtraInfo implements Serializable {
 		this.aboutYou=accountExtraInfoBuilder.getAboutYou();
 	}
 	
+
 	
 	public String getRealName() {
 		return realName;
@@ -102,30 +98,6 @@ public class AccountExtraInfo implements Serializable {
 
 	public void setAboutYou(String aboutYou) {
 		this.aboutYou = aboutYou;
-	}
-
-	public List<Photo> getPhotos() {
-		return photos;
-	}
-
-	public void setPhotos(List<Photo> photos) {
-		this.photos = photos;
-	}
-
-	public List<Hobby> getListHobbys() {
-		return listHobbys;
-	}
-
-	public void setListHobbys(List<Hobby> listHobbys) {
-		this.listHobbys = listHobbys;
-	}
-
-	public List<Language> getListLanguages() {
-		return listLanguages;
-	}
-
-	public void setListLanguages(List<Language> listLanguages) {
-		this.listLanguages = listLanguages;
 	}
 
 }

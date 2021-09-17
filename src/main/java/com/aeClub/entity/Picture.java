@@ -9,31 +9,38 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Photo {
+public class Picture {
 	@Id
 	@GeneratedValue
 	private long id;
 	
-	@Column
-	private String linkPhoto;
+	@Column(nullable=false)
+	private String linkPicture;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="id_profile", nullable=false)
 	private Account account;
 
+	public Picture() {
+	}
+	
+	public Picture (String linkPicture) {
+		this.linkPicture=linkPicture;
+	}
+	
 	public String getLinkPhoto() {
-		return linkPhoto;
+		return linkPicture;
 	}
 
-	public void setLinkPhoto(String linkPhoto) {
-		this.linkPhoto = linkPhoto;
+	public void setLinkPhoto(String linkPicture) {
+		this.linkPicture = linkPicture;
 	}
 
-	public Account getIdUser() {
+	public Account getAccount() {
 		return account;
 	}
 
-	public void setIdUser(Account account) {
+	public void setAccount(Account account) {
 		this.account = account;
 	}
 

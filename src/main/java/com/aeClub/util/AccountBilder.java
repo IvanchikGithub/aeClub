@@ -72,7 +72,7 @@ public class AccountBilder {
 		return this;
 	}
 	
-	public AccountBilder putLinkOnPhotoProfile(String linkOnPhotoProfile) {
+	public AccountBilder putLinkOnProfilesAvatar(String linkOnPhotoProfile) {
 		this.linkOnPhotoProfile=linkOnPhotoProfile;
 		return this;
 	}
