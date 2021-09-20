@@ -11,7 +11,9 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
+import com.aeClub.model.WallType;
 import com.aeClub.util.AccountBilder;
 
 @Entity
@@ -47,6 +49,9 @@ public class Account {
 	@OneToMany (mappedBy="account")
 	private List<Language> listLanguages;
 	
+	@Transient
+	private WallType activeWall;
+	
 	public void addPicture (Picture picture) {
 		if (picture!=null) {
 			if (this.pictures == null) {
@@ -81,8 +86,33 @@ public class Account {
 		this.denomination = accountBuilder.getDenomination();
 		this.linkOnPhotoProfile = accountBuilder.getLinkOnPhotoProfile();
 		this.accountExtraInfo = accountBuilder.getAccountExtraInfo();
+		this.activeWall=WallType.EVERYDAY_LIVE_WALL;
 	}
 	
+	public List<Picture> getPictures() {
+		return pictures;
+	}
+
+	public void setPictures(List<Picture> pictures) {
+		this.pictures = pictures;
+	}
+
+	public List<Hobby> getHobbies() {
+		return hobbies;
+	}
+
+	public void setHobbies(List<Hobby> hobbies) {
+		this.hobbies = hobbies;
+	}
+
+	public List<Language> getListLanguages() {
+		return listLanguages;
+	}
+
+	public void setListLanguages(List<Language> listLanguages) {
+		this.listLanguages = listLanguages;
+	}
+
 	public String getLinkOnPhotoProfile() {
 		return linkOnPhotoProfile;
 	}
@@ -155,5 +185,13 @@ public class Account {
 		this.denomination = denomination;
 	}
 
+	public WallType getActiveWall() {
+		return activeWall;
+	}
 
+	public void setActiveWall(WallType lastWall) {
+		this.activeWall = lastWall;
+	}
+
+	
 }

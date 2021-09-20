@@ -203,5 +203,9 @@ public class CreateNewUserServiceImpl implements CreateNewUserService {
 		}
 		return true;
 	}
+	
+	public String getRootPath () {
+		return rootPath;
+	}
 
 }

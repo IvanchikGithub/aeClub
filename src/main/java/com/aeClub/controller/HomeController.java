@@ -50,7 +50,7 @@ public class HomeController {
 	public ModelAndView getHome(@AuthenticationPrincipal CurrentProfile currentProfile, Model model) {
 
 		if (SecurityUtil.isCurrentProfileAuthentificated()) {
-			return new ModelAndView("redirect:profile/registrationMainInfo");
+			return new ModelAndView("redirect:profile/home");
 		} else {
 			return new ModelAndView("/home");
 		}

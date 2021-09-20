@@ -39,7 +39,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginProcessingUrl("/login-handler")
                 .usernameParameter("email")
                 .passwordParameter("password")
-                .defaultSuccessUrl("/profile/registrationMainInfo")                
+                .defaultSuccessUrl("/profile/home")                
                 .failureUrl("/login-failed")
                 .permitAll();
         http

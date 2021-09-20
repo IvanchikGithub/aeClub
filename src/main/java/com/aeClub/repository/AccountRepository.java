@@ -8,4 +8,5 @@ import com.aeClub.entity.Account;
 public interface AccountRepository {
 	void save(Account account);
 	int countByIdUser (int idUser);
+	Account findById (int idUser);
 }

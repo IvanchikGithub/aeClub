@@ -1,0 +1,115 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>HomeProfil</title>
+<link rel="shortcut icon" href="/static/favicon.ico">
+<link th:rel="stylesheet"
+	th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} " />
+</head>
+
+
+
+<body>
+	<nav th:insert="/fragments/navbar"></nav>
+	<div class="container">
+		<div class="row">
+
+			<div class="col-md-4 col-sm-6">
+				<div class="panel panel-primary">
+					<div class="panel-body">
+						<img src="/media/pictures/ProfileMainPhotos/photoman.jpg"
+							class="img-responsive img-rounded" style="width: 100%;" />
+					</div>
+				</div>
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						<div class="row">
+							<div class="col-xs-4 col-md-3"
+								th:each="item : ${account.pictures}">
+								<a href="${rootPath+'LibraryPhotos\\small\\'+item.linkPicture}"
+									class="thumbnail"> <img
+									src="${rootPath+'LibraryPhotos\\small\\'+item.linkPicture}"
+									alt="pic_lab">
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						<h3 class="panel-title">Main info</h3>
+					</div>
+					<div class="panel-body">
+						<span th:text="${account.nameForClub}"></span> <span
+							th:text="${account.birthdate}"></span>
+					</div>
+					<div class="panel-body">
+						<span th:text="${account.city}"></span>
+					</div>
+					<div class="panel-body">
+						Toronto Church,<span th:text="${account.denomination}"></span>
+					</div>
+				</div>
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						<h3 class="panel-title">Additional info</h3>
+					</div>
+					<div class="panel-body">
+						<span th:text="${account.accountExtraInfo.aboutMe}"></span>
+					</div>
+					<div class="panel-body">
+						<span th:text="${account.accountExtraInfo.aboutYou}"></span>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-8 col-sm-6">
+
+				<div class="col">
+					<ul class="nav nav-tabs mt-5" id="myTabs">
+						<li th:if="${account.activeWall.name()=='RELIGION_WALL'}"
+							class="nav-item"><a th:href="@{/profile/home/0}" 
+							class="nav-link active">Wall1</a></li>
+						<li th:if="${account.activeWall.name()!='RELIGION_WALL'}"
+							class="nav-item"><a th:href="@{/profile/home/0}"
+							class="nav-link">Wall1</a></li>
+						<li th:if="${account.activeWall.name()=='EVERYDAY_LIVE_WALL'}"
+							class="nav-item"><a th:href="@{/profile/home/1}"
+							class="nav-link active">Wall2</a></li>
+						<li th:if="${account.activeWall.name()!='EVERYDAY_LIVE_WALL'}"
+							class="nav-item"><a th:href="@{/profile/home/1}"
+							class="nav-link">Wall2</a></li>
+						<li th:if="${account.activeWall.name()=='MY_QUESTION_WALL'}"
+							class="nav-item"><a th:href="@{/profile/home/2}"
+							class="nav-link active">Wall3</a></li>
+						<li th:if="${account.activeWall.name()!='MY_QUESTION_WALL'}"
+							class="nav-item"><a th:href="@{/profile/home/2}"
+							class="nav-link">Wall3</a></li>
+					</ul> 
+
+					<div class="tab-content pt-3">
+						<div th:if="${account.activeWall.name()=='RELIGION_WALL'}"
+							class="tab-pane active" id="tab1">Active panel 1</div>
+						<div th:if="${account.activeWall.name()!='RELIGION_WALL'}"
+							id="tab1"></div>
+						<div th:if="${account.activeWall.name()=='EVERYDAY_LIVE_WALL'}"
+							class="tab-pane active" id="tab2">Active panel 2</div>
+						<div th:if="${account.activeWall.name()!='EVERYDAY_LIVE_WALL'}"
+							id="tab2"></div>
+						<div th:if="${account.activeWall.name()=='MY_QUESTION_WALL'}"
+							class="tab-pane active" id="tab3">Active panel 3</div>
+						<div th:if="${account.activeWall.name()!='MY_QUESTION_WALL'}"
+							id="tab3"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+	<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+
+
+</body>
+</html>
