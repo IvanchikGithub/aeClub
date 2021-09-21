@@ -46,7 +46,7 @@ public class Account {
 	private List<Picture> pictures;
 	@OneToMany (cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy="account")
 	private List<Hobby> hobbies;
-	@OneToMany (mappedBy="account")
+	@OneToMany (cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy="account")
 	private List<Language> languages;
 	
 	@Transient

@@ -19,6 +19,7 @@ import com.aeClub.entity.Account;
 import com.aeClub.entity.AccountExtraInfo;
 import com.aeClub.entity.EmailPass;
 import com.aeClub.entity.Hobby;
+import com.aeClub.entity.Language;
 import com.aeClub.entity.Picture;
 import com.aeClub.form.AccountForm;
 import com.aeClub.model.GenderType;
@@ -82,6 +83,10 @@ public class CreateNewUserServiceImpl implements CreateNewUserService {
 		if (accountForm.getHobbies().size() > 0) {
 			accountForm.getHobbies().stream().forEach(hobby -> account.addHobby(new Hobby(hobby)));
 		}
+		
+		if (accountForm.getLanguages().size() > 0) {
+			accountForm.getLanguages().stream().forEach(language -> account.addLanguage(new Language(language)));
+		}
 
 		accountRepository.save(account);
 	}
@@ -102,7 +107,7 @@ public class CreateNewUserServiceImpl implements CreateNewUserService {
 		Optional<String> recievedLinkOnProfilesAvatar = savePictureInStorage(fileWithUsersPhoto,
 				PicturesType.USERS_AVATAR);
 		if (!recievedLinkOnProfilesAvatar.isEmpty()) {
-			accountBilder.putLinkOnProfilesAvatar(recievedLinkOnProfilesAvatar.get());
+			accountBilder.putLinkOnProfilesAvatar(recievedLinkOnProfilesAvatar.get()+".jpg");
 		}
 
 		AccountExtraInfo accountExtraInfo = new AccountExtraInfo();

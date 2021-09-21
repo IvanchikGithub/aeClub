@@ -24,13 +24,15 @@ public class AccountForm {
 	private String aboutYou;
 	
 	private List<String> hobbies;
-	private List<Language> languages;
+	private List<String> languages;
 
-	public List<Language> getLanguages() {
+
+
+	public List<String> getLanguages() {
 		return languages;
 	}
 
-	public void setLanguages(List<Language> languages) {
+	public void setLanguages(List<String> languages) {
 		this.languages = languages;
 	}
 

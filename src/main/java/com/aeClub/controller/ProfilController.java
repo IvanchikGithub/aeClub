@@ -67,11 +67,6 @@ public class ProfilController {
 		// ...
 	}
 
-	@GetMapping(value = "/profile/newuser")
-	public ModelAndView formNewUser(Model model) {
-		return new ModelAndView("/profile/newuser");
-	}
-
 	@GetMapping(value = "/profile/home")
 	public ModelAndView getUsersHome(@AuthenticationPrincipal CurrentProfile currentProfile, Model model) {
 		Account account = getService.getAccountById(currentProfile.getId());
@@ -130,7 +125,7 @@ public class ProfilController {
 		createService.createUsersMainInformation(currentProfile.getId(), accountForm, fileWithUsersPhoto,
 				filesWithUsersExtraPhoto);
 
-		return new ModelAndView("redirect:/profile/newuser");
+		return new ModelAndView("redirect:/profile/home");
 	}
 
 }

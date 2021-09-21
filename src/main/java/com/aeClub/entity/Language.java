@@ -15,7 +15,7 @@ public class Language {
 	@GeneratedValue
 	private long id;
 
-	@Column
+	@Column(nullable = false)
 	private String languageType;
 
 	@ManyToOne(fetch = FetchType.LAZY)
