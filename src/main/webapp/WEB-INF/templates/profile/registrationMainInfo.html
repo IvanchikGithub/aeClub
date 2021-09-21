@@ -37,7 +37,7 @@
 						<legend>Information about you</legend>
 
 						<div class="row">
-							<div class="col-5">
+							<div class="col-md-6 col-sm-12">
 								<div class="form-group">
 									<label for="nameForClub" class="col-sm-6 col-form-label">Name
 										for club* </label>
@@ -68,7 +68,8 @@
 										</div>
 									</div>
 								</div>
-
+							</div>
+							<div class="col-md-6 col-sm-12">
 								<div class="form-group">
 									<label for="gendertype">Country*</label> <select
 										id="gendertype" th:field="*{country}">
@@ -140,7 +141,6 @@
 						</select>
 
 
-
 					</fieldset>
 
 					<h3>Additional information</h3>
@@ -148,7 +148,7 @@
 						<legend>More information about you</legend>
 
 						<div class="row">
-							<div class="col-5">
+							<div class="col-md-6 col-sm-12">
 								<div class="form-group">
 									<label for="realName" class="col-sm-6 col-form-label">Your
 										real name </label>
@@ -168,7 +168,8 @@
 											th:field="*{realSurname}" />
 									</div>
 								</div>
-
+							</div>
+							<div class="col-md-6 col-sm-12">
 								<div class="form-group">
 									<label for="gendertype">Education</label> <select
 										id="gendertype" th:field="*{education}">
@@ -187,8 +188,33 @@
 											th:field="*{nameChurch}" />
 									</div>
 								</div>
+
+								<div class="form-group">
+									<label for="gendertype">Amount of children</label> <select
+										id="gendertype" th:field="*{amountChildren}">
+										<option value="">Have you children?</option>
+										<option th:each="item : ${ammountChildrenTypeList}"
+											th:value="${item.getName}" th:text="${item}"></option>
+									</select>
+								</div>
+
+
 							</div>
 						</div>
+						<h3>Your languages</h3>
+
+
+						<select multiple="multiple" size="10" name="selected[]"
+							id="optionsbox2" th:field="*{languages}" class="form-control">
+
+							<option th:each="item : ${languages}"
+								th:selected="${item.isChecked}" th:value="${item.languageType}"><span
+									th:text="${item.languageType}"></span></option>
+						</select>
+
+
+
+
 					</fieldset>
 
 
@@ -198,14 +224,7 @@
 
 
 						<div class="form-group">
-							<div class="col-5">
-								<label for="gendertype">Amount of children</label> <select
-									id="gendertype" th:field="*{amountChildren}">
-									<option value="">Have you children?</option>
-									<option th:each="item : ${ammountChildrenTypeList}"
-										th:value="${item.getName}" th:text="${item}"></option>
-								</select>
-							</div>
+
 							<div class="form-group">
 								<label for="city" class="col-sm-6 col-form-label">About
 									Me </label>
@@ -309,6 +328,9 @@
 	</script>
 	<script>
 		$('#optionsbox').bootstrapDualListbox();
+	</script>
+		<script>
+		$('#optionsbox2').bootstrapDualListbox();
 	</script>
 	<script>
 		$('.input-group.date').datepicker({

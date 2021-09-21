@@ -72,17 +72,17 @@ public class CreateNewUserServiceImpl implements CreateNewUserService {
 		Account account = createAccountBuilderFromFormsData(idUser, accountForm, fileWithUsersPhoto,
 				filesWithUsersExtraPhoto).create();
 
-		if (filesWithUsersExtraPhoto.length!=0) {
+		if (filesWithUsersExtraPhoto.length != 0) {
 			List<Picture> pictures = handlingFilesWithUsersExtraPhoto(filesWithUsersExtraPhoto);
-			if (pictures.size()>0) {
-				pictures.stream().forEach(picture->account.addPicture(picture));
+			if (pictures.size() > 0) {
+				pictures.stream().forEach(picture -> account.addPicture(picture));
 			}
 		}
-		
-		if (accountForm.getHobbies().size()>0) {
-			accountForm.getHobbies().stream().forEach(hobby->account.addHobby(new Hobby(hobby)));
+
+		if (accountForm.getHobbies().size() > 0) {
+			accountForm.getHobbies().stream().forEach(hobby -> account.addHobby(new Hobby(hobby)));
 		}
-		
+
 		accountRepository.save(account);
 	}
 
@@ -99,48 +99,61 @@ public class CreateNewUserServiceImpl implements CreateNewUserService {
 			accountBilder.putWomanGender();
 			accountBilder.putTemplateLinkOnPhotoProfileForWoman();
 		}
-		Optional<String> recievedLinkOnProfilesAvatar = savePictureInStorage(fileWithUsersPhoto, PicturesType.USERS_AVATAR);
+		Optional<String> recievedLinkOnProfilesAvatar = savePictureInStorage(fileWithUsersPhoto,
+				PicturesType.USERS_AVATAR);
 		if (!recievedLinkOnProfilesAvatar.isEmpty()) {
 			accountBilder.putLinkOnProfilesAvatar(recievedLinkOnProfilesAvatar.get());
 		}
-		
-		AccountExtraInfo accountExtraInfo= new AccountExtraInfo();
-		accountExtraInfo=buildAccountExtraInfoBuilderFromFormsData(accountForm).create(); 
-		
+
+		AccountExtraInfo accountExtraInfo = new AccountExtraInfo();
+		accountExtraInfo = buildAccountExtraInfoBuilderFromFormsData(accountForm).create();
+
 		accountBilder.putAccountExtraInfo(accountExtraInfo);
 		return accountBilder;
 	}
 
 	private AccountExtraInfoBuilder buildAccountExtraInfoBuilderFromFormsData(AccountForm accountForm) {
 		AccountExtraInfoBuilder accountExtraInfoBuilder = new AccountExtraInfoBuilder();
-		if (!accountForm.getRealName().isBlank()&&accountForm.getRealName()!=null) {
-			accountExtraInfoBuilder.putRealName(accountForm.getRealName());
+		String realName=accountForm.getRealName();
+		if (notEmptyAndNotNull(realName)) {
+			accountExtraInfoBuilder.putRealName(realName);
 		}
-		if (!accountForm.getRealSurname().isBlank()&&accountForm.getRealSurname()!=null) {
-			accountExtraInfoBuilder.putRealSurname(accountForm.getRealSurname());
+		String realSurname = accountForm.getRealSurname();
+		if (notEmptyAndNotNull(realSurname)) {
+			accountExtraInfoBuilder.putRealSurname(realSurname);
 		}
-		if (!accountForm.getNameChurch().isBlank()&&accountForm.getNameChurch()!=null) {
-			accountExtraInfoBuilder.putNameChurch(accountForm.getNameChurch());
+		String nameChurch = accountForm.getNameChurch();
+		if (notEmptyAndNotNull(nameChurch)) {
+			accountExtraInfoBuilder.putNameChurch(nameChurch);
 		}
-		if (!accountForm.getEducation().isBlank()&&accountForm.getEducation()!=null) {
-			accountExtraInfoBuilder.putEducation(accountForm.getEducation());
+		String education = accountForm.getEducation();
+		if (notEmptyAndNotNull(education)) {
+			accountExtraInfoBuilder.putEducation(education);
 		}
-		if (!accountForm.getAboutMe().isBlank()&&accountForm.getAboutMe()!=null) {
-			accountExtraInfoBuilder.putAboutMe(accountForm.getAboutMe());
+		String aboutMe = accountForm.getAboutMe();
+		if (notEmptyAndNotNull(aboutMe)) {
+			accountExtraInfoBuilder.putAboutMe(aboutMe);
 		}
-		if (!accountForm.getAboutYou().isBlank()&&accountForm.getAboutYou()!=null) {
-			accountExtraInfoBuilder.putAboutYou(accountForm.getAboutYou());
+		String aboutYou = accountForm.getAboutYou();
+		if (notEmptyAndNotNull(aboutYou)) {
+			accountExtraInfoBuilder.putAboutYou(aboutYou);
 		}
-		if (!accountForm.getAmountChildren().isBlank()&&accountForm.getAmountChildren()!=null) {
-			accountExtraInfoBuilder.putAmountChildren(accountForm.getAmountChildren());
+		String amountChildren = accountForm.getAmountChildren();
+		if (notEmptyAndNotNull(amountChildren)) {
+			accountExtraInfoBuilder.putAmountChildren(amountChildren);
 		}
 		return accountExtraInfoBuilder;
 	}
-	
+
+	private boolean notEmptyAndNotNull(String value) {
+		return !(value.isBlank() || value.isEmpty() || value == null);
+	}
+
 	private List<Picture> handlingFilesWithUsersExtraPhoto(MultipartFile[] filesWithUsersExtraPhoto) {
 		List<Picture> pictures = new ArrayList<Picture>();
-		for (int i=0; i<filesWithUsersExtraPhoto.length; i++) {
-			Optional<String> recievedLinkOnPictureInAlbum = savePictureInStorage (filesWithUsersExtraPhoto[i], PicturesType.PHOTO_IN_ALBUM);
+		for (int i = 0; i < filesWithUsersExtraPhoto.length; i++) {
+			Optional<String> recievedLinkOnPictureInAlbum = savePictureInStorage(
+					filesWithUsersExtraPhoto[i], PicturesType.PHOTO_IN_ALBUM);
 			if (!recievedLinkOnPictureInAlbum.isEmpty()) {
 				Picture picture = new Picture(recievedLinkOnPictureInAlbum.get());
 				pictures.add(picture);
@@ -148,9 +161,9 @@ public class CreateNewUserServiceImpl implements CreateNewUserService {
 		}
 		return pictures;
 	}
-	
-	
-	private Optional<String> savePictureInStorage(MultipartFile fileWithUsersPhoto, PicturesType pictureType) {
+
+	private Optional<String> savePictureInStorage(MultipartFile fileWithUsersPhoto,
+			PicturesType pictureType) {
 		if (fileWithUsersPhoto.isEmpty()) {
 			return Optional.empty();
 		}
@@ -158,7 +171,8 @@ public class CreateNewUserServiceImpl implements CreateNewUserService {
 			return Optional.empty();
 		}
 		String generatedLinkOnPhotoProfile = UUID.randomUUID().toString();
-		if (!savePictureFullSizeInStorage(fileWithUsersPhoto, generatedLinkOnPhotoProfile, pictureType)) {
+		if (!savePictureFullSizeInStorage(fileWithUsersPhoto, generatedLinkOnPhotoProfile,
+				pictureType)) {
 			return Optional.empty();
 		}
 		if (!savePictureSmallSizeInStorage(generatedLinkOnPhotoProfile, pictureType)) {
@@ -166,8 +180,7 @@ public class CreateNewUserServiceImpl implements CreateNewUserService {
 		}
 		return Optional.of(generatedLinkOnPhotoProfile);
 	}
-	
-	
+
 	private boolean validateExtension(MultipartFile file) {
 		String extension = FilenameUtils.getExtension(file.getOriginalFilename());
 		return "png".equals(extension) || "jpeg".equals(extension) || "jpg".equals(extension)
@@ -177,8 +190,8 @@ public class CreateNewUserServiceImpl implements CreateNewUserService {
 	private boolean savePictureFullSizeInStorage(MultipartFile fileWithUsersPhoto,
 			String generatedLinkOnPhotoProfile, PicturesType picturesType) {
 		try {
-			fileWithUsersPhoto.transferTo(
-					new File(rootPath + picturesType.getDirectory() + generatedLinkOnPhotoProfile + ".jpg"));
+			fileWithUsersPhoto.transferTo(new File(
+					rootPath + picturesType.getDirectory() + generatedLinkOnPhotoProfile + ".jpg"));
 		} catch (IllegalStateException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -191,11 +204,12 @@ public class CreateNewUserServiceImpl implements CreateNewUserService {
 		return true;
 	}
 
-	private boolean savePictureSmallSizeInStorage(String generatedLinkOnPhotoProfile, PicturesType picturesType) {
+	private boolean savePictureSmallSizeInStorage(String generatedLinkOnPhotoProfile,
+			PicturesType picturesType) {
 		try {
 			Thumbnails.of(rootPath + picturesType.getDirectory() + generatedLinkOnPhotoProfile + ".jpg")
-					.size(110, 110).outputFormat("JPEG").outputQuality(0.90)
-					.toFile(rootPath + picturesType.getDirectory() + "small\\" + generatedLinkOnPhotoProfile);
+					.size(110, 110).outputFormat("JPEG").outputQuality(0.90).toFile(rootPath
+							+ picturesType.getDirectory() + "small\\" + generatedLinkOnPhotoProfile);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -203,8 +217,8 @@ public class CreateNewUserServiceImpl implements CreateNewUserService {
 		}
 		return true;
 	}
-	
-	public String getRootPath () {
+
+	public String getRootPath() {
 		return rootPath;
 	}
 

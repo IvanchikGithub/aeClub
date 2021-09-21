@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.aeClub.entity.Account;
+import com.aeClub.model.AccountEmpty;
 import com.aeClub.model.WallType;
 import com.aeClub.repository.AccountRepository;
 import com.aeClub.service.GetService;
@@ -16,6 +17,9 @@ public class GetServiceImpl implements GetService {
 	@Override
 	public Account getAccountById(int idUser) {
 		Account account = accountRepository.findById(idUser);
+		if (account == null) {
+			return new AccountEmpty();
+		}
 		account.setActiveWall(WallType.EVERYDAY_LIVE_WALL);
 		return account;
 	}

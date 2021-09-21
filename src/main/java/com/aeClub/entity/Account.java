@@ -47,7 +47,7 @@ public class Account {
 	@OneToMany (cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy="account")
 	private List<Hobby> hobbies;
 	@OneToMany (mappedBy="account")
-	private List<Language> listLanguages;
+	private List<Language> languages;
 	
 	@Transient
 	private WallType activeWall;
@@ -71,6 +71,17 @@ public class Account {
 			hobby.setAccount(this);
 		}
 	}
+	
+	public void addLanguage (Language language) {
+		if (language!=null) {
+			if (this.languages == null) {
+				this.languages = new ArrayList<Language>();
+			} 
+			this.languages.add(language);
+			language.setAccount(this);
+		}
+	}
+	
 	
 
 	public Account() {
@@ -106,11 +117,11 @@ public class Account {
 	}
 
 	public List<Language> getListLanguages() {
-		return listLanguages;
+		return languages;
 	}
 
 	public void setListLanguages(List<Language> listLanguages) {
-		this.listLanguages = listLanguages;
+		this.languages = listLanguages;
 	}
 
 	public String getLinkOnPhotoProfile() {
@@ -193,5 +204,8 @@ public class Account {
 		this.activeWall = lastWall;
 	}
 
+	
+	
+	
 	
 }

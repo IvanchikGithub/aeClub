@@ -3,6 +3,8 @@ package com.aeClub.form;
 import java.util.Date;
 import java.util.List;
 
+import com.aeClub.entity.Language;
+
 public class AccountForm {
 
 	private String nameForClub;
@@ -22,9 +24,15 @@ public class AccountForm {
 	private String aboutYou;
 	
 	private List<String> hobbies;
-	
+	private List<Language> languages;
 
+	public List<Language> getLanguages() {
+		return languages;
+	}
 
+	public void setLanguages(List<Language> languages) {
+		this.languages = languages;
+	}
 
 	public List<String> getHobbies() {
 		return hobbies;

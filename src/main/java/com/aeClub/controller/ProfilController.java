@@ -23,6 +23,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.aeClub.entity.Account;
 import com.aeClub.entity.Hobby;
+import com.aeClub.entity.Language;
 import com.aeClub.form.AccountForm;
 import com.aeClub.model.AmmountChildrenType;
 import com.aeClub.model.CountryList;
@@ -74,6 +75,9 @@ public class ProfilController {
 	@GetMapping(value = "/profile/home")
 	public ModelAndView getUsersHome(@AuthenticationPrincipal CurrentProfile currentProfile, Model model) {
 		Account account = getService.getAccountById(currentProfile.getId());
+		if (account.getClass().getSimpleName().equals("AccountEmpty")) {
+			return new ModelAndView("redirect:/profile/registrationMainInfo");
+		}
 		model.addAttribute("account", account);
 		model.addAttribute("rootPath", createService.getRootPath());
 		return new ModelAndView("/profile/home");
@@ -104,6 +108,10 @@ public class ProfilController {
 		model.addAttribute("ammountChildrenTypeList", ammountChildrenTypeList);
 		List<Hobby> hobbies = EnumUtil.getHobbiesList();
 		model.addAttribute("hobbies", hobbies);
+		List<Language> languages = EnumUtil.getLanguagesList();
+		model.addAttribute("languages", languages);
+		
+		
 		model.addAttribute("accountForm", new AccountForm());
 		return new ModelAndView("/profile/registrationMainInfo");
 	}

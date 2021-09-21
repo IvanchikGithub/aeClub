@@ -2,45 +2,42 @@ package com.aeClub.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-
-import com.aeClub.model.LanguageType;
+import javax.persistence.Transient;
 
 @Entity
 public class Language {
 	@Id
 	@GeneratedValue
 	private long id;
-	
+
 	@Column
-	@Enumerated (value=EnumType.STRING)
-	private LanguageType languageType;
-	
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="id_profile", nullable=false)
+	private String languageType;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_profile", nullable = false)
 	private Account account;
 
-	public LanguageType getHobbyType() {
-		return languageType;
+	@Transient
+	private boolean isChecked;
+
+	public Language() {
 	}
 
-	public void setHobbyType(LanguageType languageType) {
+	public Language(String languageType) {
 		this.languageType = languageType;
+		this.isChecked = false;
 	}
 
-
-
-	public LanguageType getLanguageType() {
+	public String getLanguageType() {
 		return languageType;
 	}
 
-	public void setLanguageType(LanguageType languageType) {
+	public void setLanguageType(String languageType) {
 		this.languageType = languageType;
 	}
 
@@ -55,4 +52,13 @@ public class Language {
 	public long getId() {
 		return id;
 	}
+
+	public boolean isChecked() {
+		return isChecked;
+	}
+
+	public void setChecked(boolean isChecked) {
+		this.isChecked = isChecked;
+	}
+
 }
