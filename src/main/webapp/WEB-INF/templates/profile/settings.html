@@ -1,0 +1,81 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>HomeProfil</title>
+<link rel="shortcut icon" href="/static/favicon.ico">
+<link th:rel="stylesheet"
+	th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} " />
+</head>
+
+
+
+<body>
+	<nav th:insert="/fragments/navbarForRegistrated"></nav>
+	<div class="container">
+		<div class="row">
+
+			<div class="col-md-4 col-sm-12">
+				<div class="panel panel-primary">
+					<div class="panel-body">
+ 						<img th:src="@{/media/pictures/ProfileMainPhotos/}+${account.linkOnPhotoProfile}"
+							class="img-responsive img-rounded" style="width: 100%;" />  
+					</div>
+				</div>
+
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						<h3 class="panel-title">Main info</h3>
+					</div>
+					<div class="panel-body">
+						<span th:text="${account.nameForClub}"></span> <span
+							th:text="${account.birthdate}"></span>
+					</div>
+					<div class="panel-body">
+						<span th:text="${account.city}"></span>
+					</div>
+					<div class="panel-body">
+						Toronto Church,<span th:text="${account.denomination}"></span>
+					</div>
+				</div>
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						<h3 class="panel-title">Additional info</h3>
+					</div>
+					<div class="panel-body">
+						<span th:text="${account.accountExtraInfo.aboutMe}"></span>
+					</div>
+					<div class="panel-body">
+						<span th:text="${account.accountExtraInfo.aboutYou}"></span>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-8 col-sm-12">
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						<div class="row">
+							<div class="col-md-1  col-sm-4"
+								th:each="item : ${account.pictures}">
+								<a href="#"
+									class="thumbnail"> <img
+									th:src="@{/media/pictures/LibraryPhotos/}+${item.linkPicture}"
+									alt="pic_lab">
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col">
+					
+				</div>
+			</div>
+		</div>
+	</div>
+	<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+	<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+
+
+</body>
+</html>

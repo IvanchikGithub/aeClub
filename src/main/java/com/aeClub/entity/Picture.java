@@ -28,11 +28,13 @@ public class Picture {
 		this.linkPicture=linkPicture;
 	}
 	
-	public String getLinkPhoto() {
+
+
+	public String getLinkPicture() {
 		return linkPicture;
 	}
 
-	public void setLinkPhoto(String linkPicture) {
+	public void setLinkPicture(String linkPicture) {
 		this.linkPicture = linkPicture;
 	}
 

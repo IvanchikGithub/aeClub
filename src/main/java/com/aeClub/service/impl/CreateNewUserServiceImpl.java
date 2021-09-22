@@ -160,7 +160,7 @@ public class CreateNewUserServiceImpl implements CreateNewUserService {
 			Optional<String> recievedLinkOnPictureInAlbum = savePictureInStorage(
 					filesWithUsersExtraPhoto[i], PicturesType.PHOTO_IN_ALBUM);
 			if (!recievedLinkOnPictureInAlbum.isEmpty()) {
-				Picture picture = new Picture(recievedLinkOnPictureInAlbum.get());
+				Picture picture = new Picture(recievedLinkOnPictureInAlbum.get()+".jpg");
 				pictures.add(picture);
 			}
 		}
@@ -213,7 +213,7 @@ public class CreateNewUserServiceImpl implements CreateNewUserService {
 			PicturesType picturesType) {
 		try {
 			Thumbnails.of(rootPath + picturesType.getDirectory() + generatedLinkOnPhotoProfile + ".jpg")
-					.size(110, 110).outputFormat("JPEG").outputQuality(0.90).toFile(rootPath
+					.size(110, 110).outputFormat("jpg").outputQuality(0.90).toFile(rootPath
 							+ picturesType.getDirectory() + "small\\" + generatedLinkOnPhotoProfile);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
