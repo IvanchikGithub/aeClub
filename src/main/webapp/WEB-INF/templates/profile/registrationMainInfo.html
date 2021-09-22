@@ -59,7 +59,7 @@
 
 								<div class="form-group ">
 									<label for="birthdate">Date of birth*</label>
-									<div class="input-group date">
+									<div class="col-sm-8 input-group date">
 										<input type="text" class="form-control" id="birthdate"
 											autocomplete="off" th:field="*{birthdate}" />
 										<div class="input-group-append">
@@ -110,7 +110,7 @@
 							<div class="col-5">
 								<div class="form-group">
 									<div class="custom-file">
-									
+
 										<input type="file" class="custom-file-input" id="customFile"
 											name="fileWithUsersPhoto"> <label
 											class="custom-file-label" for="customFile">Upload
@@ -137,8 +137,10 @@
 							id="optionsbox" th:field="*{hobbies}" class="form-control">
 
 							<option th:each="item : ${hobbies}"
-								th:selected="${item.isChecked}" th:value="${item.hobbyType}"><span
-									th:text="${item.hobbyType}"></span></option>
+								th:selected="${item.isChecked}" th:value="${item.hobbyType}" th:text="${item.hobbyType}">
+									</option>
+
+
 						</select>
 
 
@@ -330,7 +332,7 @@
 	<script>
 		$('#optionsbox').bootstrapDualListbox();
 	</script>
-		<script>
+	<script>
 		$('#optionsbox2').bootstrapDualListbox();
 	</script>
 	<script>

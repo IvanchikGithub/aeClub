@@ -9,15 +9,16 @@ import org.springframework.ui.Model;
 import com.aeClub.entity.Account;
 import com.aeClub.entity.Hobby;
 import com.aeClub.entity.Language;
-import com.aeClub.model.AccountEmpty;
-import com.aeClub.model.AmmountChildrenType;
-import com.aeClub.model.CountryList;
-import com.aeClub.model.DenominationType;
-import com.aeClub.model.EducationLevel;
-import com.aeClub.model.GenderType;
-import com.aeClub.model.WallType;
+import com.aeClub.enums.AmmountChildrenType;
+import com.aeClub.enums.CountryList;
+import com.aeClub.enums.DenominationType;
+import com.aeClub.enums.EducationLevel;
+import com.aeClub.enums.GenderType;
+import com.aeClub.enums.SettingsWallType;
+import com.aeClub.enums.WallType;
 import com.aeClub.repository.AccountRepository;
 import com.aeClub.service.GetService;
+import com.aeClub.util.AccountEmpty;
 import com.aeClub.util.EnumUtil;
 
 @Service
@@ -32,6 +33,7 @@ public class GetServiceImpl implements GetService {
 			return new AccountEmpty();
 		}
 		account.setActiveWall(WallType.EVERYDAY_LIVE_WALL);
+		account.setActiveSettingsWall(SettingsWallType.MAIN_INFO);
 		return account;
 	}
 	

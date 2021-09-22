@@ -1,4 +1,4 @@
-package com.aeClub.model;
+package com.aeClub.enums;
 
 public enum WallType {
 	RELIGION_WALL, EVERYDAY_LIVE_WALL, MY_QUESTION_WALL, MY_ANSWER_WALL;

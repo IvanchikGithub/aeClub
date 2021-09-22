@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.aeClub.form.CreateEmailPassForm;
-import com.aeClub.model.CurrentProfile;
 import com.aeClub.service.CreateNewUserService;
+import com.aeClub.util.CurrentProfile;
 import com.aeClub.util.SecurityUtil;
 import com.aeClub.validator.CreateEmailPassValidator;
 

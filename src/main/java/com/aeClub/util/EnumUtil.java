@@ -6,13 +6,13 @@ import java.util.stream.Collectors;
 
 import com.aeClub.entity.Hobby;
 import com.aeClub.entity.Language;
-import com.aeClub.model.AmmountChildrenType;
-import com.aeClub.model.CountryList;
-import com.aeClub.model.DenominationType;
-import com.aeClub.model.EducationLevel;
-import com.aeClub.model.GenderType;
-import com.aeClub.model.HobbyType;
-import com.aeClub.model.LanguageType;
+import com.aeClub.enums.AmmountChildrenType;
+import com.aeClub.enums.CountryList;
+import com.aeClub.enums.DenominationType;
+import com.aeClub.enums.EducationLevel;
+import com.aeClub.enums.GenderType;
+import com.aeClub.enums.HobbyType;
+import com.aeClub.enums.LanguageType;
 
 public final class EnumUtil {
 	public static List<GenderType> getGenderTypes() {

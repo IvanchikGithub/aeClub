@@ -4,7 +4,7 @@ import java.util.Date;
 
 import com.aeClub.entity.Account;
 import com.aeClub.entity.AccountExtraInfo;
-import com.aeClub.model.GenderType;
+import com.aeClub.enums.GenderType;
 
 public class AccountBilder {
 

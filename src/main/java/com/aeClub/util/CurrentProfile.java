@@ -1,4 +1,4 @@
-package com.aeClub.model;
+package com.aeClub.util;
 
 import java.util.Collections;
 

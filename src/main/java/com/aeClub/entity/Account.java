@@ -13,7 +13,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import com.aeClub.model.WallType;
+import com.aeClub.enums.SettingsWallType;
+import com.aeClub.enums.WallType;
 import com.aeClub.util.AccountBilder;
 
 @Entity
@@ -40,49 +41,48 @@ public class Account {
 	private String linkOnPhotoProfile;
 	@Embedded
 	private AccountExtraInfo accountExtraInfo;
-	
-	
-	@OneToMany (cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy="account")
+
+	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "account")
 	private List<Picture> pictures;
-	@OneToMany (cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy="account")
+	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "account")
 	private List<Hobby> hobbies;
-	@OneToMany (cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy="account")
+	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "account")
 	private List<Language> languages;
-	
+
 	@Transient
 	private WallType activeWall;
-	
-	public void addPicture (Picture picture) {
-		if (picture!=null) {
+	@Transient
+	private SettingsWallType activeSettingsWall;
+
+	public void addPicture(Picture picture) {
+		if (picture != null) {
 			if (this.pictures == null) {
 				this.pictures = new ArrayList<Picture>();
-			} 
+			}
 			this.pictures.add(picture);
 			picture.setAccount(this);
 		}
 	}
 
-	public void addHobby (Hobby hobby) {
-		if (hobby!=null) {
+	public void addHobby(Hobby hobby) {
+		if (hobby != null) {
 			if (this.hobbies == null) {
 				this.hobbies = new ArrayList<Hobby>();
-			} 
+			}
 			this.hobbies.add(hobby);
 			hobby.setAccount(this);
 		}
 	}
-	
-	public void addLanguage (Language language) {
-		if (language!=null) {
+
+	public void addLanguage(Language language) {
+		if (language != null) {
 			if (this.languages == null) {
 				this.languages = new ArrayList<Language>();
-			} 
+			}
 			this.languages.add(language);
 			language.setAccount(this);
 		}
 	}
-	
-	
 
 	public Account() {
 	}
@@ -97,9 +97,28 @@ public class Account {
 		this.denomination = accountBuilder.getDenomination();
 		this.linkOnPhotoProfile = accountBuilder.getLinkOnPhotoProfile();
 		this.accountExtraInfo = accountBuilder.getAccountExtraInfo();
-		this.activeWall=WallType.EVERYDAY_LIVE_WALL;
+		this.activeWall = WallType.EVERYDAY_LIVE_WALL;
+		this.activeSettingsWall = SettingsWallType.MAIN_INFO;
 	}
-	
+
+	public List<Language> getLanguages() {
+		return languages;
+	}
+
+	public void setLanguages(List<Language> languages) {
+		this.languages = languages;
+	}
+
+
+
+	public SettingsWallType getActiveSettingsWall() {
+		return activeSettingsWall;
+	}
+
+	public void setActiveSettingsWall(SettingsWallType activeSettingsWall) {
+		this.activeSettingsWall = activeSettingsWall;
+	}
+
 	public List<Picture> getPictures() {
 		return pictures;
 	}
@@ -204,8 +223,4 @@ public class Account {
 		this.activeWall = lastWall;
 	}
 
-	
-	
-	
-	
 }

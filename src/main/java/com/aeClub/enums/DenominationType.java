@@ -1,4 +1,4 @@
-package com.aeClub.model;
+package com.aeClub.enums;
 
 /**
  * Das Anzahltyp besteht aus bekannte protestantische Konfessionen 

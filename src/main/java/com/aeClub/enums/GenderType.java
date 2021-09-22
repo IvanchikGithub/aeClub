@@ -1,4 +1,4 @@
-package com.aeClub.model;
+package com.aeClub.enums;
 
 public enum GenderType {
 	MAN("man"), WOMAN("woman");

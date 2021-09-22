@@ -1,4 +1,4 @@
-package com.aeClub.model;
+package com.aeClub.enums;
 
 public enum HobbyType {
 	BAKING("baking"), BLOGGING("blogging"), COLLECTING_THINGS("collecting things"), COOKING("cooking"),

@@ -1,4 +1,4 @@
-package com.aeClub.model;
+package com.aeClub.enums;
 
 public enum LanguageType {
 	ALBANIAN("albanian"), ARMENIAN("armenian"), BELARUSIAN("belarusian"), BOSNIAN("bosnian"),

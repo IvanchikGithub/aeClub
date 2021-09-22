@@ -30,7 +30,7 @@ public class Language {
 
 	public Language(String languageType) {
 		this.languageType = languageType;
-		this.isChecked = false;
+		this.isChecked=false;
 	}
 
 	public String getLanguageType() {

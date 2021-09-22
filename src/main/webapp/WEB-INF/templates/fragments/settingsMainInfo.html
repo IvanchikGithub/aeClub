@@ -1,0 +1,186 @@
+
+
+<div class="container">
+	<div class="row">
+		<div class="col-sm-10 mt-5">
+			<form id="example-advanced-form"
+				action="/profile/settings/changeMainInfo" method="post"
+				th:object="${accountForm}">
+				<div class="form-group row">
+					<label for="email" class="col-sm-4 col-form-label">Name for
+						club</label>
+					<div class="col-sm-8">
+						<input type="text" class="form-control" id="nameForClub"
+							data-inputmask="'alias': 'nameForClub'" autocomplete="off"
+							th:placeholder="${account.nameForClub}" th:field="*{nameForClub}" />
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<label for="email" class="col-sm-4 col-form-label">Your
+						gender</label>
+					<div class="col-sm-8">
+						<span th:text="${account.gender}"></span>
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<label for="time12h" class="col-sm-4 col-form-label">Date
+						of birth</label>
+					<div class="col-sm-8 input-group date">
+						<input type="text" class="form-control" id="birthdate"
+							autocomplete="off" th:placeholder="${account.birthdate}"
+							th:field="*{birthdate}" />
+						<div class="input-group-append">
+							<span class="input-group-text"><i
+								class="far fa-calendar-alt"></i></span>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<label for="gendertype" class="col-sm-4 col-form-label">Country</label>
+					<div class="col-sm-8">
+						<select th:field="*{country}">
+							<option th:value="${account.country}"><span
+									th:text="${account.country}"></span></option>
+							<option th:each="item : ${listCountry}"
+								th:value="${item.getName}" th:text="${item}"></option>
+						</select>
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<label for="city" class="col-sm-4 col-form-label">City</label>
+					<div class="col-sm-8">
+						<input type="text" class="form-control" id="city"
+							data-inputmask="'alias': 'city'" autocomplete="off"
+							th:placeholder="${account.city}" th:field="*{city}" />
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<label for="gendertype" class="col-sm-4 col-form-label">Religion
+						Denomination</label>
+					<div class="col-sm-8">
+						<select th:field="*{denomination}">
+							<option th:value="${account.denomination}"><span
+									th:text="${account.denomination}"></span></option>
+							<option th:each="item : ${listDenomination}"
+								th:value="${item.getName}" th:text="${item}"></option>
+						</select>
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<label for="time12h" class="col-sm-4 col-form-label">Your
+						real name</label>
+					<div class="col-sm-8">
+						<input type="text" class="form-control" id="realName"
+							data-inputmask="'alias': 'realName'" autocomplete="off"
+							th:field="*{realName}"
+							th:placeholder="${account.accountExtraInfo.realName}" />
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<label for="time12h" class="col-sm-4 col-form-label">Your
+						real surname</label>
+					<div class="col-sm-8">
+						<input type="text" class="form-control" id="realSurname"
+							data-inputmask="'alias': 'realSurname'" autocomplete="off"
+							th:field="*{realSurname}"
+							th:placeholder="${account.accountExtraInfo.realSurname}" />
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<label for="gendertype" class="col-sm-4 col-form-label">Education</label>
+					<div class="col-sm-8">
+						<select th:field="*{education}">
+							<option th:value="${account.accountExtraInfo.education}"><span
+									th:text="${account.accountExtraInfo.education}"></span></option>
+							<option th:each="item : ${educationLevelList}"
+								th:value="${item.getName}" th:text="${item}"></option>
+						</select>
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<label for="time12h" class="col-sm-4 col-form-label">Name
+						your church</label>
+					<div class="col-sm-8">
+						<input type="text" class="form-control" id="nameChurch"
+							data-inputmask="'alias': 'nameChurch'" autocomplete="off"
+							th:field="*{nameChurch}"
+							th:placeholder="${account.accountExtraInfo.nameChurch}" />
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<label for="gendertype" class="col-sm-4 col-form-label">Amount
+						of children</label>
+					<div class="col-sm-8">
+						<select th:field="*{amountChildren}">
+							<option th:value="${account.accountExtraInfo.amountChildren}"><span
+									th:text="${account.accountExtraInfo.amountChildren}"></span></option>
+							<option th:each="item : ${ammountChildrenTypeList}"
+								th:value="${item.getName}" th:text="${item}"></option>
+						</select>
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<label for="time12h" class="col-sm-4 col-form-label">About
+						Me</label>
+					<div class="col-sm-8">
+						<textarea class="form-control input-sm" rows="1"
+							th:field="*{aboutMe}"
+							th:placeholder="${account.accountExtraInfo.aboutMe}" />
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<label for="time12h" class="col-sm-4 col-form-label">About
+						You</label>
+					<div class="col-sm-8">
+						<textarea class="form-control input-sm" rows="1"
+							th:field="*{aboutYou}"
+							th:placeholder="${account.accountExtraInfo.aboutYou}" />
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<label class="col-sm-4 col-form-label">Your languages</label>
+					<div class="col-sm-8">
+						<select multiple="multiple" size="10" name="selected[]"
+							id="optionsbox" th:field="*{languages}" class="form-control">
+							<div>
+								<option th:each="item : ${languages}"
+									th:selected="${item.isChecked}" th:value="${item.languageType}"
+									th:text="${item.languageType}"></option>
+							</div>
+
+						</select>
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<label class="col-sm-4 col-form-label">Your hobbies</label>
+					<div class="col-sm-8">
+						<select multiple="multiple" size="10" name="selected[]"
+							id="optionsbox2" th:field="*{hobbies}" class="form-control"/>
+							
+								<option th:each="item : ${hobbies}" th:selected="true"
+									th:value="${item.hobbyType}" th:text="${item.hobbyType}"></option>
+							
+					</div>
+				</div>
+
+
+
+				<button class="btn btn-primary" type="submit">Make changes</button>
+			</form>
+		</div>
+	</div>
+</div>

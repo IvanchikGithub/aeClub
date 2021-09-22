@@ -25,16 +25,16 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.aeClub.entity.Account;
 import com.aeClub.entity.Hobby;
 import com.aeClub.entity.Language;
+import com.aeClub.enums.AmmountChildrenType;
+import com.aeClub.enums.CountryList;
+import com.aeClub.enums.DenominationType;
+import com.aeClub.enums.EducationLevel;
+import com.aeClub.enums.GenderType;
 import com.aeClub.form.AccountForm;
-import com.aeClub.model.AmmountChildrenType;
-import com.aeClub.model.CountryList;
-import com.aeClub.model.CurrentProfile;
-import com.aeClub.model.DenominationType;
-import com.aeClub.model.EducationLevel;
-import com.aeClub.model.GenderType;
 import com.aeClub.service.CreateNewUserService;
 import com.aeClub.service.EditService;
 import com.aeClub.service.GetService;
+import com.aeClub.util.CurrentProfile;
 import com.aeClub.util.EnumUtil;
 import com.aeClub.validator.AccountFormValidator;
 
@@ -113,6 +113,15 @@ public class ProfilController {
 	
 	@GetMapping (value="/profile/settings")
 	public ModelAndView profileSettings (Model model) {
+		model = getService.getDataFromCatalogues (model);
+		model.addAttribute("accountForm", new AccountForm());
+		return new ModelAndView("/profile/settings");
+	}
+	
+	@GetMapping (value="/profile/settings/{settingsWallType}")
+	public ModelAndView getSettingsOtherWall(Model model, @ModelAttribute ("account") Account account, @PathVariable String settingsWallType) {
+		account.setActiveSettingsWall(editService.changeActiveSettingsWall(Integer.parseInt(settingsWallType)));
+		model.addAttribute("account", account);
 		model = getService.getDataFromCatalogues (model);
 		return new ModelAndView("/profile/settings");
 	}

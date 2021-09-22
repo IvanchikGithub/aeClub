@@ -1,4 +1,4 @@
-package com.aeClub.model;
+package com.aeClub.enums;
 
 public enum CountryList {
 	AFGHANISTAN("Afghanistan"), ALBANIA("Albania"), ALGERIA("Algeria"), ANDORRA("Andorra"), ANGOLA("Angola"),

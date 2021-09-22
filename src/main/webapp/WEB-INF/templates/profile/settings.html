@@ -2,10 +2,22 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8" />
-<title>HomeProfil</title>
+<title>Settings</title>
 <link rel="shortcut icon" href="/static/favicon.ico">
 <link th:rel="stylesheet"
+	th:href="@{/static/assets/bootstrap-datepicker/css/bootstrap-datepicker.css}" />
+<link th:rel="stylesheet"
+	th:href="@{/static/assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.css}" />
+<link th:rel="stylesheet"
 	th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} " />
+<link th:rel="stylesheet"
+	th:href="@{/static/assets/jquery-steps/jquery.steps.css} " />
+<link th:rel="stylesheet"
+	th:href="@{/webjars/font-awesome/5.11.2/css/all.css} " />
+<link th:rel="stylesheet"
+	th:href="@{/static/assets/datatable/datatables.css}" />
+<link th:rel="stylesheet"
+	th:href="@{/static/assets/bootstrap-dual-listbox/bootstrap-duallistbox.min.css}" />
 </head>
 
 
@@ -14,68 +26,151 @@
 	<nav th:insert="/fragments/navbarForRegistrated"></nav>
 	<div class="container">
 		<div class="row">
-
-			<div class="col-md-4 col-sm-12">
-				<div class="panel panel-primary">
-					<div class="panel-body">
- 						<img th:src="@{/media/pictures/ProfileMainPhotos/}+${account.linkOnPhotoProfile}"
-							class="img-responsive img-rounded" style="width: 100%;" />  
-					</div>
-				</div>
-
-				<div class="panel panel-primary">
-					<div class="panel-heading">
-						<h3 class="panel-title">Main info</h3>
-					</div>
-					<div class="panel-body">
-						<span th:text="${account.nameForClub}"></span> <span
-							th:text="${account.birthdate}"></span>
-					</div>
-					<div class="panel-body">
-						<span th:text="${account.city}"></span>
-					</div>
-					<div class="panel-body">
-						Toronto Church,<span th:text="${account.denomination}"></span>
-					</div>
-				</div>
-				<div class="panel panel-primary">
-					<div class="panel-heading">
-						<h3 class="panel-title">Additional info</h3>
-					</div>
-					<div class="panel-body">
-						<span th:text="${account.accountExtraInfo.aboutMe}"></span>
-					</div>
-					<div class="panel-body">
-						<span th:text="${account.accountExtraInfo.aboutYou}"></span>
-					</div>
-				</div>
+			<div class="col">
+				<ul class="nav nav-tabs mt-5" id="myTabs">
+					<li th:if="${account.activeSettingsWall.name()=='MAIN_INFO'}"
+						class="nav-item"><a th:href="@{/profile/settings/0}"
+						class="nav-link active">Personal Info</a></li>
+					<li th:if="${account.activeSettingsWall.name()!='MAIN_INFO'}"
+						class="nav-item"><a th:href="@{/profile/settings/0}"
+						class="nav-link">Personal Info</a></li>
+					<li th:if="${account.activeSettingsWall.name()=='PICTURES'}"
+						class="nav-item"><a th:href="@{/profile/settings/1}"
+						class="nav-link active">Pictures</a></li>
+					<li th:if="${account.activeSettingsWall.name()!='PICTURES'}"
+						class="nav-item"><a th:href="@{/profile/settings/1}"
+						class="nav-link">Pictures</a></li>
+					<li th:if="${account.activeSettingsWall.name()=='PASSWORD'}"
+						class="nav-item"><a th:href="@{/profile/settings/2}"
+						class="nav-link active">Password</a></li>
+					<li th:if="${account.activeSettingsWall.name()!='PASSWORD'}"
+						class="nav-item"><a th:href="@{/profile/settings/2}"
+						class="nav-link">Password</a></li>
+					<li th:if="${account.activeSettingsWall.name()=='OTHER'}"
+						class="nav-item"><a th:href="@{/profile/settings/3}"
+						class="nav-link active">Other</a></li>
+					<li th:if="${account.activeSettingsWall.name()!='OTHER'}"
+						class="nav-item"><a th:href="@{/profile/settings/3}"
+						class="nav-link">Other</a></li>
+				</ul>
 			</div>
-
-			<div class="col-md-8 col-sm-12">
-				<div class="panel panel-primary">
-					<div class="panel-heading">
-						<div class="row">
-							<div class="col-md-1  col-sm-4"
-								th:each="item : ${account.pictures}">
-								<a href="#"
-									class="thumbnail"> <img
-									th:src="@{/media/pictures/LibraryPhotos/}+${item.linkPicture}"
-									alt="pic_lab">
-								</a>
-							</div>
-						</div>
-					</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<div th:if="${account.activeSettingsWall.name()=='MAIN_INFO'}"
+					class="tab-pane active" id="tab1">
+					<div th:insert="/fragments/settingsMainInfo"></div>
 				</div>
-				<div class="col">
-					
-				</div>
+				<div th:if="${account.activeSettingsWall.name()!='MAIN_INFOL'}"
+					id="tab1"></div>
+				<div th:if="${account.activeSettingsWall.name()=='PICTURES'}"
+					class="tab-pane active" id="tab2">Pictures</div>
+				<div th:if="${account.activeSettingsWall.name()!='PICTURES'}"
+					id="tab2"></div>
+				<div th:if="${account.activeSettingsWall.name()=='PASSWORD'}"
+					class="tab-pane active" id="tab3">Password</div>
+				<div th:if="${account.activeSettingsWall.name()!='PASSWORD'}"
+					id="tab3"></div>
+				<div th:if="${account.activeSettingsWall.name()=='OTHER'}"
+					class="tab-pane active" id="tab4">Other</div>
+				<div th:if="${account.activeSettingsWall.name()!='OTHER'}" id="tab4"></div>
 			</div>
 		</div>
 	</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<!-- 		<div class="panel panel-primary">
+			<div class="panel-body">
+				<img
+					th:src="@{/media/pictures/ProfileMainPhotos/}+${account.linkOnPhotoProfile}"
+					class="img-responsive img-rounded" style="width: 100%;" />
+			</div>
+		</div>
+
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<h3 class="panel-title">Main info</h3>
+			</div>
+			<div class="panel-body">
+				<span th:text="${account.nameForClub}"></span> <span
+					th:text="${account.birthdate}"></span>
+			</div>
+			<div class="panel-body">
+				<span th:text="${account.city}"></span>
+			</div>
+			<div class="panel-body">
+				Toronto Church,<span th:text="${account.denomination}"></span>
+			</div>
+		</div>
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<h3 class="panel-title">Additional info</h3>
+			</div>
+			<div class="panel-body">
+				<span th:text="${account.accountExtraInfo.aboutMe}"></span>
+			</div>
+			<div class="panel-body">
+				<span th:text="${account.accountExtraInfo.aboutYou}"></span>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-md-8 col-sm-12">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<div class="row">
+					<div class="col-md-1  col-sm-4"
+						th:each="item : ${account.pictures}">
+						<a href="#" class="thumbnail"> <img
+							th:src="@{/media/pictures/LibraryPhotos/}+${item.linkPicture}"
+							alt="pic_lab">
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col"></div>
+	</div>
+	</div>
+	</div> -->
+	<script
+		th:src="@{/static/assets/custom-file-input/bs-custom-file-input.js}"></script>
 	<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 	<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
 	<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+	<script th:src="@{/static/assets/jquery-steps/jquery.steps.min.js}"></script>
+	<script
+		th:src="@{/static/assets/jquery-validate/jquery.validate.min.js}"></script>
+	<script
+		th:src="@{/static/assets/bootstrap-datepicker/js/bootstrap-datepicker.js}"></script>
+	<script th:src="@{/static/assets/datatable/datatables.js}"></script>
+	<script
+		th:src="@{/static/assets/bootstrap-dual-listbox/jquery.bootstrap-duallistbox.min.js}"></script>
 
-
+	<script>
+	$('.input-group.date').datepicker({
+		autoclose : true,
+		todayHighlight : true,
+		format : "mm/dd/yyyy"
+	});
+</script>
+	<script>
+		$('#optionsbox').bootstrapDualListbox();
+	</script>
+		<script>
+		$('#optionsbox2').bootstrapDualListbox();
+	</script>
 </body>
 </html>

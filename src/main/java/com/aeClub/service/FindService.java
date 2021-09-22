@@ -9,8 +9,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.aeClub.entity.EmailPass;
-import com.aeClub.model.CurrentProfile;
 import com.aeClub.repository.EmailPassRepository;
+import com.aeClub.util.CurrentProfile;
 
 
 @Service

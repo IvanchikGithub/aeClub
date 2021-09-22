@@ -1,4 +1,4 @@
-package com.aeClub.model;
+package com.aeClub.enums;
 
 public enum EducationLevel {
 	ELEMENTARY_SCHOOL("elementary school"),
