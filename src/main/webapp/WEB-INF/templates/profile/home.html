@@ -61,6 +61,12 @@
 					<div class="panel-body">
 						<span th:text="${account.accountExtraInfo.aboutYou}"></span>
 					</div>
+					<div class="panel-body" th:each="item : ${account.hobbies}">
+						<span  th:text="${item.hobbyType}"></span>
+					</div>
+					<div class="panel-body" th:each="item : ${account.languages}">
+						<span  th:text="${item.languageType}"></span>
+					</div>
 				</div>
 			</div>
 

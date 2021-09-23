@@ -98,7 +98,6 @@ public class Account {
 		this.linkOnPhotoProfile = accountBuilder.getLinkOnPhotoProfile();
 		this.accountExtraInfo = accountBuilder.getAccountExtraInfo();
 		this.activeWall = WallType.EVERYDAY_LIVE_WALL;
-		this.activeSettingsWall = SettingsWallType.MAIN_INFO;
 	}
 
 	public List<Language> getLanguages() {
