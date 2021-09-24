@@ -91,6 +91,29 @@ public class EditServiceImpl implements EditService {
 	}
 
 	private Account saveFieldsThatHaveBeenChanged(Account account, AccountForm form) {
+		account = changingUsersMainInfo (account, form);
+		account = changingUsersExtraInfo(account, form);
+		account = changingListUsersHobbies(account, form);
+		account = changingListUsersLanguages(account, form);
+
+		accountRepository.save(account);
+		return account;
+	}
+
+	private boolean fieldsAreEqualOrChangingNotNecessary(String valueInDataBase, String valueInForm) {
+		if (valueInForm == null) {
+			return true;
+		}
+		if (ServiceUtil.emptyOrNull(valueInForm) && valueInDataBase.equals("not indicated")) {
+			return true;
+		}
+		if (!ServiceUtil.emptyOrNull(valueInForm) && valueInDataBase.equals(valueInForm)) {
+			return true;
+		}
+		return false;
+	}
+
+	private Account changingUsersMainInfo (Account account, AccountForm form) {
 		String nameForClubInDataBase = account.getNameForClub();
 		String nameForClubInForm = form.getNameForClub();
 		if (!fieldsAreEqualOrChangingNotNecessary(nameForClubInDataBase, nameForClubInForm)) {
@@ -111,6 +134,10 @@ public class EditServiceImpl implements EditService {
 		if (!fieldsAreEqualOrChangingNotNecessary(cityInDataBase, cityInForm)) {
 			account.setCity(cityInForm);
 		}
+			return account;
+	}
+	
+	private Account changingUsersExtraInfo (Account account, AccountForm form) {
 		String realNameInDataBase = account.getAccountExtraInfo().getRealName();
 		String realNameInForm = form.getRealName();
 		if (!fieldsAreEqualOrChangingNotNecessary(realNameInDataBase, realNameInForm)) {
@@ -163,27 +190,9 @@ public class EditServiceImpl implements EditService {
 			} else
 				account.getAccountExtraInfo().setAboutYou("not indicated");
 		}
-
-		account = changingListUsersHobbies(account, form);
-		account = changingListUsersLanguages(account, form);
-
-		accountRepository.save(account);
 		return account;
 	}
-
-	private boolean fieldsAreEqualOrChangingNotNecessary(String valueInDataBase, String valueInForm) {
-		if (valueInForm == null) {
-			return true;
-		}
-		if (ServiceUtil.emptyOrNull(valueInForm) && valueInDataBase.equals("not indicated")) {
-			return true;
-		}
-		if (!ServiceUtil.emptyOrNull(valueInForm) && valueInDataBase.equals(valueInForm)) {
-			return true;
-		}
-		return false;
-	}
-
+	
 	private Account changingListUsersHobbies(Account account, AccountForm form) {
 		// Deleting
 		List<Hobby> usersHobbiesInDataBase = account.getHobbies();
