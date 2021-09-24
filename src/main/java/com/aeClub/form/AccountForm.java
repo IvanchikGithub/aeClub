@@ -3,10 +3,8 @@ package com.aeClub.form;
 import java.util.Date;
 import java.util.List;
 
-import com.aeClub.entity.Language;
-
 public class AccountForm {
-
+	
 	private String nameForClub;
 	private String gender;
 	private Date birthdate;

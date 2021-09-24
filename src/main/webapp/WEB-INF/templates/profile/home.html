@@ -18,8 +18,9 @@
 			<div class="col-md-4 col-sm-12">
 				<div class="panel panel-primary">
 					<div class="panel-body">
- 						<img th:src="@{/media/pictures/ProfileMainPhotos/}+${account.linkOnPhotoProfile}"
-							class="img-responsive img-rounded" style="width: 100%;" />  
+						<img
+							th:src="@{/media/pictures/ProfileMainPhotos/}+${account.linkOnPhotoProfile}"
+							class="img-responsive img-rounded" style="width: 100%;" />
 					</div>
 				</div>
 				<div class="panel panel-primary">
@@ -27,8 +28,7 @@
 						<div class="row">
 							<div class="col-md-4  col-sm-6"
 								th:each="item : ${account.pictures}">
-								<a href="#"
-									class="thumbnail"> <img
+								<a href="#" class="thumbnail"> <img
 									th:src="@{/media/pictures/LibraryPhotos/small/}+${item.linkPicture}"
 									alt="pic_lab">
 								</a>
@@ -62,10 +62,10 @@
 						<span th:text="${account.accountExtraInfo.aboutYou}"></span>
 					</div>
 					<div class="panel-body" th:each="item : ${account.hobbies}">
-						<span  th:text="${item.hobbyType}"></span>
+						<span th:text="${item.hobbyType}"></span>
 					</div>
 					<div class="panel-body" th:each="item : ${account.languages}">
-						<span  th:text="${item.languageType}"></span>
+						<span th:text="${item.languageType}"></span>
 					</div>
 				</div>
 			</div>
@@ -75,7 +75,7 @@
 				<div class="col">
 					<ul class="nav nav-tabs mt-5" id="myTabs">
 						<li th:if="${account.activeWall.name()=='RELIGION_WALL'}"
-							class="nav-item"><a th:href="@{/profile/home/0}" 
+							class="nav-item"><a th:href="@{/profile/home/0}"
 							class="nav-link active">My Faith</a></li>
 						<li th:if="${account.activeWall.name()!='RELIGION_WALL'}"
 							class="nav-item"><a th:href="@{/profile/home/0}"
@@ -92,13 +92,13 @@
 						<li th:if="${account.activeWall.name()!='MY_QUESTION_WALL'}"
 							class="nav-item"><a th:href="@{/profile/home/2}"
 							class="nav-link">My Questions</a></li>
-							<li th:if="${account.activeWall.name()=='MY_ANSWER_WALL'}"
+						<li th:if="${account.activeWall.name()=='MY_ANSWER_WALL'}"
 							class="nav-item"><a th:href="@{/profile/home/3}"
 							class="nav-link active">My Answers</a></li>
 						<li th:if="${account.activeWall.name()!='MY_ANSWER_WALL'}"
 							class="nav-item"><a th:href="@{/profile/home/3}"
 							class="nav-link">My Answers</a></li>
-					</ul> 
+					</ul>
 
 					<div class="tab-content pt-3">
 						<div th:if="${account.activeWall.name()=='RELIGION_WALL'}"
@@ -113,7 +113,7 @@
 							class="tab-pane active" id="tab3">Active panel 3</div>
 						<div th:if="${account.activeWall.name()!='MY_QUESTION_WALL'}"
 							id="tab3"></div>
-							<div th:if="${account.activeWall.name()=='MY_ANSWER_WALL'}"
+						<div th:if="${account.activeWall.name()=='MY_ANSWER_WALL'}"
 							class="tab-pane active" id="tab4">Active panel 4</div>
 						<div th:if="${account.activeWall.name()!='MY_ANSWER_WALL'}"
 							id="tab4"></div>

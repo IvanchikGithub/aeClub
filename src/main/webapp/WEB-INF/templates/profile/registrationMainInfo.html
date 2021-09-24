@@ -137,8 +137,8 @@
 							id="optionsbox" th:field="*{hobbies}" class="form-control">
 
 							<option th:each="item : ${hobbies}"
-								th:selected="${item.isChecked}" th:value="${item.hobbyType}" th:text="${item.hobbyType}">
-									</option>
+								th:selected="${item.isChecked}" th:value="${item.hobbyType}"
+								th:text="${item.hobbyType}"></option>
 
 
 						</select>

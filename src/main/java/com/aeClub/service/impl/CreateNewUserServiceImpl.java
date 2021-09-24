@@ -30,6 +30,7 @@ import com.aeClub.service.CreateNewUserService;
 import com.aeClub.util.AccountBilder;
 import com.aeClub.util.AccountExtraInfoBuilder;
 import com.aeClub.util.SecurityUtil;
+import com.aeClub.util.ServiceUtil;
 
 import net.coobird.thumbnailator.Thumbnails;
 
@@ -73,18 +74,18 @@ public class CreateNewUserServiceImpl implements CreateNewUserService {
 		Account account = createAccountBuilderFromFormsData(idUser, accountForm, fileWithUsersPhoto,
 				filesWithUsersExtraPhoto).create();
 
-		if (filesWithUsersExtraPhoto.length != 0) {
+		if (filesWithUsersExtraPhoto!=null && filesWithUsersExtraPhoto.length != 0) {
 			List<Picture> pictures = handlingFilesWithUsersExtraPhoto(filesWithUsersExtraPhoto);
 			if (pictures.size() > 0) {
 				pictures.stream().forEach(picture -> account.addPicture(picture));
 			}
 		}
 
-		if (accountForm.getHobbies().size() > 0) {
+		if (accountForm.getHobbies()!=null && accountForm.getHobbies().size() > 0) {
 			accountForm.getHobbies().stream().forEach(hobby -> account.addHobby(new Hobby(hobby)));
 		}
 		
-		if (accountForm.getLanguages().size() > 0) {
+		if (accountForm.getLanguages()!=null && accountForm.getLanguages().size() > 0) {
 			accountForm.getLanguages().stream().forEach(language -> account.addLanguage(new Language(language)));
 		}
 
@@ -120,39 +121,36 @@ public class CreateNewUserServiceImpl implements CreateNewUserService {
 	private AccountExtraInfoBuilder buildAccountExtraInfoBuilderFromFormsData(AccountForm accountForm) {
 		AccountExtraInfoBuilder accountExtraInfoBuilder = new AccountExtraInfoBuilder();
 		String realName=accountForm.getRealName();
-		if (notEmptyAndNotNull(realName)) {
+		if (!ServiceUtil.emptyOrNull(realName)) {
 			accountExtraInfoBuilder.putRealName(realName);
 		}
 		String realSurname = accountForm.getRealSurname();
-		if (notEmptyAndNotNull(realSurname)) {
+		if (!ServiceUtil.emptyOrNull(realSurname)) {
 			accountExtraInfoBuilder.putRealSurname(realSurname);
 		}
 		String nameChurch = accountForm.getNameChurch();
-		if (notEmptyAndNotNull(nameChurch)) {
+		if (!ServiceUtil.emptyOrNull(nameChurch)) {
 			accountExtraInfoBuilder.putNameChurch(nameChurch);
 		}
 		String education = accountForm.getEducation();
-		if (notEmptyAndNotNull(education)) {
+		if (!ServiceUtil.emptyOrNull(education)) {
 			accountExtraInfoBuilder.putEducation(education);
 		}
 		String aboutMe = accountForm.getAboutMe();
-		if (notEmptyAndNotNull(aboutMe)) {
+		if (!ServiceUtil.emptyOrNull(aboutMe)) {
 			accountExtraInfoBuilder.putAboutMe(aboutMe);
 		}
 		String aboutYou = accountForm.getAboutYou();
-		if (notEmptyAndNotNull(aboutYou)) {
+		if (!ServiceUtil.emptyOrNull(aboutYou)) {
 			accountExtraInfoBuilder.putAboutYou(aboutYou);
 		}
 		String amountChildren = accountForm.getAmountChildren();
-		if (notEmptyAndNotNull(amountChildren)) {
+		if (!ServiceUtil.emptyOrNull(amountChildren)) {
 			accountExtraInfoBuilder.putAmountChildren(amountChildren);
 		}
 		return accountExtraInfoBuilder;
 	}
 
-	private boolean notEmptyAndNotNull(String value) {
-		return !(value.isBlank() || value.isEmpty() || value == null);
-	}
 
 	private List<Picture> handlingFilesWithUsersExtraPhoto(MultipartFile[] filesWithUsersExtraPhoto) {
 		List<Picture> pictures = new ArrayList<Picture>();
@@ -169,7 +167,7 @@ public class CreateNewUserServiceImpl implements CreateNewUserService {
 
 	private Optional<String> savePictureInStorage(MultipartFile fileWithUsersPhoto,
 			PicturesType pictureType) {
-		if (fileWithUsersPhoto.isEmpty()) {
+		if (fileWithUsersPhoto==null||fileWithUsersPhoto.isEmpty()) {
 			return Optional.empty();
 		}
 		if (!validateExtension(fileWithUsersPhoto)) {

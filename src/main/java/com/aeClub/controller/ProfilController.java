@@ -120,13 +120,15 @@ public class ProfilController {
 	}
 
 	@PostMapping(value = "/profile/settings/mainInfo")
-	public ModelAndView postSettingsMainInfo(@ModelAttribute("accountForm") @Validated AccountForm accountForm, BindingResult result,
-			RedirectAttributes redirectAttributes, Model model) {
+	public ModelAndView postSettingsMainInfo(
+			@ModelAttribute("accountForm") @Validated AccountForm accountForm, BindingResult result,
+			RedirectAttributes redirectAttributes, Model model, @AuthenticationPrincipal CurrentProfile currentProfile) {
 		if (result.hasErrors()) {
-			redirectAttributes.addAttribute("accountForm", accountForm);
-			//model.addAttribute("hobbies", hobbies);
-			return new ModelAndView("/profile/settings");
+//			redirectAttributes.addAttribute("accountForm", accountForm);
+//			return new ModelAndView("/profile/settings");
 		}
+		Account account = editService.editAccount(accountForm, currentProfile.getId());
+		model.addAttribute("account", account);
 		return new ModelAndView("redirect:/profile/settings/mainInfo");
 	}
 
