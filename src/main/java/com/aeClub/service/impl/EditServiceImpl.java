@@ -1,5 +1,6 @@
 package com.aeClub.service.impl;
 
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -133,6 +134,10 @@ public class EditServiceImpl implements EditService {
 		String cityInForm = form.getCity();
 		if (!fieldsAreEqualOrChangingNotNecessary(cityInDataBase, cityInForm)) {
 			account.setCity(cityInForm);
+		}
+		if (form.getBirthdate()!= null) {
+			Date birthdatInForm = form.getBirthdate();
+			account.setBirthdate(birthdatInForm);
 		}
 			return account;
 	}

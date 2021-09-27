@@ -42,6 +42,9 @@ public class Account {
 	@Embedded
 	private AccountExtraInfo accountExtraInfo;
 
+	
+	
+	
 	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "account")
 	private List<Picture> pictures;
 	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "account", orphanRemoval=true)
@@ -184,6 +187,7 @@ public class Account {
 
 	public Date getBirthdate() {
 		return birthdate;
+		
 	}
 
 	public void setBirthdate(Date birthdate) {

@@ -19,18 +19,18 @@
 					<label class="col-sm-4 col-form-label">Your gender</label>
 					<div class="col-sm-8">
 						<input type="text" class="form-control" id="gender"
-							autocomplete="off"
-							th:value="${account.gender}" th:placeholder="${account.gender}"
-							name="gender" readonly />
+							autocomplete="off" th:value="${account.gender}"
+							th:placeholder="${account.gender}" name="gender" readonly />
 					</div>
 				</div>
 
 				<div class="form-group row">
-					<label class="col-sm-4 col-form-label">Date of birth</label>
+					<label class="col-sm-4 col-form-label"
+						th:text="'Date of birth '+${account.birthdate}">Date of
+						birth</label>
 					<div class="col-sm-8 input-group date">
 						<input type="text" class="form-control" id="birthdate"
-							autocomplete="off" th:value="${account.birthdate}"
-							th:placeholder="${account.birthdate}" name="birthdate" />
+							autocomplete="off" name="birthdate" />
 						<div class="input-group-append">
 							<span class="input-group-text"><i
 								class="far fa-calendar-alt"></i></span>
@@ -76,7 +76,7 @@
 					<div class="col-sm-8">
 						<input type="text" class="form-control" id="realName"
 							data-inputmask="'alias': 'realName'" autocomplete="off"
-							name="realName" th:value="${account.accountExtraInfo.realName}"/>
+							name="realName" th:value="${account.accountExtraInfo.realName}" />
 					</div>
 				</div>
 
@@ -86,7 +86,7 @@
 						<input type="text" class="form-control" id="realSurname"
 							data-inputmask="'alias': 'realSurname'" autocomplete="off"
 							name="realSurname"
-							th:value="${account.accountExtraInfo.realSurname}"/>
+							th:value="${account.accountExtraInfo.realSurname}" />
 					</div>
 				</div>
 
@@ -107,7 +107,7 @@
 						<input type="text" class="form-control" id="nameChurch"
 							data-inputmask="'alias': 'nameChurch'" autocomplete="off"
 							name="nameChurch"
-							th:value="${account.accountExtraInfo.nameChurch}"/>
+							th:value="${account.accountExtraInfo.nameChurch}" />
 					</div>
 				</div>
 
