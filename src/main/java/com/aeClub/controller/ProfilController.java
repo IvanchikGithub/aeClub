@@ -92,14 +92,13 @@ public class ProfilController {
 	}
 
 	@PostMapping(value = "/profile/registrationMainInfo")
-	public ModelAndView uploadUsersData(@AuthenticationPrincipal CurrentProfile currentProfile,
+	public ModelAndView uploadUsersData(Model model, @AuthenticationPrincipal CurrentProfile currentProfile,
 			@ModelAttribute("accountForm") @Validated AccountForm accountForm, BindingResult result,
 			@RequestParam("fileWithUsersPhoto") MultipartFile fileWithUsersPhoto,
-			RedirectAttributes redirectAttributes,
 			@RequestParam("filesWithUsersExtraPhoto") MultipartFile[] filesWithUsersExtraPhoto) {
 
 		if (result.hasErrors()) {
-			redirectAttributes.addAttribute("accountForm", accountForm);
+			model = getService.getDataFromCatalogues(model);
 			return new ModelAndView("/profile/registrationMainInfo");
 		}
 
@@ -124,8 +123,8 @@ public class ProfilController {
 			@ModelAttribute("accountForm") @Validated AccountForm accountForm, BindingResult result,
 			RedirectAttributes redirectAttributes, Model model, @AuthenticationPrincipal CurrentProfile currentProfile) {
 		if (result.hasErrors()) {
-//			redirectAttributes.addAttribute("accountForm", accountForm);
-//			return new ModelAndView("/profile/settings");
+			redirectAttributes.addAttribute("accountForm", accountForm);
+			return new ModelAndView("/profile/settings");
 		}
 		Account account = editService.editAccount(accountForm, currentProfile.getId());
 		model.addAttribute("account", account);

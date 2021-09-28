@@ -46,6 +46,9 @@
 											data-inputmask="'alias': 'nameForClub'" autocomplete="off"
 											th:field="*{nameForClub}" />
 									</div>
+									<div style="color: Tomato;"
+										th:if="${#fields.hasErrors('nameForClub')}"
+										th:errors="*{nameForClub}"></div>
 								</div>
 
 								<div class="form-group">
@@ -55,13 +58,16 @@
 										<option th:each="item : ${listGender}"
 											th:value="${item.getName}" th:text="${item}"></option>
 									</select>
+									<div style="color: Tomato;"
+										th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}"></div>
 								</div>
 
+
 								<div class="form-group ">
-									<label for="birthdate">Date of birth*</label>
+									<label for="birthdate">Date of birth</label>
 									<div class="col-sm-8 input-group date">
 										<input type="text" class="form-control" id="birthdate"
-											autocomplete="off" th:field="*{birthdate}" />
+											autocomplete="off" th:field="*{birthdate}" required/>
 										<div class="input-group-append">
 											<span class="input-group-text"><i
 												class="far fa-calendar-alt"></i></span>
@@ -69,6 +75,7 @@
 									</div>
 								</div>
 							</div>
+
 							<div class="col-md-6 col-sm-12">
 								<div class="form-group">
 									<label for="gendertype">Country*</label> <select
@@ -77,6 +84,8 @@
 										<option th:each="item : ${listCountry}"
 											th:value="${item.getName}" th:text="${item}"></option>
 									</select>
+									<div style="color: Tomato;"
+										th:if="${#fields.hasErrors('country')}" th:errors="*{country}"></div>
 								</div>
 
 								<div class="form-group">
@@ -87,7 +96,10 @@
 											data-inputmask="'alias': 'city'" autocomplete="off"
 											th:field="*{city}" />
 									</div>
+									<div style="color: Tomato;"
+										th:if="${#fields.hasErrors('city')}" th:errors="*{city}"></div>
 								</div>
+
 
 								<div class="form-group">
 									<label for="gendertype">Religion Denomination*</label> <select
@@ -96,167 +108,170 @@
 										<option th:each="item : ${listDenomination}"
 											th:value="${item.getName}" th:text="${item}"></option>
 									</select>
-								</div>
-							</div>
-						</div>
-						<p>(*) Mandatory</p>
-					</fieldset>
-
-					<h3>Photos</h3>
-					<fieldset>
-						<legend>Your Avatar and other photos</legend>
-
-						<div class="row">
-							<div class="col-5">
-								<div class="form-group">
-									<div class="custom-file">
-
-										<input type="file" class="custom-file-input" id="customFile"
-											name="fileWithUsersPhoto"> <label
-											class="custom-file-label" for="customFile">Upload
-											your photo</label>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-5">
-								<div class="form-group">
-									<div class="custom-file">
-										<input type="file" class="custom-file-input" id="customFile"
-											name="filesWithUsersExtraPhoto" multiple="multiple">
-										<label class="custom-file-label" for="customFile">Upload
-											your extra photos</label>
-									</div>
+									<div style="color: Tomato;"
+										th:if="${#fields.hasErrors('denomination')}"
+										th:errors="*{denomination}"></div>
 								</div>
 							</div>
 						</div>
 
-						<h3>Your hobbies</h3>
-						<select multiple="multiple" size="10" name="selected[]"
-							id="optionsbox" th:field="*{hobbies}" class="form-control">
+		<p>(*) Mandatory</p>
+		</fieldset>
 
-							<option th:each="item : ${hobbies}"
-								th:selected="${item.isChecked}" th:value="${item.hobbyType}"
-								th:text="${item.hobbyType}"></option>
+		<h3>Photos</h3>
+		<fieldset>
+			<legend>Your Avatar and other photos</legend>
+
+			<div class="row">
+				<div class="col-5">
+					<div class="form-group">
+						<div class="custom-file">
+
+							<input type="file" class="custom-file-input" id="customFile"
+								name="fileWithUsersPhoto"> <label
+								class="custom-file-label" for="customFile">Upload your
+								photo</label>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-5">
+					<div class="form-group">
+						<div class="custom-file">
+							<input type="file" class="custom-file-input" id="customFile"
+								name="filesWithUsersExtraPhoto" multiple="multiple"> <label
+								class="custom-file-label" for="customFile">Upload your
+								extra photos</label>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<h3>Your hobbies</h3>
+			<select multiple="multiple" size="10" name="selected[]"
+				id="optionsbox" th:field="*{hobbies}" class="form-control">
+
+				<option th:each="item : ${hobbies}" th:selected="${item.isChecked}"
+					th:value="${item.hobbyType}" th:text="${item.hobbyType}"></option>
 
 
+			</select>
+
+
+		</fieldset>
+
+		<h3>Additional information</h3>
+		<fieldset>
+			<legend>More information about you</legend>
+
+			<div class="row">
+				<div class="col-md-6 col-sm-12">
+					<div class="form-group">
+						<label for="realName" class="col-sm-6 col-form-label">Your
+							real name </label>
+						<div class="col-sm-8">
+							<input type="text" class="form-control" id="realName"
+								data-inputmask="'alias': 'realName'" autocomplete="off"
+								th:field="*{realName}" />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="realSurname" class="col-sm-6 col-form-label">Your
+							real surname </label>
+						<div class="col-sm-8">
+							<input type="text" class="form-control" id="realSurname"
+								data-inputmask="'alias': 'realSurname'" autocomplete="off"
+								th:field="*{realSurname}" />
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6 col-sm-12">
+					<div class="form-group">
+						<label for="gendertype">Education</label> <select id="gendertype"
+							th:field="*{education}">
+							<option value="">Get your education</option>
+							<option th:each="item : ${educationLevelList}"
+								th:value="${item.getName}" th:text="${item}"></option>
 						</select>
+					</div>
 
-
-					</fieldset>
-
-					<h3>Additional information</h3>
-					<fieldset>
-						<legend>More information about you</legend>
-
-						<div class="row">
-							<div class="col-md-6 col-sm-12">
-								<div class="form-group">
-									<label for="realName" class="col-sm-6 col-form-label">Your
-										real name </label>
-									<div class="col-sm-8">
-										<input type="text" class="form-control" id="realName"
-											data-inputmask="'alias': 'realName'" autocomplete="off"
-											th:field="*{realName}" />
-									</div>
-								</div>
-
-								<div class="form-group">
-									<label for="realSurname" class="col-sm-6 col-form-label">Your
-										real surname </label>
-									<div class="col-sm-8">
-										<input type="text" class="form-control" id="realSurname"
-											data-inputmask="'alias': 'realSurname'" autocomplete="off"
-											th:field="*{realSurname}" />
-									</div>
-								</div>
-							</div>
-							<div class="col-md-6 col-sm-12">
-								<div class="form-group">
-									<label for="gendertype">Education</label> <select
-										id="gendertype" th:field="*{education}">
-										<option value="">Get your education</option>
-										<option th:each="item : ${educationLevelList}"
-											th:value="${item.getName}" th:text="${item}"></option>
-									</select>
-								</div>
-
-								<div class="form-group">
-									<label for="nameChurch" class="col-sm-6 col-form-label">Name
-										your church </label>
-									<div class="col-sm-8">
-										<input type="text" class="form-control" id="nameChurch"
-											data-inputmask="'alias': 'nameChurch'" autocomplete="off"
-											th:field="*{nameChurch}" />
-									</div>
-								</div>
-
-								<div class="form-group">
-									<label for="gendertype">Amount of children</label> <select
-										id="gendertype" th:field="*{amountChildren}">
-										<option value="">Have you children?</option>
-										<option th:each="item : ${ammountChildrenTypeList}"
-											th:value="${item.getName}" th:text="${item}"></option>
-									</select>
-								</div>
-
-
-							</div>
+					<div class="form-group">
+						<label for="nameChurch" class="col-sm-6 col-form-label">Name
+							your church </label>
+						<div class="col-sm-8">
+							<input type="text" class="form-control" id="nameChurch"
+								data-inputmask="'alias': 'nameChurch'" autocomplete="off"
+								th:field="*{nameChurch}" />
 						</div>
-						<h3>Your languages</h3>
+					</div>
 
-
-						<select multiple="multiple" size="10" name="selected[]"
-							id="optionsbox2" th:field="*{languages}" class="form-control">
-
-							<option th:each="item : ${languages}"
-								th:selected="${item.isChecked}" th:value="${item.languageType}"><span
-									th:text="${item.languageType}"></span></option>
+					<div class="form-group">
+						<label for="gendertype">Amount of children</label> <select
+							id="gendertype" th:field="*{amountChildren}">
+							<option value="">Have you children?</option>
+							<option th:each="item : ${ammountChildrenTypeList}"
+								th:value="${item.getName}" th:text="${item}"></option>
 						</select>
+					</div>
+
+
+				</div>
+			</div>
+			<h3>Your languages</h3>
+
+
+			<select multiple="multiple" size="10" name="selected[]"
+				id="optionsbox2" th:field="*{languages}" class="form-control">
+
+				<option th:each="item : ${languages}"
+					th:selected="${item.isChecked}" th:value="${item.languageType}"><span
+						th:text="${item.languageType}"></span></option>
+			</select>
 
 
 
 
-					</fieldset>
+		</fieldset>
 
 
-					<h3>Finish</h3>
-					<fieldset>
-						<legend>And the last step</legend>
+		<h3>Finish</h3>
+		<fieldset>
+			<legend>And the last step</legend>
 
 
-						<div class="form-group">
+			<div class="form-group">
 
-							<div class="form-group">
-								<label for="city" class="col-sm-6 col-form-label">About
-									Me </label>
-								<div class="col-sm-8">
-									<textarea class="form-control input-sm" rows="1"
-										th:field="*{aboutMe}" />
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="city" class="col-sm-6 col-form-label">About
-									You </label>
-								<div class="col-sm-8">
-									<textarea class="form-control input-sm" rows="1"
-										th:field="*{aboutYou}" />
-								</div>
-							</div>
-							<input id="acceptTerms-2" name="acceptTerms"
-								th:field="*{termsAccepted}" type="checkbox" class="required">
-							<label for="acceptTerms-2">I agree with the Terms and
-								Conditions.</label>
-
-						</div>
-
-
-					</fieldset>
-				</form>
+				<div class="form-group">
+					<label for="city" class="col-sm-6 col-form-label">About Me
+					</label>
+					<div class="col-sm-8">
+						<textarea class="form-control input-sm" rows="1"
+							th:field="*{aboutMe}" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="city" class="col-sm-6 col-form-label">About You
+					</label>
+					<div class="col-sm-8">
+						<textarea class="form-control input-sm" rows="1"
+							th:field="*{aboutYou}" />
+					</div>
+				</div>
+				<input id="acceptTerms-2" name="acceptTerms"
+					th:field="*{termsAccepted}" type="checkbox" class="required">
+				<label for="acceptTerms-2">I agree with the Terms and
+					Conditions.</label>
 
 			</div>
-		</div>
+
+
+		</fieldset>
+		</form>
+
+	</div>
+	</div>
 	</div>
 
 	<script
@@ -275,57 +290,12 @@
 	<script>
 		var form = $("#example-advanced-form").show();
 
-		form.steps(
-				{
-					headerTag : "h3",
-					bodyTag : "fieldset",
-					transitionEffect : "slideLeft",
-					onStepChanging : function(event, currentIndex, newIndex) {
-						// Allways allow previous action even if the current form is not valid!
-						if (currentIndex > newIndex) {
-							return true;
-						}
-						// Forbid next action on "Warning" step if the user is to young
-						if (newIndex === 3 && Number($("#age-2").val()) < 18) {
-							return false;
-						}
-						// Needed in some cases if the user went back (clean up)
-						if (currentIndex < newIndex) {
-							// To remove error styles
-							form.find(".body:eq(" + newIndex + ") label.error")
-									.remove();
-							form.find(".body:eq(" + newIndex + ") .error")
-									.removeClass("error");
-						}
-						form.validate().settings.ignore = ":disabled,:hidden";
-						return form.valid();
-					},
-					onStepChanged : function(event, currentIndex, priorIndex) {
-						// Used to skip the "Warning" step if the user is old enough.
-						if (currentIndex === 2
-								&& Number($("#age-2").val()) >= 18) {
-							form.steps("next");
-						}
-						// Used to skip the "Warning" step if the user is old enough and wants to the previous step.
-						if (currentIndex === 2 && priorIndex === 3) {
-							form.steps("previous");
-						}
-					},
-					onFinishing : function(event, currentIndex) {
-						form.validate().settings.ignore = ":disabled";
-						return form.valid();
-					},
-					onFinished : function(event, currentIndex) {
-						form.submit();
-					}
-				}).validate({
-			errorPlacement : function errorPlacement(error, element) {
-				element.before(error);
-			},
-			rules : {
-				confirm : {
-					equalTo : "#password-2"
-				}
+		form.steps({
+			headerTag : "h3",
+			bodyTag : "fieldset",
+			transitionEffect : "slideLeft",
+			onFinished : function(event, currentIndex) {
+				form.submit();
 			}
 		});
 	</script>
