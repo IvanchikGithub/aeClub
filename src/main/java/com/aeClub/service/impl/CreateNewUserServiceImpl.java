@@ -1,14 +1,9 @@
 package com.aeClub.service.impl;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
-import java.util.UUID;
 
-import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -32,8 +27,6 @@ import com.aeClub.util.AccountExtraInfoBuilder;
 import com.aeClub.util.SecurityUtil;
 import com.aeClub.util.ServiceUtil;
 
-import net.coobird.thumbnailator.Thumbnails;
-
 @Service
 public class CreateNewUserServiceImpl implements CreateNewUserService {
 
@@ -45,6 +38,9 @@ public class CreateNewUserServiceImpl implements CreateNewUserService {
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	private PictureService pictureService;
 
 	@Value("${spring.servlet.multipart.max-file-size}")
 	long MAXIMUM_FILE_SIZE_ALLOWED;
@@ -75,7 +71,7 @@ public class CreateNewUserServiceImpl implements CreateNewUserService {
 				filesWithUsersExtraPhoto).create();
 
 		if (filesWithUsersExtraPhoto!=null && filesWithUsersExtraPhoto.length != 0) {
-			List<Picture> pictures = handlingFilesWithUsersExtraPhoto(filesWithUsersExtraPhoto);
+			List<Picture> pictures = pictureService.handlingFilesWithUsersExtraPhoto(filesWithUsersExtraPhoto);
 			if (pictures.size() > 0) {
 				pictures.stream().forEach(picture -> account.addPicture(picture));
 			}
@@ -105,7 +101,7 @@ public class CreateNewUserServiceImpl implements CreateNewUserService {
 			accountBilder.putWomanGender();
 			accountBilder.putTemplateLinkOnPhotoProfileForWoman();
 		}
-		Optional<String> recievedLinkOnProfilesAvatar = savePictureInStorage(fileWithUsersPhoto,
+		Optional<String> recievedLinkOnProfilesAvatar = pictureService.savePictureInStorage(fileWithUsersPhoto,
 				PicturesType.USERS_AVATAR);
 		if (!recievedLinkOnProfilesAvatar.isEmpty()) {
 			accountBilder.putLinkOnProfilesAvatar(recievedLinkOnProfilesAvatar.get()+".jpg");
@@ -152,77 +148,6 @@ public class CreateNewUserServiceImpl implements CreateNewUserService {
 	}
 
 
-	private List<Picture> handlingFilesWithUsersExtraPhoto(MultipartFile[] filesWithUsersExtraPhoto) {
-		List<Picture> pictures = new ArrayList<Picture>();
-		for (int i = 0; i < filesWithUsersExtraPhoto.length; i++) {
-			Optional<String> recievedLinkOnPictureInAlbum = savePictureInStorage(
-					filesWithUsersExtraPhoto[i], PicturesType.PHOTO_IN_ALBUM);
-			if (!recievedLinkOnPictureInAlbum.isEmpty()) {
-				Picture picture = new Picture(recievedLinkOnPictureInAlbum.get()+".jpg");
-				pictures.add(picture);
-			}
-		}
-		return pictures;
-	}
 
-	private Optional<String> savePictureInStorage(MultipartFile fileWithUsersPhoto,
-			PicturesType pictureType) {
-		if (fileWithUsersPhoto==null||fileWithUsersPhoto.isEmpty()) {
-			return Optional.empty();
-		}
-		if (!validateExtension(fileWithUsersPhoto)) {
-			return Optional.empty();
-		}
-		String generatedLinkOnPhotoProfile = UUID.randomUUID().toString();
-		if (!savePictureFullSizeInStorage(fileWithUsersPhoto, generatedLinkOnPhotoProfile,
-				pictureType)) {
-			return Optional.empty();
-		}
-		if (!savePictureSmallSizeInStorage(generatedLinkOnPhotoProfile, pictureType)) {
-			return Optional.empty();
-		}
-		return Optional.of(generatedLinkOnPhotoProfile);
-	}
-
-	private boolean validateExtension(MultipartFile file) {
-		String extension = FilenameUtils.getExtension(file.getOriginalFilename());
-		return "png".equals(extension) || "jpeg".equals(extension) || "jpg".equals(extension)
-				|| "bmp".equals(extension) || "wbmp".equals(extension);
-	}
-
-	private boolean savePictureFullSizeInStorage(MultipartFile fileWithUsersPhoto,
-			String generatedLinkOnPhotoProfile, PicturesType picturesType) {
-		try {
-			fileWithUsersPhoto.transferTo(new File(
-					rootPath + picturesType.getDirectory() + generatedLinkOnPhotoProfile + ".jpg"));
-		} catch (IllegalStateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
-		}
-		return true;
-	}
-
-	private boolean savePictureSmallSizeInStorage(String generatedLinkOnPhotoProfile,
-			PicturesType picturesType) {
-		try {
-			Thumbnails.of(rootPath + picturesType.getDirectory() + generatedLinkOnPhotoProfile + ".jpg")
-					.size(110, 110).outputFormat("jpg").outputQuality(0.90).toFile(rootPath
-							+ picturesType.getDirectory() + "small\\" + generatedLinkOnPhotoProfile);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
-		}
-		return true;
-	}
-
-	public String getRootPath() {
-		return rootPath;
-	}
 
 }

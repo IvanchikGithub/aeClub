@@ -8,6 +8,5 @@ public interface CreateNewUserService {
 	
 	public void createNewPairEmailAndPass (String email, String password);
 	public void createUsersMainInformation (int idUser, AccountForm accountForm, MultipartFile fileUsersPhoto, MultipartFile[] filesWithUsersExtraPhoto);
-	public String getRootPath();
 	
 }

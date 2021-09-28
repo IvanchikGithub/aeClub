@@ -29,16 +29,16 @@
 			<div class="col">
 				<ul class="nav nav-tabs mt-5" id="myTabs">
 					<li th:if="${account.activeSettingsWall.name()=='MAIN_INFO'}"
-						class="nav-item"><a th:href="@{/profile/settings/0}"
+						class="nav-item"><a th:href="@{/profile/settings/mainInfo}"
 						class="nav-link active">Personal Info</a></li>
 					<li th:if="${account.activeSettingsWall.name()!='MAIN_INFO'}"
-						class="nav-item"><a th:href="@{/profile/settings/0}"
+						class="nav-item"><a th:href="@{/profile/settings/mainInfo}"
 						class="nav-link">Personal Info</a></li>
 					<li th:if="${account.activeSettingsWall.name()=='PICTURES'}"
-						class="nav-item"><a th:href="@{/profile/settings/1}"
+						class="nav-item"><a th:href="@{/profile/settings/pictures}"
 						class="nav-link active">Pictures</a></li>
 					<li th:if="${account.activeSettingsWall.name()!='PICTURES'}"
-						class="nav-item"><a th:href="@{/profile/settings/1}"
+						class="nav-item"><a th:href="@{/profile/settings/pictures}"
 						class="nav-link">Pictures</a></li>
 					<li th:if="${account.activeSettingsWall.name()=='PASSWORD'}"
 						class="nav-item"><a th:href="@{/profile/settings/2}"
@@ -64,7 +64,9 @@
 				<div th:if="${account.activeSettingsWall.name()!='MAIN_INFOL'}"
 					id="tab1"></div>
 				<div th:if="${account.activeSettingsWall.name()=='PICTURES'}"
-					class="tab-pane active" id="tab2">Pictures</div>
+					class="tab-pane active" id="tab2">
+					<div th:insert="/fragments/settingsPictures"></div>
+					</div>
 				<div th:if="${account.activeSettingsWall.name()!='PICTURES'}"
 					id="tab2"></div>
 				<div th:if="${account.activeSettingsWall.name()=='PASSWORD'}"

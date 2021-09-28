@@ -3,14 +3,18 @@ package com.aeClub.service.impl;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.aeClub.entity.Account;
 import com.aeClub.entity.Hobby;
 import com.aeClub.entity.Language;
+import com.aeClub.entity.Picture;
+import com.aeClub.enums.PicturesType;
 import com.aeClub.enums.WallType;
 import com.aeClub.form.AccountForm;
 import com.aeClub.repository.AccountRepository;
@@ -22,6 +26,9 @@ public class EditServiceImpl implements EditService {
 
 	@Autowired
 	private AccountRepository accountRepository;
+	
+	@Autowired
+	private PictureService pictureService;
 
 	@Override
 	public WallType changeActiveWall(int newWallType) {
@@ -53,6 +60,32 @@ public class EditServiceImpl implements EditService {
 		return model;
 	}
 
+	@Override
+	public Account editAccount(AccountForm accountForm, int idUser) {
+		Account account = accountRepository.findById(idUser);
+		account = saveFieldsThatHaveBeenChanged(account, accountForm);
+		return account;
+	}
+	
+	@Override
+	public Account editAccountsPictures (MultipartFile fileWithUsersPhoto, MultipartFile[] filesWithUsersExtraPhoto, int idUser) {
+		Account account = accountRepository.findById(idUser);
+		Optional<String> recievedLinkOnProfilesAvatar = pictureService.savePictureInStorage(fileWithUsersPhoto,
+				PicturesType.USERS_AVATAR);
+		if (!recievedLinkOnProfilesAvatar.isEmpty()) {
+			account.setLinkOnPhotoProfile(recievedLinkOnProfilesAvatar.get()+".jpg");
+		}
+		if (filesWithUsersExtraPhoto!=null && filesWithUsersExtraPhoto.length != 0) {
+			List<Picture> pictures = pictureService.handlingFilesWithUsersExtraPhoto(filesWithUsersExtraPhoto);
+			if (pictures.size() > 0) {
+				pictures.stream().forEach(picture -> account.addPicture(picture));
+			}
+		}
+		accountRepository.save(account);
+		return account;
+	}
+	
+	
 	private List<Hobby> setCheckForHobbiesWhichAreUsersHobby(List<Hobby> hobbiesFromCatalog,
 			List<Hobby> usersHobbies) {
 		hobbiesFromCatalog.stream().forEach(hobby -> checkingHobbyIsAsUsersHobby(hobby, usersHobbies));
@@ -84,12 +117,7 @@ public class EditServiceImpl implements EditService {
 		return language;
 	}
 
-	@Override
-	public Account editAccount(AccountForm accountForm, int idUser) {
-		Account account = accountRepository.findById(idUser);
-		account = saveFieldsThatHaveBeenChanged(account, accountForm);
-		return account;
-	}
+
 
 	private Account saveFieldsThatHaveBeenChanged(Account account, AccountForm form) {
 		account = changingUsersMainInfo (account, form);

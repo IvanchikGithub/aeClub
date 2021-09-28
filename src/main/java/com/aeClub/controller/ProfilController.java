@@ -92,7 +92,8 @@ public class ProfilController {
 	}
 
 	@PostMapping(value = "/profile/registrationMainInfo")
-	public ModelAndView uploadUsersData(Model model, @AuthenticationPrincipal CurrentProfile currentProfile,
+	public ModelAndView uploadUsersData(Model model,
+			@AuthenticationPrincipal CurrentProfile currentProfile,
 			@ModelAttribute("accountForm") @Validated AccountForm accountForm, BindingResult result,
 			@RequestParam("fileWithUsersPhoto") MultipartFile fileWithUsersPhoto,
 			@RequestParam("filesWithUsersExtraPhoto") MultipartFile[] filesWithUsersExtraPhoto) {
@@ -121,9 +122,9 @@ public class ProfilController {
 	@PostMapping(value = "/profile/settings/mainInfo")
 	public ModelAndView postSettingsMainInfo(
 			@ModelAttribute("accountForm") @Validated AccountForm accountForm, BindingResult result,
-			RedirectAttributes redirectAttributes, Model model, @AuthenticationPrincipal CurrentProfile currentProfile) {
+			Model model, @AuthenticationPrincipal CurrentProfile currentProfile) {
 		if (result.hasErrors()) {
-			redirectAttributes.addAttribute("accountForm", accountForm);
+			// redirectAttributes.addAttribute("accountForm", accountForm);
 			return new ModelAndView("/profile/settings");
 		}
 		Account account = editService.editAccount(accountForm, currentProfile.getId());
@@ -137,6 +138,15 @@ public class ProfilController {
 		account.setActiveSettingsWall(SettingsWallType.PICTURES);
 		model.addAttribute("accountForm", new AccountForm());
 		return new ModelAndView("/profile/settings");
+	}
+
+	@PostMapping(value="/profile/settings/pictures")
+	public ModelAndView postSettingPicture (Model model, @RequestParam("fileWithUsersPhoto") MultipartFile fileWithUsersPhoto,
+			@RequestParam("filesWithUsersExtraPhoto") MultipartFile[] filesWithUsersExtraPhoto, @AuthenticationPrincipal CurrentProfile currentProfile) {
+		Account account = editService.editAccountsPictures(fileWithUsersPhoto, filesWithUsersExtraPhoto, currentProfile.getId());
+		account.setActiveSettingsWall(SettingsWallType.PICTURES);
+		model.addAttribute("account", account);
+		return new ModelAndView ("/profile/settings");
 	}
 
 	@GetMapping(value = "/profile/settings/password")

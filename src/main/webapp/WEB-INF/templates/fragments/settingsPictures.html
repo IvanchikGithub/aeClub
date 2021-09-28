@@ -1,0 +1,50 @@
+<div class="container">
+	<form id="example-advanced-form" action="/profile/settings/pictures"
+		method="post" enctype="multipart/form-data">
+		<div class="row">
+			<div class="col-sm-12 col-md-4">
+
+
+				<img
+					th:src="@{/media/pictures/ProfileMainPhotos/}+${account.linkOnPhotoProfile}"
+					class="img-responsive img-rounded" style="width: 100%;" />
+
+			</div>
+			<div class="col-sm-12 col-md-auto">
+
+				<input type="file" class="custom-file-input" id="customFile"
+					name="fileWithUsersPhoto"> <label class="custom-file-label"
+					for="customFile">Upload your new photo</label>
+
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-12 col-md-6">
+						<div class="row">
+							<div class="col-md-3  col-sm-6"
+								th:each="item : ${account.pictures}">
+								<a href="#" class="thumbnail"> <img
+									th:src="@{/media/pictures/LibraryPhotos/small/}+${item.linkPicture}"
+									alt="pic_lab">
+								</a>
+							</div>
+						</div>
+					
+				</div>
+			<div class="col-sm-12 col-md-auto">
+
+				<div class="custom-file">
+					<input type="file" class="custom-file-input" id="customFile"
+						name="filesWithUsersExtraPhoto" multiple="multiple"> <label
+						class="custom-file-label" for="customFile">Upload your
+						extra photos</label>
+				</div>
+
+			</div>
+		</div>
+		<div>
+			<button class="btn btn-primary" type="submit">Make changes</button>
+			<a th:href="@{/profile/home}">Cancel</a>
+		</div>
+	</form>
+</div>
