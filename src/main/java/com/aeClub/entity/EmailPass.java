@@ -50,6 +50,10 @@ public class EmailPass {
 	public void setIdUser(int idUser) {
 		this.idUser = idUser;
 	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
 	
 	
 	

@@ -26,6 +26,7 @@ import com.aeClub.entity.Account;
 import com.aeClub.entity.Hobby;
 import com.aeClub.enums.SettingsWallType;
 import com.aeClub.form.AccountForm;
+import com.aeClub.form.ChangePassForm;
 import com.aeClub.service.CreateNewUserService;
 import com.aeClub.service.EditService;
 import com.aeClub.service.GetService;
@@ -140,19 +141,38 @@ public class ProfilController {
 		return new ModelAndView("/profile/settings");
 	}
 
-	@PostMapping(value="/profile/settings/pictures")
-	public ModelAndView postSettingPicture (Model model, @RequestParam("fileWithUsersPhoto") MultipartFile fileWithUsersPhoto,
-			@RequestParam("filesWithUsersExtraPhoto") MultipartFile[] filesWithUsersExtraPhoto, @AuthenticationPrincipal CurrentProfile currentProfile) {
-		Account account = editService.editAccountsPictures(fileWithUsersPhoto, filesWithUsersExtraPhoto, currentProfile.getId());
+	@PostMapping(value = "/profile/settings/pictures")
+	public ModelAndView postSettingPicture(Model model,
+			@RequestParam("fileWithUsersPhoto") MultipartFile fileWithUsersPhoto,
+			@RequestParam("filesWithUsersExtraPhoto") MultipartFile[] filesWithUsersExtraPhoto,
+			@AuthenticationPrincipal CurrentProfile currentProfile) {
+		Account account = editService.editAccountsPictures(fileWithUsersPhoto, filesWithUsersExtraPhoto,
+				currentProfile.getId());
 		account.setActiveSettingsWall(SettingsWallType.PICTURES);
 		model.addAttribute("account", account);
-		return new ModelAndView ("/profile/settings");
+		return new ModelAndView("/profile/settings");
 	}
 
 	@GetMapping(value = "/profile/settings/password")
 	public ModelAndView getSettingsWallPassword(Model model,
 			@ModelAttribute("account") Account account) {
 		account.setActiveSettingsWall(SettingsWallType.PASSWORD);
+		model.addAttribute("changePassForm", new ChangePassForm());
+		return new ModelAndView("/profile/settings");
+	}
+
+	@PostMapping(value = "/profile/settings/password")
+	public ModelAndView postChangePassword(Model model,
+			@ModelAttribute("changePassForm") @Validated ChangePassForm form, BindingResult result,
+			@ModelAttribute("account") Account account,
+			@AuthenticationPrincipal CurrentProfile currentProfile) {
+		if (result.hasErrors()) {
+			// redirectAttributes.addAttribute("accountForm", accountForm);
+			return new ModelAndView("/profile/settings");
+		}
+		editService.editPass(form.getPassword1(), currentProfile.getId());
+		account.setActiveSettingsWall(SettingsWallType.PASSWORD);
+		model.addAttribute("success", "Password changed successfully");
 		return new ModelAndView("/profile/settings");
 	}
 

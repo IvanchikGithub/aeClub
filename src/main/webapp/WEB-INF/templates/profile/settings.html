@@ -18,6 +18,8 @@
 	th:href="@{/static/assets/datatable/datatables.css}" />
 <link th:rel="stylesheet"
 	th:href="@{/static/assets/bootstrap-dual-listbox/bootstrap-duallistbox.min.css}" />
+<link th:rel="stylesheet"
+	th:href="@{/static/assets/password-strength-meter/password.min.css}" />
 </head>
 
 
@@ -41,10 +43,10 @@
 						class="nav-item"><a th:href="@{/profile/settings/pictures}"
 						class="nav-link">Pictures</a></li>
 					<li th:if="${account.activeSettingsWall.name()=='PASSWORD'}"
-						class="nav-item"><a th:href="@{/profile/settings/2}"
+						class="nav-item"><a th:href="@{/profile/settings/password}"
 						class="nav-link active">Password</a></li>
 					<li th:if="${account.activeSettingsWall.name()!='PASSWORD'}"
-						class="nav-item"><a th:href="@{/profile/settings/2}"
+						class="nav-item"><a th:href="@{/profile/settings/password}"
 						class="nav-link">Password</a></li>
 					<li th:if="${account.activeSettingsWall.name()=='OTHER'}"
 						class="nav-item"><a th:href="@{/profile/settings/3}"
@@ -66,11 +68,13 @@
 				<div th:if="${account.activeSettingsWall.name()=='PICTURES'}"
 					class="tab-pane active" id="tab2">
 					<div th:insert="/fragments/settingsPictures"></div>
-					</div>
+				</div>
 				<div th:if="${account.activeSettingsWall.name()!='PICTURES'}"
 					id="tab2"></div>
 				<div th:if="${account.activeSettingsWall.name()=='PASSWORD'}"
-					class="tab-pane active" id="tab3">Password</div>
+					class="tab-pane active" id="tab3">
+					<div th:insert="/fragments/settingsPassword"></div>
+				</div>
 				<div th:if="${account.activeSettingsWall.name()!='PASSWORD'}"
 					id="tab3"></div>
 				<div th:if="${account.activeSettingsWall.name()=='OTHER'}"
@@ -160,19 +164,60 @@
 	<script th:src="@{/static/assets/datatable/datatables.js}"></script>
 	<script
 		th:src="@{/static/assets/bootstrap-dual-listbox/jquery.bootstrap-duallistbox.min.js}"></script>
+	<script
+		th:src="@{/static/assets/password-strength-meter/password.min.js}"></script>
 
 	<script>
-	$('.input-group.date').datepicker({
-		autoclose : true,
-		todayHighlight : true,
-		format : "mm/dd/yyyy"
-	});
-</script>
+		$('.input-group.date').datepicker({
+			autoclose : true,
+			todayHighlight : true,
+			format : "mm/dd/yyyy"
+		});
+	</script>
 	<script>
 		$('#languages').bootstrapDualListbox();
 	</script>
 	<script>
 		$('#hobbies').bootstrapDualListbox();
+	</script>
+	<script>
+		$('#password').password({
+			closestSelector : '.form-group',
+			shortPass : 'The password is too short',
+			badPass : 'Weak; try combining letters & numbers',
+			goodPass : 'Medium; try using special characters',
+			strongPass : 'Strong password',
+			containsField : 'The password contains your username',
+			enterPass : 'Type your password',
+			showPercent : false,
+			showText : true, // shows the text tips
+			animate : true, // whether or not to animate the progress bar on input blur/focus
+			animateSpeed : 'fast', // the above animation speed
+			field : false, // select the match field (selector or jQuery instance) for better password checks
+			fieldPartialMatch : true, // whether to check for partials in field
+			minimumLength : 8
+		// minimum password length (below this threshold, the score is 0)
+		});
+	</script>
+
+	<script>
+		var input = $("#show_hide_password input");
+		var icon = $("#show_hide_password i");
+
+		icon.on('click', function(event) {
+			event.preventDefault();
+
+			if (input.attr("type") === "text") {
+				input.attr('type', 'password');
+				icon.addClass("fa-eye-slash");
+				icon.removeClass("fa-eye");
+
+			} else if (input.attr("type") === "password") {
+				input.attr('type', 'text');
+				icon.removeClass("fa-eye-slash");
+				icon.addClass("fa-eye");
+			}
+		});
 	</script>
 </body>
 </html>

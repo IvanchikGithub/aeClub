@@ -10,5 +10,6 @@ public interface EmailPassRepository {
 	void save(EmailPass emailPass);
 	int countByEmail (String email);
 	int countByIdUser (int idUser);
+	EmailPass findByIdUser (int idUser);
 	
 }

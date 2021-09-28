@@ -16,4 +16,6 @@ public interface EditService {
 
 	public Account editAccountsPictures(MultipartFile fileWithUsersPhoto,
 			MultipartFile[] filesWithUsersExtraPhoto, int idUser);
+	
+	public void editPass (String password, int idUser);
 }

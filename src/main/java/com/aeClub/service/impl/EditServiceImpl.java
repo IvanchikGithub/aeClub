@@ -6,11 +6,13 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.aeClub.entity.Account;
+import com.aeClub.entity.EmailPass;
 import com.aeClub.entity.Hobby;
 import com.aeClub.entity.Language;
 import com.aeClub.entity.Picture;
@@ -18,6 +20,7 @@ import com.aeClub.enums.PicturesType;
 import com.aeClub.enums.WallType;
 import com.aeClub.form.AccountForm;
 import com.aeClub.repository.AccountRepository;
+import com.aeClub.repository.EmailPassRepository;
 import com.aeClub.service.EditService;
 import com.aeClub.util.ServiceUtil;
 
@@ -26,6 +29,12 @@ public class EditServiceImpl implements EditService {
 
 	@Autowired
 	private AccountRepository accountRepository;
+	
+	@Autowired
+	private EmailPassRepository emailPassRepository;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
 	@Autowired
 	private PictureService pictureService;
@@ -85,6 +94,12 @@ public class EditServiceImpl implements EditService {
 		return account;
 	}
 	
+	@Override
+	public void editPass (String password, int idUser) {
+		EmailPass emailPass = emailPassRepository.findByIdUser(idUser);
+		emailPass.setPassword(passwordEncoder.encode(password));
+		emailPassRepository.save(emailPass);
+	}
 	
 	private List<Hobby> setCheckForHobbiesWhichAreUsersHobby(List<Hobby> hobbiesFromCatalog,
 			List<Hobby> usersHobbies) {
