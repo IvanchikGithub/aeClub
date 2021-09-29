@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.aeClub.entity.EmailPass;
@@ -18,7 +19,8 @@ public class FindService implements UserDetailsService{
 	private static final Logger LOGGER = LoggerFactory.getLogger(FindService.class);
 	@Autowired
 	private EmailPassRepository emailPassRepository;
-	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 		EmailPass emailPass = findEmailPass(email);
@@ -52,4 +54,14 @@ public class FindService implements UserDetailsService{
 			return false;
 		}
 	}
+	
+	public boolean isPasswordCorrect (String password, int idUser ) {
+		EmailPass emailPass = emailPassRepository.findByIdUser(idUser);
+		if (emailPass!=null && passwordEncoder.matches(password, emailPass.getPassword())) {
+			
+			return true;
+		}
+		return false;
+	}
+	
 }

@@ -1,7 +1,5 @@
 package com.aeClub.controller;
 
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,18 +18,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.aeClub.entity.Account;
-import com.aeClub.entity.Hobby;
 import com.aeClub.enums.SettingsWallType;
 import com.aeClub.form.AccountForm;
 import com.aeClub.form.ChangePassForm;
 import com.aeClub.service.CreateNewUserService;
 import com.aeClub.service.EditService;
+import com.aeClub.service.FindService;
 import com.aeClub.service.GetService;
 import com.aeClub.util.CurrentProfile;
 import com.aeClub.validator.AccountFormValidator;
+import com.aeClub.validator.ChangePassValidator;
 
 @Controller
 @SessionAttributes("account")
@@ -44,9 +42,13 @@ public class ProfilController {
 	private GetService getService;
 	@Autowired
 	private EditService editService;
+	@Autowired
+	private FindService findService;
 
 	@Autowired
 	private AccountFormValidator accountFormValidator;
+	@Autowired
+	private ChangePassValidator changePassValidator;
 
 	// Set a form validator
 	@InitBinder
@@ -60,7 +62,12 @@ public class ProfilController {
 		if (target.getClass() == AccountForm.class) {
 			dataBinder.setValidator(accountFormValidator);
 		}
-
+		if (target.getClass() == ChangePassForm.class) {
+			dataBinder.setValidator(changePassValidator);
+		}
+		
+		
+		
 		// ...
 	}
 
@@ -167,7 +174,10 @@ public class ProfilController {
 			@ModelAttribute("account") Account account,
 			@AuthenticationPrincipal CurrentProfile currentProfile) {
 		if (result.hasErrors()) {
-			// redirectAttributes.addAttribute("accountForm", accountForm);
+			return new ModelAndView("/profile/settings");
+		}
+		if (!findService.isPasswordCorrect(form.getOldPassword(), currentProfile.getId())) {
+			model.addAttribute("wrongPassword", "Old password is wrong");
 			return new ModelAndView("/profile/settings");
 		}
 		editService.editPass(form.getPassword1(), currentProfile.getId());
