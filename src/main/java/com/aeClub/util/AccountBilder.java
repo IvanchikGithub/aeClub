@@ -1,6 +1,6 @@
 package com.aeClub.util;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import com.aeClub.entity.Account;
 import com.aeClub.entity.AccountExtraInfo;
@@ -11,7 +11,7 @@ public class AccountBilder {
 	private int idUser;
 	private String nameForClub;
 	private String gender;
-	private Date birthdate;
+	private LocalDate birthdate;
 	private String country;
 	private String city;
 	private String denomination;
@@ -42,7 +42,7 @@ public class AccountBilder {
 		return this;
 	}
 
-	public AccountBilder putBirthday(Date birthday) {
+	public AccountBilder putBirthday(LocalDate birthday) {
 		this.birthdate = birthday;
 		return this;
 	}
@@ -95,7 +95,7 @@ public class AccountBilder {
 		return gender;
 	}
 
-	public Date getBirthdate() {
+	public LocalDate getBirthdate() {
 		return birthdate;
 	}
 

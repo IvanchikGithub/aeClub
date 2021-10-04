@@ -1,13 +1,15 @@
 package com.aeClub.entity;
 
+import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -19,7 +21,7 @@ import com.aeClub.util.AccountBilder;
 
 @Entity
 @Table(name = "account")
-public class Account {
+public class Account implements Serializable{
 
 	@Id
 	@Column(name = "id_user", nullable = false)
@@ -29,8 +31,9 @@ public class Account {
 	private String nameForClub;
 	@Column(name = "gender", nullable = false, length = 5)
 	private String gender;
+	
 	@Column(name = "birthdate", nullable = false)
-	private Date birthdate;
+	private LocalDate birthdate;
 	@Column(name = "country", nullable = false, length = 64)
 	private String country;
 	@Column(name = "city", nullable = false, length = 64)
@@ -185,12 +188,11 @@ public class Account {
 		this.gender = gender;
 	}
 
-	public Date getBirthdate() {
+	public LocalDate getBirthdate() {
 		return birthdate;
-		
 	}
 
-	public void setBirthdate(Date birthdate) {
+	public void setBirthdate(LocalDate birthdate) {
 		this.birthdate = birthdate;
 	}
 

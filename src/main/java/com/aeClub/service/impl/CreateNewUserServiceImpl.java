@@ -1,5 +1,6 @@
 package com.aeClub.service.impl;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -77,12 +78,12 @@ public class CreateNewUserServiceImpl implements CreateNewUserService {
 			}
 		}
 
-		if (accountForm.getHobbies()!=null && accountForm.getHobbies().size() > 0) {
-			accountForm.getHobbies().stream().forEach(hobby -> account.addHobby(new Hobby(hobby)));
+		if (accountForm.getHobbiesFromForm()!=null && accountForm.getHobbiesFromForm().size() > 0) {
+			accountForm.getHobbiesFromForm().stream().forEach(hobby -> account.addHobby(new Hobby(hobby)));
 		}
 		
-		if (accountForm.getLanguages()!=null && accountForm.getLanguages().size() > 0) {
-			accountForm.getLanguages().stream().forEach(language -> account.addLanguage(new Language(language)));
+		if (accountForm.getLanguagesFromForm()!=null && accountForm.getLanguagesFromForm().size() > 0) {
+			accountForm.getLanguagesFromForm().stream().forEach(language -> account.addLanguage(new Language(language)));
 		}
 
 		accountRepository.save(account);
@@ -92,7 +93,7 @@ public class CreateNewUserServiceImpl implements CreateNewUserService {
 			MultipartFile fileWithUsersPhoto, MultipartFile[] filesWithUsersExtraPhoto) {
 		AccountBilder accountBilder = new AccountBilder();
 		accountBilder.putIdUser(idUser).putNameForClub(accountForm.getNameForClub())
-				.putBirthday(accountForm.getBirthdate()).putCountry(accountForm.getCountry())
+				.putBirthday(LocalDate.parse(accountForm.getBirthdateFromForm())).putCountry(accountForm.getCountry())
 				.putCity(accountForm.getCity()).putDenomination(accountForm.getDenomination());
 		if (accountForm.getGender().equals(GenderType.MAN.getName())) {
 			accountBilder.putManGender();

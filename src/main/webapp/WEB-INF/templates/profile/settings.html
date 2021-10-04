@@ -49,10 +49,10 @@
 						class="nav-item"><a th:href="@{/profile/settings/password}"
 						class="nav-link">Password</a></li>
 					<li th:if="${account.activeSettingsWall.name()=='OTHER'}"
-						class="nav-item"><a th:href="@{/profile/settings/3}"
+						class="nav-item"><a th:href="@{/profile/settings/other}"
 						class="nav-link active">Other</a></li>
 					<li th:if="${account.activeSettingsWall.name()!='OTHER'}"
-						class="nav-item"><a th:href="@{/profile/settings/3}"
+						class="nav-item"><a th:href="@{/profile/settings/other}"
 						class="nav-link">Other</a></li>
 				</ul>
 			</div>
@@ -171,14 +171,14 @@
 		$('.input-group.date').datepicker({
 			autoclose : true,
 			todayHighlight : true,
-			format : "mm/dd/yyyy"
+			format : "yyyy-mm-dd"
 		});
 	</script>
 	<script>
-		$('#languages').bootstrapDualListbox();
+		$('#languagesFromForm').bootstrapDualListbox();
 	</script>
 	<script>
-		$('#hobbies').bootstrapDualListbox();
+		$('#hobbiesFromForm').bootstrapDualListbox();
 	</script>
 	<script>
 		$('#password').password({

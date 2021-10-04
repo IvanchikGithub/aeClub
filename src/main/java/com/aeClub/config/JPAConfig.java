@@ -56,7 +56,8 @@ public class JPAConfig {
 				environment.getRequiredProperty("spring.jpa.database-platform"));
 		properties.put("javax.persistence.validation.mode", "none");
 		properties.put("spring.jpa.show-sql", environment.getRequiredProperty("spring.jpa.show-sql"));
-		properties.put("hibernate.format_sql", "true");
+		properties.put("logging.level.org.hibernate.SQL", environment.getRequiredProperty("logging.level.org.hibernate.SQL"));
+		properties.put("spring.jpa.properties.hibernate.format_sql", "true");
 		properties.put("hibernate.hbm2ddl.auto",
 				environment.getRequiredProperty("hibernate.hbm2ddl.auto"));
 		properties.put("spring.jpa.properties.hibernate.jdbc.time_zone",

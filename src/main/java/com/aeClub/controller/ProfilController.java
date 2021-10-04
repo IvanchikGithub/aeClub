@@ -65,9 +65,7 @@ public class ProfilController {
 		if (target.getClass() == ChangePassForm.class) {
 			dataBinder.setValidator(changePassValidator);
 		}
-		
-		
-		
+
 		// ...
 	}
 
@@ -119,8 +117,10 @@ public class ProfilController {
 
 	@GetMapping(value = "/profile/settings/mainInfo")
 	public ModelAndView getSettingsWallMainInfo(Model model,
-			@ModelAttribute("account") Account account) {
+			@AuthenticationPrincipal CurrentProfile currentProfile) {
+		Account account = getService.getAccountById(currentProfile.getId());
 		account.setActiveSettingsWall(SettingsWallType.MAIN_INFO);
+		model.addAttribute("account", account);
 		model = getService.getDataFromCatalogues(model);
 		model = editService.setCheckedInHobbiesAndLanguagesLists(model, account);
 		model.addAttribute("accountForm", new AccountForm());
@@ -130,13 +130,12 @@ public class ProfilController {
 	@PostMapping(value = "/profile/settings/mainInfo")
 	public ModelAndView postSettingsMainInfo(
 			@ModelAttribute("accountForm") @Validated AccountForm accountForm, BindingResult result,
-			Model model, @AuthenticationPrincipal CurrentProfile currentProfile) {
+			Model model, @ModelAttribute("account") Account account) {
 		if (result.hasErrors()) {
 			// redirectAttributes.addAttribute("accountForm", accountForm);
 			return new ModelAndView("/profile/settings");
 		}
-		Account account = editService.editAccount(accountForm, currentProfile.getId());
-		model.addAttribute("account", account);
+		editService.editAccount(account, accountForm);
 		return new ModelAndView("redirect:/profile/settings/mainInfo");
 	}
 
@@ -149,12 +148,12 @@ public class ProfilController {
 	}
 
 	@PostMapping(value = "/profile/settings/pictures")
-	public ModelAndView postSettingPicture(Model model,
+	public ModelAndView postSettingPicture(Model model, @ModelAttribute("account") Account account,
 			@RequestParam("fileWithUsersPhoto") MultipartFile fileWithUsersPhoto,
-			@RequestParam("filesWithUsersExtraPhoto") MultipartFile[] filesWithUsersExtraPhoto,
-			@AuthenticationPrincipal CurrentProfile currentProfile) {
-		Account account = editService.editAccountsPictures(fileWithUsersPhoto, filesWithUsersExtraPhoto,
-				currentProfile.getId());
+			@RequestParam("filesWithUsersExtraPhoto") MultipartFile[] filesWithUsersExtraPhoto) {
+		if (fileWithUsersPhoto != null || filesWithUsersExtraPhoto != null) {
+			editService.editAccountsPictures(account, fileWithUsersPhoto, filesWithUsersExtraPhoto);
+		}
 		account.setActiveSettingsWall(SettingsWallType.PICTURES);
 		model.addAttribute("account", account);
 		return new ModelAndView("/profile/settings");
@@ -171,16 +170,15 @@ public class ProfilController {
 	@PostMapping(value = "/profile/settings/password")
 	public ModelAndView postChangePassword(Model model,
 			@ModelAttribute("changePassForm") @Validated ChangePassForm form, BindingResult result,
-			@ModelAttribute("account") Account account,
-			@AuthenticationPrincipal CurrentProfile currentProfile) {
+			@ModelAttribute("account") Account account) {
 		if (result.hasErrors()) {
 			return new ModelAndView("/profile/settings");
 		}
-		if (!findService.isPasswordCorrect(form.getOldPassword(), currentProfile.getId())) {
+		if (!findService.isPasswordCorrect(form.getOldPassword(), account.getIdUser())) {
 			model.addAttribute("wrongPassword", "Old password is wrong");
 			return new ModelAndView("/profile/settings");
 		}
-		editService.editPass(form.getPassword1(), currentProfile.getId());
+		editService.editPass(form.getPassword1(), account.getIdUser());
 		account.setActiveSettingsWall(SettingsWallType.PASSWORD);
 		model.addAttribute("success", "Password changed successfully");
 		return new ModelAndView("/profile/settings");
@@ -188,7 +186,7 @@ public class ProfilController {
 
 	@GetMapping(value = "/profile/settings/other")
 	public ModelAndView getSettingsWallOther(Model model, @ModelAttribute("account") Account account) {
-		account.setActiveSettingsWall(SettingsWallType.PASSWORD);
+		account.setActiveSettingsWall(SettingsWallType.OTHER);
 		return new ModelAndView("/profile/settings");
 	}
 

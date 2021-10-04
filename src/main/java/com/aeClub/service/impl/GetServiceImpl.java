@@ -28,12 +28,11 @@ public class GetServiceImpl implements GetService {
 	AccountRepository accountRepository;
 	@Override
 	public Account getAccountById(int idUser) {
-		Account account = accountRepository.findById(idUser);
+		Account account = accountRepository.findByIdUser(idUser);
 		if (account == null) {
 			return new AccountEmpty();
 		}
 		account.setActiveWall(WallType.EVERYDAY_LIVE_WALL);
-		account.setActiveSettingsWall(SettingsWallType.MAIN_INFO);
 		return account;
 	}
 	
@@ -49,9 +48,9 @@ public class GetServiceImpl implements GetService {
 		List<AmmountChildrenType> ammountChildrenTypeList = EnumUtil.getAmmountChildrenList();
 		model.addAttribute("ammountChildrenTypeList", ammountChildrenTypeList);
 		List<Hobby> hobbies = EnumUtil.getHobbiesList();
-		model.addAttribute("hobbies", hobbies);
+		model.addAttribute("hobbiesFromCatalog", hobbies);
 		List<Language> languages = EnumUtil.getLanguagesList();
-		model.addAttribute("languages", languages);
+		model.addAttribute("languagesFromCatalog", languages);
 		return model;
 	}
 	

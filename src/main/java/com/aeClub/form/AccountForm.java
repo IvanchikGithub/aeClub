@@ -1,17 +1,18 @@
 package com.aeClub.form;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
 public class AccountForm {
-	
+
 	private String nameForClub;
 	private String gender;
-	private Date birthdate;
+	private String birthdateFromForm;
 	private String country;
 	private String denomination;
 	private String city;
-	
+
 	private Boolean termsAccepted;
 	private String realName;
 	private String realSurname;
@@ -20,26 +21,24 @@ public class AccountForm {
 	private String education;
 	private String aboutMe;
 	private String aboutYou;
-	
-	private List<String> hobbies;
-	private List<String> languages;
 
+	private List<String> hobbiesFromForm;
+	private List<String> languagesFromForm;
 
-
-	public List<String> getLanguages() {
-		return languages;
+	public List<String> getLanguagesFromForm() {
+		return languagesFromForm;
 	}
 
-	public void setLanguages(List<String> languages) {
-		this.languages = languages;
+	public void setLanguagesFromForm(List<String> languagesFromForm) {
+		this.languagesFromForm = languagesFromForm;
 	}
 
-	public List<String> getHobbies() {
-		return hobbies;
+	public List<String> getHobbiesFromForm() {
+		return hobbiesFromForm;
 	}
 
-	public void setHobbies(List<String> hobbies) {
-		this.hobbies = hobbies;
+	public void setHobbiesFromForm(List<String> hobbiesFromForm) {
+		this.hobbiesFromForm = hobbiesFromForm;
 	}
 
 	public String getRealName() {
@@ -138,12 +137,12 @@ public class AccountForm {
 		this.gender = gender;
 	}
 
-	public Date getBirthdate() {
-		return birthdate;
+	public String getBirthdateFromForm() {
+		return birthdateFromForm;
 	}
 
-	public void setBirthdate(Date birthdate) {
-		this.birthdate = birthdate;
+	public void setBirthdateFromForm(String birthdateFromForm) {
+		this.birthdateFromForm = birthdateFromForm;
 	}
 
 	public String getCity() {

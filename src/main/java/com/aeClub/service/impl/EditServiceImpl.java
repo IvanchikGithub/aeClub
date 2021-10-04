@@ -1,6 +1,6 @@
 package com.aeClub.service.impl;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
@@ -29,13 +29,13 @@ public class EditServiceImpl implements EditService {
 
 	@Autowired
 	private AccountRepository accountRepository;
-	
+
 	@Autowired
 	private EmailPassRepository emailPassRepository;
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-	
+
 	@Autowired
 	private PictureService pictureService;
 
@@ -52,68 +52,73 @@ public class EditServiceImpl implements EditService {
 	}
 
 	public Model setCheckedInHobbiesAndLanguagesLists(Model model, Account account) {
-		List<Hobby> hobbiesFromCatalog = (List<Hobby>) model.getAttribute("hobbies");
+		List<Hobby> hobbiesFromCatalog = (List<Hobby>) model.getAttribute("hobbiesFromCatalog");
 		List<Hobby> usersHobbies = account.getHobbies();
-		if (usersHobbies.size() > 0) {
+		if (usersHobbies != null && usersHobbies.size() > 0) {
 			List<Hobby> checkedHobbies = setCheckForHobbiesWhichAreUsersHobby(hobbiesFromCatalog,
 					usersHobbies);
-			model.addAttribute("hobbies", checkedHobbies);
+			model.addAttribute("hobbiesFromCatalog", checkedHobbies);
 		}
-		List<Language> languagesFromCatalog = (List<Language>) model.getAttribute("languages");
+		List<Language> languagesFromCatalog = (List<Language>) model
+				.getAttribute("languagesFromCatalog");
 		List<Language> usersLanguage = account.getLanguages();
-		if (usersLanguage.size() > 0) {
+		if (usersLanguage != null && usersLanguage.size() > 0) {
 			List<Language> checkedLanguages = setCheckForLanguagesWhichAreUsersHobby(
 					languagesFromCatalog, usersLanguage);
-			model.addAttribute("languages", checkedLanguages);
+			model.addAttribute("languagesFromCatalog", checkedLanguages);
 		}
 		return model;
 	}
 
 	@Override
-	public Account editAccount(AccountForm accountForm, int idUser) {
-		Account account = accountRepository.findById(idUser);
-		account = saveFieldsThatHaveBeenChanged(account, accountForm);
-		return account;
+	public void editAccount(Account account, AccountForm accountForm) {
+		saveFieldsThatHaveBeenChanged(account, accountForm);
 	}
-	
+
 	@Override
-	public Account editAccountsPictures (MultipartFile fileWithUsersPhoto, MultipartFile[] filesWithUsersExtraPhoto, int idUser) {
-		Account account = accountRepository.findById(idUser);
-		Optional<String> recievedLinkOnProfilesAvatar = pictureService.savePictureInStorage(fileWithUsersPhoto,
-				PicturesType.USERS_AVATAR);
+	public void editAccountsPictures(Account account, MultipartFile fileWithUsersPhoto,
+			MultipartFile[] filesWithUsersExtraPhoto) {
+
+		Optional<String> recievedLinkOnProfilesAvatar = pictureService
+				.savePictureInStorage(fileWithUsersPhoto, PicturesType.USERS_AVATAR);
 		if (!recievedLinkOnProfilesAvatar.isEmpty()) {
-			account.setLinkOnPhotoProfile(recievedLinkOnProfilesAvatar.get()+".jpg");
+			account.setLinkOnPhotoProfile(recievedLinkOnProfilesAvatar.get() + ".jpg");
 		}
-		if (filesWithUsersExtraPhoto!=null && filesWithUsersExtraPhoto.length != 0) {
-			List<Picture> pictures = pictureService.handlingFilesWithUsersExtraPhoto(filesWithUsersExtraPhoto);
+		if (filesWithUsersExtraPhoto != null && filesWithUsersExtraPhoto.length != 0) {
+			List<Picture> pictures = pictureService
+					.handlingFilesWithUsersExtraPhoto(filesWithUsersExtraPhoto);
 			if (pictures.size() > 0) {
 				pictures.stream().forEach(picture -> account.addPicture(picture));
 			}
 		}
 		accountRepository.save(account);
-		return account;
 	}
-	
+
 	@Override
-	public void editPass (String password, int idUser) {
+	public void editPass(String password, int idUser) {
 		EmailPass emailPass = emailPassRepository.findByIdUser(idUser);
 		emailPass.setPassword(passwordEncoder.encode(password));
 		emailPassRepository.save(emailPass);
 	}
-	
+
 	private List<Hobby> setCheckForHobbiesWhichAreUsersHobby(List<Hobby> hobbiesFromCatalog,
 			List<Hobby> usersHobbies) {
-		hobbiesFromCatalog.stream().forEach(hobby -> checkingHobbyIsAsUsersHobby(hobby, usersHobbies));
+
+		for (Hobby hobby : hobbiesFromCatalog) {
+			checkingHobbyIsAsUsersHobby(hobby, usersHobbies);
+		}
+
+		// hobbiesFromCatalog.stream().forEach(hobby -> checkingHobbyIsAsUsersHobby(hobby,
+		// usersHobbies));
 		return hobbiesFromCatalog;
 	}
 
-	private Hobby checkingHobbyIsAsUsersHobby(Hobby hobbyFromCatalog, List<Hobby> usersHobbies) {
+	private void checkingHobbyIsAsUsersHobby(Hobby hobbyFromCatalog, List<Hobby> usersHobbies) {
 		for (Hobby theUsersHobby : usersHobbies) {
 			if (theUsersHobby.getHobbyType().equals(hobbyFromCatalog.getHobbyType())) {
 				hobbyFromCatalog.setChecked(true);
 			}
 		}
-		return hobbyFromCatalog;
 	}
 
 	private List<Language> setCheckForLanguagesWhichAreUsersHobby(List<Language> languagesFromCatalog,
@@ -132,16 +137,13 @@ public class EditServiceImpl implements EditService {
 		return language;
 	}
 
-
-
-	private Account saveFieldsThatHaveBeenChanged(Account account, AccountForm form) {
-		account = changingUsersMainInfo (account, form);
-		account = changingUsersExtraInfo(account, form);
-		account = changingListUsersHobbies(account, form);
-		account = changingListUsersLanguages(account, form);
+	private void saveFieldsThatHaveBeenChanged(Account account, AccountForm form) {
+		changingUsersMainInfo(account, form);
+		changingUsersExtraInfo(account, form);
+		changingListUsersHobbies(account, form);
+		changingListUsersLanguages(account, form);
 
 		accountRepository.save(account);
-		return account;
 	}
 
 	private boolean fieldsAreEqualOrChangingNotNecessary(String valueInDataBase, String valueInForm) {
@@ -157,7 +159,7 @@ public class EditServiceImpl implements EditService {
 		return false;
 	}
 
-	private Account changingUsersMainInfo (Account account, AccountForm form) {
+	private void changingUsersMainInfo(Account account, AccountForm form) {
 		String nameForClubInDataBase = account.getNameForClub();
 		String nameForClubInForm = form.getNameForClub();
 		if (!fieldsAreEqualOrChangingNotNecessary(nameForClubInDataBase, nameForClubInForm)) {
@@ -178,14 +180,13 @@ public class EditServiceImpl implements EditService {
 		if (!fieldsAreEqualOrChangingNotNecessary(cityInDataBase, cityInForm)) {
 			account.setCity(cityInForm);
 		}
-		if (form.getBirthdate()!= null) {
-			Date birthdatInForm = form.getBirthdate();
-			account.setBirthdate(birthdatInForm);
+		if (!ServiceUtil.emptyOrNull(form.getBirthdateFromForm())) {
+			String dateInForm = form.getBirthdateFromForm();
+			account.setBirthdate(LocalDate.parse(dateInForm));
 		}
-			return account;
 	}
-	
-	private Account changingUsersExtraInfo (Account account, AccountForm form) {
+
+	private void changingUsersExtraInfo(Account account, AccountForm form) {
 		String realNameInDataBase = account.getAccountExtraInfo().getRealName();
 		String realNameInForm = form.getRealName();
 		if (!fieldsAreEqualOrChangingNotNecessary(realNameInDataBase, realNameInForm)) {
@@ -238,73 +239,83 @@ public class EditServiceImpl implements EditService {
 			} else
 				account.getAccountExtraInfo().setAboutYou("not indicated");
 		}
-		return account;
 	}
-	
-	private Account changingListUsersHobbies(Account account, AccountForm form) {
+
+	private void changingListUsersHobbies(Account account, AccountForm form) {
 		// Deleting
 		List<Hobby> usersHobbiesInDataBase = account.getHobbies();
 		Iterator<Hobby> iterator = usersHobbiesInDataBase.iterator();
-		List<String> hobbiesInForm = form.getHobbies();
+		List<String> hobbiesInForm = form.getHobbiesFromForm();
 
 		while (iterator.hasNext()) {
 			Hobby hobby = iterator.next();
 			boolean hobbyIsPresentInForm = false;
-			for (String hobbyFromForm : hobbiesInForm) {
-				if (hobbyFromForm.equals(hobby.getHobbyType())) {
-					hobbyIsPresentInForm = true;
+			if (hobbiesInForm != null) {
+				for (String hobbyFromForm : hobbiesInForm) {
+					if (hobbyFromForm.equals(hobby.getHobbyType())) {
+						hobbyIsPresentInForm = true;
+					}
 				}
-			}
-			if (!hobbyIsPresentInForm) {
+				if (!hobbyIsPresentInForm) {
+					iterator.remove();
+				}
+			} else {
 				iterator.remove();
 			}
 		}
 		// Adding
-		for (String hobbyFromForm : hobbiesInForm) {
-			boolean hobbyIsPresentInUsersHobbiesInDataBank = false;
-			for (Hobby hobbyInUsersHobbiesInDataBank : usersHobbiesInDataBase) {
-				if (hobbyFromForm.equals(hobbyInUsersHobbiesInDataBank.getHobbyType())) {
-					hobbyIsPresentInUsersHobbiesInDataBank = true;
+		if (hobbiesInForm != null) {
+			for (String hobbyFromForm : hobbiesInForm) {
+				boolean hobbyIsPresentInUsersHobbiesInDataBank = false;
+				for (Hobby hobbyInUsersHobbiesInDataBank : usersHobbiesInDataBase) {
+					if (hobbyFromForm.equals(hobbyInUsersHobbiesInDataBank.getHobbyType())) {
+						hobbyIsPresentInUsersHobbiesInDataBank = true;
+					}
+				}
+				if (!hobbyIsPresentInUsersHobbiesInDataBank) {
+					account.addHobby(new Hobby(hobbyFromForm));
 				}
 			}
-			if (!hobbyIsPresentInUsersHobbiesInDataBank) {
-				account.addHobby(new Hobby(hobbyFromForm));
-			}
 		}
-		return account;
 	}
 
-	private Account changingListUsersLanguages(Account account, AccountForm form) {
+	private void changingListUsersLanguages(Account account, AccountForm form) {
 		// Deleting
 		List<Language> usersLanguagesInDataBase = account.getLanguages();
-		List<String> languagesInForm = form.getLanguages();
+		List<String> languagesInForm = form.getLanguagesFromForm();
 		Iterator<Language> iterator2 = usersLanguagesInDataBase.iterator();
 
 		while (iterator2.hasNext()) {
 			Language language = iterator2.next();
 			boolean languageIsPresentInForm = false;
-			for (String languageFromForm : languagesInForm) {
-				if (languageFromForm.equals(language.getLanguageType())) {
-					languageIsPresentInForm = true;
+			if (languagesInForm != null) {
+				for (String languageFromForm : languagesInForm) {
+					if (languageFromForm.equals(language.getLanguageType())) {
+						languageIsPresentInForm = true;
+					}
 				}
-			}
-			if (!languageIsPresentInForm) {
+
+				if (!languageIsPresentInForm) {
+					iterator2.remove();
+				}
+			} else {
 				iterator2.remove();
 			}
 		}
 		// Adding
-		for (String languageFromForm : languagesInForm) {
-			boolean languageIsPresentInUsersLanguagesInDataBank = false;
-			for (Language languageInDataBase : usersLanguagesInDataBase) {
-				if (languageFromForm.equals(languageInDataBase.getLanguageType())) {
-					languageIsPresentInUsersLanguagesInDataBank = true;
+		if (languagesInForm != null) {
+			for (String languageFromForm : languagesInForm) {
+				boolean languageIsPresentInUsersLanguagesInDataBank = false;
+				for (Language languageInDataBase : usersLanguagesInDataBase) {
+					if (languageFromForm.equals(languageInDataBase.getLanguageType())) {
+						languageIsPresentInUsersLanguagesInDataBank = true;
+					}
+				}
+				if (!languageIsPresentInUsersLanguagesInDataBank) {
+					account.addLanguage(new Language(languageFromForm));
 				}
 			}
-			if (!languageIsPresentInUsersLanguagesInDataBank) {
-				account.addLanguage(new Language(languageFromForm));
-			}
 		}
-		return account;
 	}
 
 }

@@ -66,8 +66,8 @@
 								<div class="form-group ">
 									<label for="birthdate">Date of birth</label>
 									<div class="col-sm-8 input-group date">
-										<input type="text" class="form-control" id="birthdate"
-											autocomplete="off" th:field="*{birthdate}" required/>
+										<input type="text" class="form-control" id="birthdateFromForm"
+											autocomplete="off" th:field="*{birthdateFromForm}" />
 										<div class="input-group-append">
 											<span class="input-group-text"><i
 												class="far fa-calendar-alt"></i></span>
@@ -150,9 +150,9 @@
 
 			<h3>Your hobbies</h3>
 			<select multiple="multiple" size="10" name="selected[]"
-				id="optionsbox" th:field="*{hobbies}" class="form-control">
+				id="optionsbox" th:field="*{hobbiesFromForm}" class="form-control">
 
-				<option th:each="item : ${hobbies}" th:selected="${item.isChecked}"
+				<option th:each="item : ${hobbiesFromCatalog}" th:selected="${item.isChecked}"
 					th:value="${item.hobbyType}" th:text="${item.hobbyType}"></option>
 
 
@@ -223,9 +223,9 @@
 
 
 			<select multiple="multiple" size="10" name="selected[]"
-				id="optionsbox2" th:field="*{languages}" class="form-control">
+				id="optionsbox2" th:field="*{languagesFromForm}" class="form-control">
 
-				<option th:each="item : ${languages}"
+				<option th:each="item : ${languagesFromCatalog}"
 					th:selected="${item.isChecked}" th:value="${item.languageType}"><span
 						th:text="${item.languageType}"></span></option>
 			</select>
@@ -305,11 +305,11 @@
 	<script>
 		$('#optionsbox2').bootstrapDualListbox();
 	</script>
-	<script>
+ 	<script>
 		$('.input-group.date').datepicker({
 			autoclose : true,
 			todayHighlight : true,
-			format : "mm/dd/yyyy"
+			format : "yyyy-mm-dd"
 		});
 	</script>
 </body>

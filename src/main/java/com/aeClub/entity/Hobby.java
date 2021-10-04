@@ -1,5 +1,7 @@
 package com.aeClub.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,7 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
 @Entity
-public class Hobby {
+public class Hobby implements Serializable {
 	@Id
 	@GeneratedValue
 	private long id;
@@ -18,8 +20,8 @@ public class Hobby {
 	@Column(nullable = false)
 	private String hobbyType;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="id_profile", nullable=false)
+	@ManyToOne
+	@JoinColumn(name="id_user", nullable=false)
 	private Account account;
 	
 	@Transient

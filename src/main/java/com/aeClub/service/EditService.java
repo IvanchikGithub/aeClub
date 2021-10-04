@@ -12,10 +12,10 @@ public interface EditService {
 
 	public Model setCheckedInHobbiesAndLanguagesLists(Model model, Account account);
 
-	public Account editAccount(AccountForm accountForm, int idUser);
+	public void editAccount(Account account, AccountForm accountForm);
 
-	public Account editAccountsPictures(MultipartFile fileWithUsersPhoto,
-			MultipartFile[] filesWithUsersExtraPhoto, int idUser);
+	public void editAccountsPictures(Account account, MultipartFile fileWithUsersPhoto,
+			MultipartFile[] filesWithUsersExtraPhoto);
 	
 	public void editPass (String password, int idUser);
 }
