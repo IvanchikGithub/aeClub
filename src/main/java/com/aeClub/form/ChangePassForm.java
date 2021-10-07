@@ -1,5 +1,24 @@
 package com.aeClub.form;
 
+import com.aeClub.entity.EmailPass;
+
+/**
+ * 
+ * Die Klasse ChangePassForm ist eine Form für die Änderung das Kennwort des Nutzers<br>
+ * Die Parameter der Klasse sind:
+ * <p>
+ * private String <i>oldPassword</i>;<br>
+ * private String <i>password1</i>;<br>
+ * private String <i>password2</i>;
+ * <p>
+ * Wir brauchen zwei Kennworter in der Form, weil es in der Form auf der Seite zwei Felder
+ * fur die Kennworter gibt. Die Nutzer muss sein Kennwort zweite Mal eingeben, um sie sich
+ * überzeugen, dass das Kennwort richtig(ohne falsche Buchstaben) aufgeschrieben ist.
+ * 
+ * @author ivasy
+ *
+ * @see EmailPass
+ */
 public class ChangePassForm {
 	private String oldPassword;
 	private String password1;

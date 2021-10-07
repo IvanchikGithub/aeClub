@@ -7,6 +7,23 @@ import org.springframework.validation.Validator;
 
 import com.aeClub.form.ChangePassForm;
 import com.aeClub.util.ValidationMethod;
+
+
+/**
+ * Die Klasse CreateEmailPassValidator ist geerbte Klasse von Validator. Bei Validation
+ * uberprufen wir ob die Parameter <i> oldPassword</i>, <i> password1</i>,<i> password2</i>
+ * gultig sind.
+ * <p>
+ * Das Folgendes lost das Fehler aus: <br>
+ * ein Parametr ist leer <br>
+ * die Kennworter password1 und password2 sind nicht gleich <br>
+ * das Kennwort ist weniger als 8 Symbole oder nicht nur englische Buchschtabe oder keine
+ * Ziffer oder keine eine kleine Buchschtabe oder keine grosse Buchstabe
+ * 
+ * @author ivasy
+ *
+ * @see Validator
+ */
 @Component
 public class ChangePassValidator implements Validator{
 

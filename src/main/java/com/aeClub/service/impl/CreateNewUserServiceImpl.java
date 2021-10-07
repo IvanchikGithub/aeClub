@@ -39,7 +39,7 @@ public class CreateNewUserServiceImpl implements CreateNewUserService {
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-	
+
 	@Autowired
 	private PictureService pictureService;
 
@@ -49,6 +49,7 @@ public class CreateNewUserServiceImpl implements CreateNewUserService {
 	@Value("${rootPath}")
 	String rootPath;
 
+	@Override
 	public void createNewPairEmailAndPass(String email, String password) {
 		EmailPass emailPass = new EmailPass(email, passwordEncoder.encode(password));
 		emailPass.setIdUser(genereateIdForNewUser());
@@ -56,9 +57,16 @@ public class CreateNewUserServiceImpl implements CreateNewUserService {
 		SecurityUtil.authentificate(emailPass);
 	}
 
+	/**
+	 * Jeder Nutzer bekommt eine zufällige Id. Die UsersId ist öffensichtlich, deswegen
+	 * möchten wir keine Abfolge Ids hintereinanderen erstellen
+	 * 
+	 * @return idUser die zufällige ist und liegt zwieschen 1000-99000
+	 */
 	private int genereateIdForNewUser() {
 		Random rand = new Random();
 		int idUser;
+		// wir suchen eine Id, die im Databank nicht angewesend ist
 		do {
 			idUser = 1000 + rand.nextInt(99000);
 		} while (emailPassRepository.countByIdUser(idUser) != 0);
@@ -71,19 +79,23 @@ public class CreateNewUserServiceImpl implements CreateNewUserService {
 		Account account = createAccountBuilderFromFormsData(idUser, accountForm, fileWithUsersPhoto,
 				filesWithUsersExtraPhoto).create();
 
-		if (filesWithUsersExtraPhoto!=null && filesWithUsersExtraPhoto.length != 0) {
-			List<Picture> pictures = pictureService.handlingFilesWithUsersExtraPhoto(filesWithUsersExtraPhoto);
+		if (filesWithUsersExtraPhoto != null && filesWithUsersExtraPhoto.length != 0) {
+			List<Picture> pictures = pictureService
+					.handlingFilesWithUsersExtraPhoto(filesWithUsersExtraPhoto);
 			if (pictures.size() > 0) {
 				pictures.stream().forEach(picture -> account.addPicture(picture));
 			}
 		}
 
-		if (accountForm.getHobbiesFromForm()!=null && accountForm.getHobbiesFromForm().size() > 0) {
-			accountForm.getHobbiesFromForm().stream().forEach(hobby -> account.addHobby(new Hobby(hobby)));
+		if (accountForm.getHobbiesFromForm() != null && accountForm.getHobbiesFromForm().size() > 0) {
+			accountForm.getHobbiesFromForm().stream()
+					.forEach(hobby -> account.addHobby(new Hobby(hobby)));
 		}
-		
-		if (accountForm.getLanguagesFromForm()!=null && accountForm.getLanguagesFromForm().size() > 0) {
-			accountForm.getLanguagesFromForm().stream().forEach(language -> account.addLanguage(new Language(language)));
+
+		if (accountForm.getLanguagesFromForm() != null
+				&& accountForm.getLanguagesFromForm().size() > 0) {
+			accountForm.getLanguagesFromForm().stream()
+					.forEach(language -> account.addLanguage(new Language(language)));
 		}
 
 		accountRepository.save(account);
@@ -93,8 +105,9 @@ public class CreateNewUserServiceImpl implements CreateNewUserService {
 			MultipartFile fileWithUsersPhoto, MultipartFile[] filesWithUsersExtraPhoto) {
 		AccountBilder accountBilder = new AccountBilder();
 		accountBilder.putIdUser(idUser).putNameForClub(accountForm.getNameForClub())
-				.putBirthday(LocalDate.parse(accountForm.getBirthdateFromForm())).putCountry(accountForm.getCountry())
-				.putCity(accountForm.getCity()).putDenomination(accountForm.getDenomination());
+				.putBirthday(LocalDate.parse(accountForm.getBirthdateFromForm()))
+				.putCountry(accountForm.getCountry()).putCity(accountForm.getCity())
+				.putDenomination(accountForm.getDenomination());
 		if (accountForm.getGender().equals(GenderType.MAN.getName())) {
 			accountBilder.putManGender();
 			accountBilder.putTemplateLinkOnPhotoProfileForMan();
@@ -102,10 +115,10 @@ public class CreateNewUserServiceImpl implements CreateNewUserService {
 			accountBilder.putWomanGender();
 			accountBilder.putTemplateLinkOnPhotoProfileForWoman();
 		}
-		Optional<String> recievedLinkOnProfilesAvatar = pictureService.savePictureInStorage(fileWithUsersPhoto,
-				PicturesType.USERS_AVATAR);
+		Optional<String> recievedLinkOnProfilesAvatar = pictureService
+				.savePictureInStorage(fileWithUsersPhoto, PicturesType.USERS_AVATAR);
 		if (!recievedLinkOnProfilesAvatar.isEmpty()) {
-			accountBilder.putLinkOnProfilesAvatar(recievedLinkOnProfilesAvatar.get()+".jpg");
+			accountBilder.putLinkOnProfilesAvatar(recievedLinkOnProfilesAvatar.get() + ".jpg");
 		}
 
 		AccountExtraInfo accountExtraInfo = new AccountExtraInfo();
@@ -117,7 +130,7 @@ public class CreateNewUserServiceImpl implements CreateNewUserService {
 
 	private AccountExtraInfoBuilder buildAccountExtraInfoBuilderFromFormsData(AccountForm accountForm) {
 		AccountExtraInfoBuilder accountExtraInfoBuilder = new AccountExtraInfoBuilder();
-		String realName=accountForm.getRealName();
+		String realName = accountForm.getRealName();
 		if (!ServiceUtil.emptyOrNull(realName)) {
 			accountExtraInfoBuilder.putRealName(realName);
 		}
@@ -147,8 +160,5 @@ public class CreateNewUserServiceImpl implements CreateNewUserService {
 		}
 		return accountExtraInfoBuilder;
 	}
-
-
-
 
 }

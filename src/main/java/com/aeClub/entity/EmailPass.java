@@ -5,30 +5,42 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import com.aeClub.form.CreateEmailPassForm;
+
+/**
+ * Die Klasse enthaltet vier Eigenschaften <b>id</b>, <b>email</b>, <b>password</b>,
+ * <b>idUser</b>.
+ * <p>
+ * Die <b>Id</b> wird automatisch von JPA erzeugt und diese Eigenchaft nutzt nur
+ * JPA. Wir nutzen <b>idUser</b>, denn diese Attribute mit id des Nutzers verknupft ist. <b>Email</b>
+ * und <b>Password</b> bekommen wir uber den CreateEmailPassForm
+ * 
+ * @author ivasy
+ * @see CreateEmailPassForm
+ */
+
 @Entity
 public class EmailPass {
 	@Id
 	@GeneratedValue
 	private long id;
-	
+
 	@Column
 	private String email;
-	
+
 	@Column
 	private String password;
 
-	@Column (name = "id_user")
+	@Column(name = "id_user")
 	private int idUser;
-	
-	
+
 	public EmailPass() {
 	}
 
 	public EmailPass(String email, String password) {
-		super();
 		this.email = email;
 		this.password = password;
-		
+
 	}
 
 	public long getId() {
@@ -54,7 +66,5 @@ public class EmailPass {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
-	
-	
+
 }

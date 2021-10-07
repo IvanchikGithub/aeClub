@@ -8,27 +8,35 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+/**
+ * Die Klasse Picture beschreibt einen Bilder von dem Nutzer. Es ist nicht unbedingt ein
+ * Hauptfoto, es kann irgendien Bilder vom Nutzer. Das Objekt der Klasse Language
+ * enthalted nächste Eigenschaften:<br>
+ * <i>String linkPicture</i> - der Link, der gibt an, wo der Bilder im Speicherplatz ist.<br>
+ * <i>Account account</i><br>
+ * 
+ * @author ivasy
+ *
+ */
 @Entity
 public class Picture {
 	@Id
 	@GeneratedValue
 	private long id;
-	
-	@Column(nullable=false)
+
+	@Column(nullable = false)
 	private String linkPicture;
-	
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="id_profile", nullable=false)
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_profile", nullable = false)
 	private Account account;
 
 	public Picture() {
 	}
-	
-	public Picture (String linkPicture) {
-		this.linkPicture=linkPicture;
-	}
-	
 
+	public Picture(String linkPicture) {
+		this.linkPicture = linkPicture;
+	}
 
 	public String getLinkPicture() {
 		return linkPicture;
@@ -49,7 +57,5 @@ public class Picture {
 	public long getId() {
 		return id;
 	}
-	
-	
-	
+
 }

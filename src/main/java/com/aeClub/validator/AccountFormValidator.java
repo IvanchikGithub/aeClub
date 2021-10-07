@@ -6,6 +6,19 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 import com.aeClub.form.AccountForm;
+
+/**
+ * Die Klasse AccountFormValidator ist geerbte Klasse von Validator. Bei Validation
+ * uberprufen wir ob die Parameter, die der Hauptinformation gehört: <i> nameForClub</i>, <i> gender</i>,<i> country</i>, <i> denomination</i>,<i> city</i>
+ * gultig sind.
+ * <p>
+ * Das Folgendes lost das Fehler aus: <br>
+ * ein Parametr ist leer <br>
+ * 
+ * @author ivasy
+ *
+ * @see Validator
+ */
 @Component
 public class AccountFormValidator implements Validator {
 	

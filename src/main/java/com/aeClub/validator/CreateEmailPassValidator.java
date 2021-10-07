@@ -11,6 +11,24 @@ import com.aeClub.form.CreateEmailPassForm;
 import com.aeClub.service.FindService;
 import com.aeClub.util.ValidationMethod;
 
+/**
+ * Die Klasse CreateEmailPassValidator ist geerbte Klasse von Validator. Bei Validation
+ * uberprufen wir ob die Parameter <i> email</i>, <i> password1</i>,<i> password2</i>
+ * gultig sind.
+ * <p>
+ * Das Folgendes lost das Fehler aus: <br>
+ * ein Parametr ist leer <br>
+ * die Kennworter sind nicht gleich <br>
+ * die Email ähnelt nicht einem Email-Format <br>
+ * die Email ist registriert <br>
+ * das Kennwort ist weniger als 8 Symbole oder nicht nur englische Buchschtabe oder keine
+ * Ziffer oder keine eine kleine Buchschtabe oder keine grosse Buchstabe
+ * 
+ * @author ivasy
+ *
+ * @see Validator
+ */
+
 @Component
 public class CreateEmailPassValidator implements Validator {
 
@@ -28,8 +46,10 @@ public class CreateEmailPassValidator implements Validator {
 	public void validate(Object target, Errors errors) {
 		CreateEmailPassForm emailPassForm = (CreateEmailPassForm) target;
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "NotEmpty.emailPassForm.email");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password1", "NotEmpty.emailPassForm.password");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password2", "NotEmpty.emailPassForm.password");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password1",
+				"NotEmpty.emailPassForm.password");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password2",
+				"NotEmpty.emailPassForm.password");
 
 		if (!emailPassForm.getPassword1().equals(emailPassForm.getPassword2())) {
 			errors.rejectValue("password1", "Equals.emailPassForm.password");
@@ -45,27 +65,27 @@ public class CreateEmailPassValidator implements Validator {
 				errors.rejectValue("email", "Duplicate.emailPassForm.email");
 			}
 		}
-		
-		if (emailPassForm.getPassword1().length()<8) {
+
+		if (emailPassForm.getPassword1().length() < 8) {
 			errors.rejectValue("password1", "MinLength.emailPassForm.password");
 		}
-		
-		if (!ValidationMethod.isOnlyEnglishLettersNumbersPunctuationsSpecialSymbols(emailPassForm.getPassword1())) {
+
+		if (!ValidationMethod
+				.isOnlyEnglishLettersNumbersPunctuationsSpecialSymbols(emailPassForm.getPassword1())) {
 			errors.rejectValue("password1", "ForbiddenSymbols.emailPassForm.password");
 		}
-		
+
 		if (!ValidationMethod.atLeastOneDigit(emailPassForm.getPassword1())) {
 			errors.rejectValue("password1", "AtLeastOneDigit.emailPassForm.password");
 		}
-		
+
 		if (!ValidationMethod.atLeastOneSmallLetter(emailPassForm.getPassword1())) {
 			errors.rejectValue("password1", "AtLeastSmallLetter.emailPassForm.password");
 		}
-		
+
 		if (!ValidationMethod.atLeastOneBigLetter(emailPassForm.getPassword1())) {
 			errors.rejectValue("password1", "AtLeastOneBigLetter.emailPassForm.password");
 		}
 	}
-
 
 }

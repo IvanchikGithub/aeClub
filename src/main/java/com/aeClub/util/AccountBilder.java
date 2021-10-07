@@ -6,6 +6,13 @@ import com.aeClub.entity.Account;
 import com.aeClub.entity.AccountExtraInfo;
 import com.aeClub.enums.GenderType;
 
+/**
+ * Die Klasse AccountBilder ist ein Erbauer für die Klasse Account, die laut das
+ * Entwurfmuster Erbauer das Objekt der Klasse Account erstellen kann.
+ * 
+ * @author ivasy
+ * @see Account
+ */
 public class AccountBilder {
 
 	private int idUser;
@@ -16,7 +23,7 @@ public class AccountBilder {
 	private String city;
 	private String denomination;
 	private String linkOnPhotoProfile;
-	private AccountExtraInfo accountExtraInfo;  
+	private AccountExtraInfo accountExtraInfo;
 
 	public Account create() {
 		return new Account(this);
@@ -31,13 +38,13 @@ public class AccountBilder {
 		this.nameForClub = nameForClub;
 		return this;
 	}
-	
-	public AccountBilder putManGender () {
+
+	public AccountBilder putManGender() {
 		this.gender = GenderType.MAN.getName();
 		return this;
 	}
-	
-	public AccountBilder putWomanGender () {
+
+	public AccountBilder putWomanGender() {
 		this.gender = GenderType.WOMAN.getName();
 		return this;
 	}
@@ -46,43 +53,42 @@ public class AccountBilder {
 		this.birthdate = birthday;
 		return this;
 	}
-	
-	public AccountBilder putCountry (String country) {
+
+	public AccountBilder putCountry(String country) {
 		this.country = country;
 		return this;
 	}
-	
-	public AccountBilder putCity (String city) {
+
+	public AccountBilder putCity(String city) {
 		this.city = city;
 		return this;
 	}
-	
-	public AccountBilder putDenomination (String denomination) {
+
+	public AccountBilder putDenomination(String denomination) {
 		this.denomination = denomination;
 		return this;
 	}
-	
+
 	public AccountBilder putTemplateLinkOnPhotoProfileForMan() {
-		this.linkOnPhotoProfile="photoman.jpg";
+		this.linkOnPhotoProfile = "photoman.jpg";
 		return this;
 	}
-	
+
 	public AccountBilder putTemplateLinkOnPhotoProfileForWoman() {
-		this.linkOnPhotoProfile="photowoman.jpg";
+		this.linkOnPhotoProfile = "photowoman.jpg";
 		return this;
 	}
-	
+
 	public AccountBilder putLinkOnProfilesAvatar(String linkOnPhotoProfile) {
-		this.linkOnPhotoProfile=linkOnPhotoProfile;
+		this.linkOnPhotoProfile = linkOnPhotoProfile;
 		return this;
 	}
-	
-	public AccountBilder putAccountExtraInfo (AccountExtraInfo accountExtraInfo) {
-		this.accountExtraInfo=accountExtraInfo;
+
+	public AccountBilder putAccountExtraInfo(AccountExtraInfo accountExtraInfo) {
+		this.accountExtraInfo = accountExtraInfo;
 		return this;
 	}
-	
-	
+
 	public int getIdUser() {
 		return idUser;
 	}
@@ -110,7 +116,7 @@ public class AccountBilder {
 	public String getDenomination() {
 		return denomination;
 	}
-	
+
 	public String getLinkOnPhotoProfile() {
 		return linkOnPhotoProfile;
 	}
@@ -119,5 +125,4 @@ public class AccountBilder {
 		return accountExtraInfo;
 	}
 
-	
 }

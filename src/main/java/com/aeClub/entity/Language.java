@@ -10,8 +10,21 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
+/**
+ * Die Klasse Language beschreibt die Sprache von dem Nutzer.
+ * Das Objekt der Klasse Language enthalted nächste Eigenschaften:<br>
+ * <i>String LanguageType</i> - der Name eines Objekts von der aufzahlungen Klasse
+ * LanguageType<br>
+ * <i>Account account</i><br>
+ * <i>boolean isChecked</i><br> 
+ * @author ivasy
+ *
+ */
 @Entity
 public class Language implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue
 	private long id;
@@ -31,7 +44,7 @@ public class Language implements Serializable {
 
 	public Language(String languageType) {
 		this.languageType = languageType;
-		this.isChecked=false;
+		this.isChecked = false;
 	}
 
 	public String getLanguageType() {

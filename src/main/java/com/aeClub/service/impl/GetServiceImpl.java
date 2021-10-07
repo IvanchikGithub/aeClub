@@ -23,18 +23,6 @@ import com.aeClub.util.EnumUtil;
 
 @Service
 public class GetServiceImpl implements GetService {
-
-	@Autowired
-	AccountRepository accountRepository;
-	@Override
-	public Account getAccountById(int idUser) {
-		Account account = accountRepository.findByIdUser(idUser);
-		if (account == null) {
-			return new AccountEmpty();
-		}
-		account.setActiveWall(WallType.EVERYDAY_LIVE_WALL);
-		return account;
-	}
 	
 	public Model getDataFromCatalogues (Model model) {
 		List<GenderType> listGender = EnumUtil.getGenderTypes();

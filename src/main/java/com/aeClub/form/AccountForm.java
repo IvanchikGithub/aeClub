@@ -1,9 +1,34 @@
 package com.aeClub.form;
 
-import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
+import com.aeClub.entity.Account;
+
+/**
+ * 
+ * Die Klasse AccountForm ist eine Form für die Klasse Account.<br>
+ * Die Parameter der Klasse sind:<p>
+ * private String <i>nameForClub</i>;<br>
+ * private String <i>gender</i>;<br>
+ * private String <i>birthdateFromForm</i>;<br>
+ * private String <i>country</i>;<br>
+ * private String <i>denomination</i>;<br>
+ * private String <i>city</i>;<p>
+ * private Boolean <i>termsAccepted</i>;<br>
+ * private String <i>realName</i>;<br>
+ * private String <i>realSurname</i>;<br>
+ * private String <i>nameChurch</i>;<br>
+ * private String <i>amountChildren</i>;<br>
+ * private String <i>education</i>;<br>
+ * private String <i>aboutMe</i>;<br>
+ * private String <i>aboutYou</i>;<p>
+ * private List String <i>hobbiesFromForm</i>;<br>
+ * private List String <i>languagesFromForm</i>;<br>
+ * 
+ * @author ivasy
+ *
+ * @see Account
+ */
 public class AccountForm {
 
 	private String nameForClub;

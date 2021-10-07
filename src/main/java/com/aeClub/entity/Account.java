@@ -9,7 +9,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -19,9 +18,33 @@ import com.aeClub.enums.SettingsWallType;
 import com.aeClub.enums.WallType;
 import com.aeClub.util.AccountBilder;
 
+/**
+ * Die Hauptklasse Account enthalt wichtige Information über den Nutzer.
+ * Die Eigenschaften der Account sind:<br>
+ * <i>String nameForClub</i><br>
+ * <i>String gender</i><br>
+ * <i>LocalDate birthdate</i><br>
+ * <i>String country</i><br>
+ * <i>String denomination</i><br>
+ * <i>String linkOnPhotoProfile</i><br>
+ * <i>AccountExtraInfo accountExtraInfo</i><br>
+ * <i>List(Picture) pictures</i><br>
+ * <i>List(Hobby) hobbies</i><br>
+ * <i>List(Language) languages</i><br>
+ * 
+ * 
+ * @author ivasy
+ * @see AccountExtraInfo
+ * @see Picture
+ * @see Hobby
+ * @see Language
+ */
+
 @Entity
 @Table(name = "account")
 public class Account implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@Column(name = "id_user", nullable = false)

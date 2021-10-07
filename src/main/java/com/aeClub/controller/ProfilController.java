@@ -31,6 +31,18 @@ import com.aeClub.util.CurrentProfile;
 import com.aeClub.validator.AccountFormValidator;
 import com.aeClub.validator.ChangePassValidator;
 
+/**
+ * ProfilController deckt nächste Internetadresse:<br>
+ * /profile/home<br>
+ * /profile/home/{wallType}<br>
+ * /profile/registrationMainInfo GET und POST<br>
+ * /profile/settings/pictures GET und POST<br>
+ * /profile/settings/password GET und POST<br>
+ * /profile/settings/other GET und POST<br>
+ * 
+ * @author ivasy
+ *
+ */
 @Controller
 @SessionAttributes("account")
 public class ProfilController {
@@ -72,8 +84,11 @@ public class ProfilController {
 	@GetMapping(value = "/profile/home")
 	public ModelAndView getUsersHome(@AuthenticationPrincipal CurrentProfile currentProfile,
 			Model model) {
-		Account account = getService.getAccountById(currentProfile.getId());
+		Account account = findService.getAccountById(currentProfile.getId());
+
 		if (account.getClass().getSimpleName().equals("AccountEmpty")) {
+			// Der Nutzer hat seine Information noch nicht eingegeben, deswegen muss er auf die Seite
+			// gehen, wo er diese Information eingeben kann.
 			return new ModelAndView("redirect:/profile/registrationMainInfo");
 		}
 		model.addAttribute("account", account);
@@ -118,7 +133,10 @@ public class ProfilController {
 	@GetMapping(value = "/profile/settings/mainInfo")
 	public ModelAndView getSettingsWallMainInfo(Model model,
 			@AuthenticationPrincipal CurrentProfile currentProfile) {
-		Account account = getService.getAccountById(currentProfile.getId());
+		Account account = findService.getAccountById(currentProfile.getId());
+		if (account.getClass().getSimpleName().equals("AccountEmpty")) {
+			return new ModelAndView("redirect:/profile/home");
+		}
 		account.setActiveSettingsWall(SettingsWallType.MAIN_INFO);
 		model.addAttribute("account", account);
 		model = getService.getDataFromCatalogues(model);
@@ -132,7 +150,7 @@ public class ProfilController {
 			@ModelAttribute("accountForm") @Validated AccountForm accountForm, BindingResult result,
 			Model model, @ModelAttribute("account") Account account) {
 		if (result.hasErrors()) {
-			// redirectAttributes.addAttribute("accountForm", accountForm);
+			// Die Behandlung die Fehler muss man noch schreiben
 			return new ModelAndView("/profile/settings");
 		}
 		editService.editAccount(account, accountForm);

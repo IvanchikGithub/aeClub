@@ -1,28 +1,39 @@
 package com.aeClub.entity;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.persistence.OneToMany;
 
 import com.aeClub.util.AccountExtraInfoBuilder;
+
+/**
+ * Die Klasse AccountExtraInfo beinhaltet die zusätztliche Eigenschaften für die Klasse
+ * Account:<br>
+ * <i>String realName</i><br>
+ * <i>String realSurname</i><br>
+ * <i>String nameChurch</i><br>
+ * <i>String amountChildren</i><br>
+ * <i>String education</i><br>
+ * <i>String aboutMe</i><br>
+ * <i>String aboutYou</i><br>
+ * 
+ * @author ivasy
+ *
+ */
 
 @Embeddable
 public class AccountExtraInfo implements Serializable {
 	private static final long serialVersionUID = 1L;
-	@Column(nullable = false,length = 64)
+	@Column(nullable = false, length = 64)
 	private String realName;
-	@Column(nullable = false,length = 64)
+	@Column(nullable = false, length = 64)
 	private String realSurname;
 	@Column(nullable = false)
 	private String nameChurch;
 	@Column(nullable = false, length = 32)
 	private String amountChildren;
-	@Column(nullable = false,length = 64)
+	@Column(nullable = false, length = 64)
 	private String education;
 	@Column(nullable = false)
 	private String aboutMe;
@@ -31,19 +42,17 @@ public class AccountExtraInfo implements Serializable {
 
 	public AccountExtraInfo() {
 	}
-	
-	public AccountExtraInfo(AccountExtraInfoBuilder accountExtraInfoBuilder) {
-		this.realName= accountExtraInfoBuilder.getRealName();
-		this.realSurname=accountExtraInfoBuilder.getRealSurname();
-		this.nameChurch=accountExtraInfoBuilder.getNameChurch();
-		this.amountChildren=accountExtraInfoBuilder.getAmountChildren();
-		this.education=accountExtraInfoBuilder.getEducation();
-		this.aboutMe=accountExtraInfoBuilder.getAboutMe();
-		this.aboutYou=accountExtraInfoBuilder.getAboutYou();
-	}
-	
 
-	
+	public AccountExtraInfo(AccountExtraInfoBuilder accountExtraInfoBuilder) {
+		this.realName = accountExtraInfoBuilder.getRealName();
+		this.realSurname = accountExtraInfoBuilder.getRealSurname();
+		this.nameChurch = accountExtraInfoBuilder.getNameChurch();
+		this.amountChildren = accountExtraInfoBuilder.getAmountChildren();
+		this.education = accountExtraInfoBuilder.getEducation();
+		this.aboutMe = accountExtraInfoBuilder.getAboutMe();
+		this.aboutYou = accountExtraInfoBuilder.getAboutYou();
+	}
+
 	public String getRealName() {
 		return realName;
 	}
