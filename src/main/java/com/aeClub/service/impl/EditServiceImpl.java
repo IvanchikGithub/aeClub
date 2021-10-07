@@ -52,13 +52,15 @@ public class EditServiceImpl implements EditService {
 	}
 
 	public Model setCheckedInHobbiesAndLanguagesLists(Model model, Account account) {
-		List<Hobby> hobbiesFromCatalog = (List<Hobby>) model.getAttribute("hobbiesFromCatalog");
+		@SuppressWarnings(value = { "unchecked" })
+	List<Hobby> hobbiesFromCatalog = (List<Hobby>) model.getAttribute("hobbiesFromCatalog");
 		List<Hobby> usersHobbies = account.getHobbies();
 		if (usersHobbies != null && usersHobbies.size() > 0) {
 			List<Hobby> checkedHobbies = setCheckForHobbiesWhichAreUsersHobby(hobbiesFromCatalog,
 					usersHobbies);
 			model.addAttribute("hobbiesFromCatalog", checkedHobbies);
 		}
+		@SuppressWarnings(value = { "unchecked" })
 		List<Language> languagesFromCatalog = (List<Language>) model
 				.getAttribute("languagesFromCatalog");
 		List<Language> usersLanguage = account.getLanguages();
