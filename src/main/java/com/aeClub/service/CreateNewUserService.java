@@ -21,7 +21,7 @@ import com.aeClub.form.AccountForm;
 public interface CreateNewUserService {
 	/**
 	 * Jeder Nutzer hat sein Paar, das aus Email and Password besteht. Diese Information ist
-	 * in der Table EmailPass gespeichert.
+	 * in der Tabele EmailPass gespeichert.
 	 * 
 	 * Einem Nutzer in unserer Anwendung gehört:<br>
 	 * ein Objekt <i>EmailPass</i><br>

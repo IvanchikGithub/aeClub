@@ -66,7 +66,7 @@ public class CreateNewUserServiceImpl implements CreateNewUserService {
 	private int genereateIdForNewUser() {
 		Random rand = new Random();
 		int idUser;
-		// wir suchen eine Id, die im Databank nicht angewesend ist
+		// Wir suchen eine Id z, die in der Datenbank nicht angewesend ist
 		do {
 			idUser = 1000 + rand.nextInt(99000);
 		} while (emailPassRepository.countByIdUser(idUser) != 0);

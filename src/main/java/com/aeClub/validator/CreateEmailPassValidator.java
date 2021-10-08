@@ -57,10 +57,10 @@ public class CreateEmailPassValidator implements Validator {
 		}
 
 		if (!this.emailValidator.isValid(emailPassForm.getEmail())) {
-			// Invalid email.
+			// Eine fehlerhafte Email.
 			errors.rejectValue("email", "Pattern.emailPassForm.email");
 		} else {
-			// Check the same email in databank
+			// Wir überprufen, ob eine gleiche Email in der Datenbank anwesend ist.
 			if (findService.isEmailRegistred(emailPassForm.getEmail())) {
 				errors.rejectValue("email", "Duplicate.emailPassForm.email");
 			}
