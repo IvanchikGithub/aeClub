@@ -8,7 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.Assert;
 
-import com.aeClub.config.AEApplicationTest;
+import com.aeClub.config.NavigationTestsForHomePage;
 import com.aeClub.enums.CountryList;
 import com.aeClub.enums.DenominationType;
 import com.aeClub.enums.GenderType;
@@ -18,7 +18,7 @@ import com.aeClub.service.impl.CreateNewUserServiceImpl;
 import com.aeClub.util.AccountExtraInfoBuilder;
 
 
-@SpringBootTest(classes=AEApplicationTest.class)
+@SpringBootTest(classes=NavigationTestsForHomePage.class)
 public class CreateNewUserServiceImplTest {
 
 	CreateNewUserServiceImpl createNewUserServiceImpl = new CreateNewUserServiceImpl();

@@ -62,7 +62,7 @@ public class HomeController {
 	public ModelAndView getHome() {
 
 		if (SecurityUtil.isCurrentProfileAuthentificated()) {
-			return new ModelAndView("redirect:profile/home");
+			return new ModelAndView("redirect:/profile/home");
 		} else {
 			return new ModelAndView("/home");
 		}

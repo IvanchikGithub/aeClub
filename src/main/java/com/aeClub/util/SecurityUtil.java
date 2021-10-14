@@ -27,7 +27,7 @@ public final class SecurityUtil {
 	}
 
 	/**
-	 * Dank diese Methode legen wir von Hand das aktuelles Objekt User in
+	 * Dank dieser Methode legen wir von Hand das aktuelles Objekt User in
 	 * SpringSecurityContext, weil das in SpringSecurityContext nach der Erschaffung gelangen
 	 * werden muss.
 	 * <p>
