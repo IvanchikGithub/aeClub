@@ -32,7 +32,7 @@ public interface CreateNewUserService {
 	 * @see EmailPass
 	 * @see Account
 	 **/
-	public void createNewPairEmailAndPass(String email, String password);
+	public void creatingNewPairEmailAndPass(String email, String password);
 
 	/**
 	 * Der Nutzer ist über die Klasse Account beschreibt.<br>

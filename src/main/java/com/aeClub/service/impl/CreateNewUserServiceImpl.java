@@ -50,7 +50,7 @@ public class CreateNewUserServiceImpl implements CreateNewUserService {
 	String rootPath;
 
 	@Override
-	public void createNewPairEmailAndPass(String email, String password) {
+	public void creatingNewPairEmailAndPass(String email, String password) {
 		EmailPass emailPass = new EmailPass(email, passwordEncoder.encode(password));
 		emailPass.setIdUser(genereateIdForNewUser());
 		emailPassRepository.save(emailPass);
@@ -122,13 +122,13 @@ public class CreateNewUserServiceImpl implements CreateNewUserService {
 		}
 
 		AccountExtraInfo accountExtraInfo = new AccountExtraInfo();
-		accountExtraInfo = buildAccountExtraInfoBuilderFromFormsData(accountForm).create();
+		accountExtraInfo = buildingAccountExtraInfoBuilderFromFormsData(accountForm).create();
 
 		accountBilder.putAccountExtraInfo(accountExtraInfo);
 		return accountBilder;
 	}
 
-	private AccountExtraInfoBuilder buildAccountExtraInfoBuilderFromFormsData(AccountForm accountForm) {
+	private AccountExtraInfoBuilder buildingAccountExtraInfoBuilderFromFormsData(AccountForm accountForm) {
 		AccountExtraInfoBuilder accountExtraInfoBuilder = new AccountExtraInfoBuilder();
 		String realName = accountForm.getRealName();
 		if (!ServiceUtil.emptyOrNull(realName)) {

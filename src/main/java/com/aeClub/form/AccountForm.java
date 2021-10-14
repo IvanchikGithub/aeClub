@@ -32,7 +32,9 @@ import com.aeClub.entity.Account;
 public class AccountForm {
 
 	private String nameForClub;
+	//man|woman
 	private String gender;
+	//format : "yyyy-mm-dd"
 	private String birthdateFromForm;
 	private String country;
 	private String denomination;

@@ -38,7 +38,7 @@ public class JPAConfig {
 		dataSource.setPassword(environment.getRequiredProperty("spring.datasource.password"));
 		return dataSource;
 	}
-
+	
 	@Bean
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
 		LocalContainerEntityManagerFactoryBean entityManagerFactory = new LocalContainerEntityManagerFactoryBean();

@@ -1,10 +1,9 @@
 package com.aeClub.config;
 
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.context.annotation.ComponentScan;
-@ComponentScan
-@EnableAutoConfiguration
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
 public class AEApplication {
 
     public static void main(String[] args) {
