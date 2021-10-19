@@ -83,4 +83,12 @@ public class FindServiceImpl implements UserDetailsService,FindService{
 		return false;
 	}
 	
+	@Override
+	public void findAndDelete (String email) {
+		EmailPass emailPass = findEmailPass(email);
+		if (emailPass!=null) {
+			emailPassRepository.deleteByEmail(email);
+		}
+	}
+	
 }

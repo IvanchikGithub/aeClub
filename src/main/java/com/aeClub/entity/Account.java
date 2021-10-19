@@ -9,10 +9,14 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import com.aeClub.enums.SettingsWallType;
 import com.aeClub.enums.WallType;
@@ -70,12 +74,14 @@ public class Account implements Serializable{
 
 	
 	
-	
-	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "account", orphanRemoval=true)
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@OneToMany(cascade = { CascadeType.ALL }, mappedBy = "account")
 	private List<Picture> pictures;
-	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "account", orphanRemoval=true)
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@OneToMany(cascade = { CascadeType.ALL }, mappedBy = "account", orphanRemoval = true)
 	private List<Hobby> hobbies;
-	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "account", orphanRemoval=true)
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@OneToMany(cascade = { CascadeType.ALL }, mappedBy = "account", orphanRemoval = true)
 	private List<Language> languages;
 
 	@Transient

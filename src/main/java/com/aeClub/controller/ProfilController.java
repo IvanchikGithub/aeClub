@@ -134,9 +134,9 @@ public class ProfilController {
 	public ModelAndView getSettingsWallMainInfo(Model model,
 			@AuthenticationPrincipal CurrentProfile currentProfile) {
 		Account account = findService.getAccountById(currentProfile.getId());
-		if (account.getClass().getSimpleName().equals("AccountEmpty")) {
-			return new ModelAndView("redirect:/profile/home");
-		}
+//		if (account.getClass().getSimpleName().equals("AccountEmpty")) {
+//			return new ModelAndView("redirect:/profile/home");
+//		}
 		account.setActiveSettingsWall(SettingsWallType.MAIN_INFO);
 		model.addAttribute("account", account);
 		model = getService.getDataFromCatalogues(model);
@@ -161,7 +161,6 @@ public class ProfilController {
 	public ModelAndView getSettingsWallPictures(Model model,
 			@ModelAttribute("account") Account account) {
 		account.setActiveSettingsWall(SettingsWallType.PICTURES);
-		account.getPictures();
 		model.addAttribute("accountForm", new AccountForm());
 		return new ModelAndView("/profile/settings");
 	}

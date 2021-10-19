@@ -36,7 +36,7 @@ public class HomeController {
 	// LoggerFactory.getLogger(HomeController.class);
 
 	@Autowired
-	private CreateNewUserService createService;
+	private CreateNewUserService createNewUserService;
 
 	@Autowired
 	private CreateEmailPassValidator createEmailPassValidator;
@@ -90,7 +90,7 @@ public class HomeController {
 		if (result.hasErrors()) {
 			return new ModelAndView("/registration");
 		}
-		createService.creatingNewPairEmailAndPass(form.getEmail(), form.getPassword1());
+		createNewUserService.creatingNewPairEmailAndPass(form.getEmail(), form.getPassword1());
 		return new ModelAndView("redirect:/profile/registrationMainInfo");
 
 	}

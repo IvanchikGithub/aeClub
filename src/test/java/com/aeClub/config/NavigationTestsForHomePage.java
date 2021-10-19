@@ -92,6 +92,7 @@ public class NavigationTestsForHomePage {
 						.password("password", "notCorrectPassword"))
 				.andExpect(redirectedUrl("/login-failed"));
 	}
+	
 
 	@Test
 	@DisplayName(value = " /home to /profile/home for registrated users")

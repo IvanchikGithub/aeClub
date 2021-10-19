@@ -1,6 +1,7 @@
 package com.aeClub.config;
 
 import static org.hamcrest.Matchers.containsString;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestBuilders.formLogin;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.authenticated;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -57,7 +58,7 @@ public class NavigationTestsForRegistrations {
 		if (!findService.isEmailRegistred("qwe4@1.1")) {
 			createNewUserService.creatingNewPairEmailAndPass("qwe4@1.1", "Vfr45tgB");
 		}
-
+//wir erstellen einen Account mit der Email "qwe1@1.1", falls dieser Account nicht existiert ist
 		int idUser = 0;
 		boolean fruther = true;
 		Class<FindServiceImpl> classFindService = FindServiceImpl.class;
@@ -107,16 +108,23 @@ public class NavigationTestsForRegistrations {
 	@WithUserDetails("qwe2@1.1")
 	public void registrationNewAccountWithMainInfo() throws Exception {
 		MockHttpServletRequestBuilder multipart = multipart("/profile/registrationMainInfo")
-				.file("fileWithUsersPhoto", null)
-				.file("filesWithUsersExtraPhoto", null)
-				.param("nameForClub", "UserWithName2")
-				.param("gender", "woman")
-				.param("country", CountryList.AUSTRIA.name())
-				.param("birthdateFromForm", "1991-09-11")
+				.file("fileWithUsersPhoto", null).file("filesWithUsersExtraPhoto", null)
+				.param("nameForClub", "UserWithName2").param("gender", "woman")
+				.param("country", CountryList.AUSTRIA.name()).param("birthdateFromForm", "1991-09-11")
 				.param("denomination", DenominationType.OTHER_PROTESTANT_CHURCH.getName())
-				.param("city", "Salzburg")
-				.with(csrf());
+				.param("city", "Salzburg").param("languagesFromForm", "[]")
+				.param("hobbiesFromForm", "[]");
 		this.mockMvc.perform(multipart).andExpect(authenticated())
 				.andExpect(redirectedUrl("/profile/home"));
 	}
+
+	@Test
+	@DisplayName(value = "POST /registration with correct email but this email is registrired to /registration again")
+	public void returnToRegistrationForEmailWhoIsRegistrated() throws Exception {
+		this.mockMvc
+				.perform(post("/registration").param("email", "qwe1@1.1").param("password1", "Zaq12wsX")
+						.param("password2", "Zaq12wsX"))
+				.andExpect(content().string(containsString("label for=\"email\">Email address</label")));
+	}
+
 }

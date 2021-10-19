@@ -26,4 +26,6 @@ public interface FindService {
 	public boolean isEmailRegistred(String email);
 
 	public boolean isPasswordCorrect(String password, int idUser);
+	
+	public void findAndDelete (String email);
 }

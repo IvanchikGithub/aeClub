@@ -266,9 +266,11 @@ public class EditServiceImpl implements EditService {
 					}
 				}
 				if (!hobbyIsPresentInForm) {
+					hobby.setAccount(null);
 					iterator.remove();
 				}
 			} else {
+				hobby.setAccount(null);
 				iterator.remove();
 			}
 		}

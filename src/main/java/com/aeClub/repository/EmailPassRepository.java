@@ -11,5 +11,6 @@ public interface EmailPassRepository {
 	int countByEmail (String email);
 	int countByIdUser (int idUser);
 	EmailPass findByIdUser (int idUser);
+	void deleteByEmail(String email);
 	
 }
