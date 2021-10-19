@@ -1,8 +1,6 @@
 package com.aeClub.config;
 
 import static org.hamcrest.Matchers.containsString;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestBuilders.formLogin;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.authenticated;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
@@ -11,9 +9,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.lang.reflect.Method;
-
-import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -25,13 +20,11 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
-import com.aeClub.entity.EmailPass;
 import com.aeClub.enums.CountryList;
 import com.aeClub.enums.DenominationType;
 import com.aeClub.form.AccountForm;
 import com.aeClub.service.CreateNewUserService;
 import com.aeClub.service.FindService;
-import com.aeClub.service.impl.FindServiceImpl;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -39,8 +32,6 @@ import com.aeClub.service.impl.FindServiceImpl;
 public class NavigationTestsForRegistrations {
 	@Autowired
 	private MockMvc mockMvc;
-	@Autowired
-	FindService findService;
 
 	// 4 emails and passwords (for 4 test-users) are puting in databank
 	@BeforeAll
@@ -59,19 +50,8 @@ public class NavigationTestsForRegistrations {
 			createNewUserService.creatingNewPairEmailAndPass("qwe4@1.1", "Vfr45tgB");
 		}
 //wir erstellen einen Account mit der Email "qwe1@1.1", falls dieser Account nicht existiert ist
-		int idUser = 0;
-		boolean fruther = true;
-		Class<FindServiceImpl> classFindService = FindServiceImpl.class;
-		try {
-			Method method = classFindService.getDeclaredMethod("findEmailPass", String.class);
-			method.setAccessible(true);
-			EmailPass emailPass = (EmailPass) method.invoke(findService, "qwe1@1.1");
-			idUser = emailPass.getIdUser();
-		} catch (Exception e) {
-			e.printStackTrace();
-			fruther = false;
-		}
-		Assumptions.assumeTrue(fruther);
+		
+		int idUser = findService.giveMeIdUserForEmail("qwe1@1.1");
 		if (idUser != 0 && findService.getAccountById(idUser) == null) {
 			AccountForm accountForm = new AccountForm();
 			accountForm.setNameForClub("UserWithName1");

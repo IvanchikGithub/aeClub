@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.aeClub.entity.Account;
 import com.aeClub.entity.EmailPass;
@@ -18,9 +19,8 @@ import com.aeClub.service.FindService;
 import com.aeClub.util.AccountEmpty;
 import com.aeClub.util.CurrentProfile;
 
-
 @Service
-public class FindServiceImpl implements UserDetailsService,FindService{
+public class FindServiceImpl implements UserDetailsService, FindService {
 	private static final Logger LOGGER = LoggerFactory.getLogger(FindServiceImpl.class);
 	@Autowired
 	private EmailPassRepository emailPassRepository;
@@ -28,8 +28,7 @@ public class FindServiceImpl implements UserDetailsService,FindService{
 	private PasswordEncoder passwordEncoder;
 	@Autowired
 	AccountRepository accountRepository;
-	
-	
+
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 		EmailPass emailPass = findEmailPass(email);
@@ -40,12 +39,11 @@ public class FindServiceImpl implements UserDetailsService,FindService{
 			throw new UsernameNotFoundException("Profile not found by " + emailPass);
 		}
 	}
-	
-	private EmailPass findEmailPass (String email) {
+
+	private EmailPass findEmailPass(String email) {
 		return emailPassRepository.findByEmail(email);
 	}
-	
-	
+
 	@Override
 	public Account getAccountById(int idUser) {
 		Account account = accountRepository.findByIdUser(idUser);
@@ -55,40 +53,43 @@ public class FindServiceImpl implements UserDetailsService,FindService{
 		account.setActiveWall(WallType.EVERYDAY_LIVE_WALL);
 		return account;
 	}
-	
-	
-	
-//	public long giveMeIdForEmail (String email) {
-//		Long userId = findEmailPass(email).getId();
-//		 if (userId!=null) {
-//			return userId;
-//		}
-//	}
-	
+
+	@Override
+	public int giveMeIdUserForEmail(String email) {
+		EmailPass emailPass = findEmailPass(email);
+		int userId = 0;
+		if (emailPass != null) {
+			userId = emailPass.getIdUser();
+		}
+		return userId;
+	}
+
 	@Override
 	public boolean isEmailRegistred(String email) {
-		if (emailPassRepository.countByEmail(email)>0) {
+		if (emailPassRepository.countByEmail(email) > 0) {
 			return true;
 		} else {
 			return false;
 		}
 	}
+
 	@Override
-	public boolean isPasswordCorrect (String password, int idUser ) {
+	public boolean isPasswordCorrect(String password, int idUser) {
 		EmailPass emailPass = emailPassRepository.findByIdUser(idUser);
-		if (emailPass!=null && passwordEncoder.matches(password, emailPass.getPassword())) {
-			
+		if (emailPass != null && passwordEncoder.matches(password, emailPass.getPassword())) {
+
 			return true;
 		}
 		return false;
 	}
-	
+
 	@Override
-	public void findAndDelete (String email) {
+	@Transactional
+	public void findAndDelete(String email) {
 		EmailPass emailPass = findEmailPass(email);
-		if (emailPass!=null) {
-			emailPassRepository.deleteByEmail(email);
+		if (emailPass != null) {
+			emailPassRepository.removeByEmail(email);
 		}
 	}
-	
+
 }

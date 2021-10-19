@@ -49,7 +49,7 @@ public class ProfilController {
 	private static final Logger LOG = LoggerFactory.getLogger(ProfilController.class);
 
 	@Autowired
-	private CreateNewUserService createService;
+	private CreateNewUserService createNewUserService;
 	@Autowired
 	private GetService getService;
 	@Autowired
@@ -124,7 +124,7 @@ public class ProfilController {
 			return new ModelAndView("/profile/registrationMainInfo");
 		}
 
-		createService.createUsersMainInformation(currentProfile.getId(), accountForm, fileWithUsersPhoto,
+		createNewUserService.createUsersMainInformation(currentProfile.getId(), accountForm, fileWithUsersPhoto,
 				filesWithUsersExtraPhoto);
 
 		return new ModelAndView("redirect:/profile/home");

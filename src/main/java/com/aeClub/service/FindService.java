@@ -28,4 +28,6 @@ public interface FindService {
 	public boolean isPasswordCorrect(String password, int idUser);
 	
 	public void findAndDelete (String email);
+	
+	public int giveMeIdUserForEmail (String email);
 }
