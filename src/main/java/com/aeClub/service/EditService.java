@@ -18,7 +18,16 @@ import com.aeClub.form.AccountForm;
  */
 @Service
 public interface EditService {
-	public WallType changeActiveWall(int newWallType);
+	
+	
+	/**
+	 * Diese Methode besorgt ein richtiges Objekt von dem Typ <i>WallType</i><br>
+	 * Dieses Objekt entsprechend die richtige Wand, die dargestellt werden muss. 
+	 * 
+	 * @param wallType 0, 1, 2, 3 aber als eine Zeichenkette
+	 * @return
+	 */
+	public WallType changeActiveWall(String wallType);
 
 	/**
 	 * Diese Methode läuft die Auflistungen Hobbys und Sprachen aus den Katalogen durch, falls

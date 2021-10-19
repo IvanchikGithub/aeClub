@@ -71,7 +71,7 @@ public class Account implements Serializable{
 	
 	
 	
-	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "account")
+	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "account", orphanRemoval=true)
 	private List<Picture> pictures;
 	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "account", orphanRemoval=true)
 	private List<Hobby> hobbies;

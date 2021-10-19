@@ -98,7 +98,7 @@ public class ProfilController {
 	@GetMapping(value = "/profile/home/{wallType}")
 	public ModelAndView getUsersHomeOtherWall(Model model, @ModelAttribute("account") Account account,
 			@PathVariable String wallType) {
-		account.setActiveWall(editService.changeActiveWall(Integer.parseInt(wallType)));
+		account.setActiveWall(editService.changeActiveWall(wallType));
 		model.addAttribute("account", account);
 		return new ModelAndView("/profile/home");
 	}
@@ -161,6 +161,7 @@ public class ProfilController {
 	public ModelAndView getSettingsWallPictures(Model model,
 			@ModelAttribute("account") Account account) {
 		account.setActiveSettingsWall(SettingsWallType.PICTURES);
+		account.getPictures();
 		model.addAttribute("accountForm", new AccountForm());
 		return new ModelAndView("/profile/settings");
 	}

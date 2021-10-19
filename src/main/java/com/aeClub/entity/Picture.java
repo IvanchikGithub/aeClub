@@ -27,7 +27,7 @@ public class Picture {
 	@Column(nullable = false)
 	private String linkPicture;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "id_profile", nullable = false)
 	private Account account;
 

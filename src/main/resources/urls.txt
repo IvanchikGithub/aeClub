@@ -1,0 +1,15 @@
+/home
+/login-failed
+/registration
+/registration POST
+
+/profile/home
+/profile/home/{wallType}
+/profile/registrationMainInfo
+/profile/registrationMainInfo POST
+/profile/settings/pictures
+/profile/settings/pictures POST
+/profile/settings/password
+/profile/settings/password POST
+/profile/settings/other
+/profile/settings/other POST

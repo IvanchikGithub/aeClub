@@ -7,7 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,15 +36,10 @@ public class NavigationTestsForHomePage {
 	@Autowired
 	private MockMvc mockMvc;
 
-	@Autowired
-	private CreateNewUserService createNewUserService;
-
-	@Autowired
-	private FindService findService;
-
 	// 4 emails and passwords (for 4 test-users) are puting in databank
-	@BeforeEach
-	private void init() {
+	@BeforeAll
+	private static void init(@Autowired	CreateNewUserService createNewUserService,
+			@Autowired FindService findService) {
 		if (!findService.isEmailRegistred("qwe1@1.1")) {
 			createNewUserService.creatingNewPairEmailAndPass("qwe1@1.1", "Zaq12wsX");
 		}
@@ -59,49 +54,50 @@ public class NavigationTestsForHomePage {
 		}
 	}
 
-	
 	@Test
-	@DisplayName (value = "/home to /home for not registrated users")
+	@DisplayName(value = "/home to /home for not registrated users")
 	public void receiveHomePage() throws Exception {
 		this.mockMvc.perform(get("/home")).andExpect(status().isOk()).andExpect(
 				content().string(containsString("<form action=\"/login-handler\" method=\"post\">")));
 	}
 
 	@Test
-	@DisplayName (value = " /profile/home to /home for not registrated users")
+	@DisplayName(value = " /profile/home to /home for not registrated users")
 	public void redirectToHomePageForNotRegistratedUsers() throws Exception {
 		this.mockMvc.perform(get("/profile/home")).andExpect(status().is3xxRedirection())
 				.andExpect(redirectedUrl("http://localhost/home"));
 	}
 
 	@Test
-	@DisplayName (value = "POST /home with correct email and pass to /profile/home")
+	@DisplayName(value = "POST /home with correct email and pass to /profile/home")
 	public void redirectedToProfileHomeForUsersWithCorrectEmailAndPassword() throws Exception {
 		this.mockMvc.perform(formLogin().loginProcessingUrl("/login-handler").user("email", "qwe1@1.1")
 				.password("password", "Zaq12wsX")).andExpect(redirectedUrl("/profile/home"));
 	}
-	
+
 	@Test
-	@DisplayName (value = "POST /home with notcorrect email to /login-failed")
+	@DisplayName(value = "POST /home with notcorrect email to /login-failed")
 	public void redirectedToHomeForNotRegistratedUsers() throws Exception {
-		this.mockMvc.perform(formLogin().loginProcessingUrl("/login-handler").user("email", "notregistried@1.1")
-				.password("password", "Zaq12wsX")).andExpect(redirectedUrl("/login-failed"));
+		this.mockMvc
+				.perform(formLogin().loginProcessingUrl("/login-handler")
+						.user("email", "notregistried@1.1").password("password", "Zaq12wsX"))
+				.andExpect(redirectedUrl("/login-failed"));
 	}
-	
+
 	@Test
-	@DisplayName (value = "POST /home with notcorrect pass to /login-failed")
+	@DisplayName(value = "POST /home with notcorrect pass to /login-failed")
 	public void redirectedToHomeForUserWithNotCorrectPassword() throws Exception {
-		this.mockMvc.perform(formLogin().loginProcessingUrl("/login-handler").user("email", "qwe1@1.1")
-				.password("password", "notCorrectPassword")).andExpect(redirectedUrl("/login-failed"));
+		this.mockMvc
+				.perform(formLogin().loginProcessingUrl("/login-handler").user("email", "qwe1@1.1")
+						.password("password", "notCorrectPassword"))
+				.andExpect(redirectedUrl("/login-failed"));
 	}
-	
+
 	@Test
-	@DisplayName (value = " /home to /profile/home for registrated users")
-	@WithUserDetails("qwe4@1.1")
+	@DisplayName(value = " /home to /profile/home for registrated users")
+	@WithUserDetails("qwe1@1.1")
 	public void redirectedToProfileHomeForRegistratedUsers() throws Exception {
 		this.mockMvc.perform(get("/home")).andExpect(redirectedUrl("/profile/home"));
 	}
-	
-	
-	
+
 }

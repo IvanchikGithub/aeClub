@@ -32,7 +32,7 @@ public class EditServiceImpl implements EditService {
 
 	@Autowired
 	private EmailPassRepository emailPassRepository;
-	
+
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
@@ -40,20 +40,27 @@ public class EditServiceImpl implements EditService {
 	private PictureService pictureService;
 
 	@Override
-	public WallType changeActiveWall(int newWallType) {
-		if (newWallType >= 0 && newWallType <= 3) {
-			for (WallType wallType : WallType.values()) {
-				if (wallType.ordinal() == newWallType) {
-					return wallType;
+	public WallType changeActiveWall(String wallType) {
+		int newWallType;
+		try {
+			newWallType = Integer.parseInt(wallType);
+			if (newWallType >= 0 && newWallType <= 3) {
+				//die Suche einen entsprechenden Wert
+				for (WallType value : WallType.values()) {
+					if (value.ordinal() == newWallType) {
+						return value;
+					}
 				}
 			}
+		} catch (NumberFormatException e) {
+			//do nothing
 		}
 		return WallType.EVERYDAY_LIVE_WALL;
 	}
 
 	public Model setCheckedInHobbiesAndLanguagesLists(Model model, Account account) {
 		@SuppressWarnings(value = { "unchecked" })
-	List<Hobby> hobbiesFromCatalog = (List<Hobby>) model.getAttribute("hobbiesFromCatalog");
+		List<Hobby> hobbiesFromCatalog = (List<Hobby>) model.getAttribute("hobbiesFromCatalog");
 		List<Hobby> usersHobbies = account.getHobbies();
 		if (usersHobbies != null && usersHobbies.size() > 0) {
 			List<Hobby> checkedHobbies = setCheckForHobbiesWhichAreUsersHobby(hobbiesFromCatalog,
