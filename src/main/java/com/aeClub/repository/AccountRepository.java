@@ -9,6 +9,6 @@ public interface AccountRepository {
 	void save(Account account);
 	int countByIdUser (int idUser);
 	Account findByIdUser (int idUser);
-	void removeAll();
+	void removeByNameForClub(String nameForClub);
 	
 }

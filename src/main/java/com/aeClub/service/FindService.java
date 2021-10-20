@@ -27,7 +27,11 @@ public interface FindService {
 
 	public boolean isPasswordCorrect(String password, int idUser);
 	
-	public void findAndDelete (String email);
+	public void findAndDeleteFromEmailPassTable (String email);
+	
+	public void findAndDeleteFromAccountTable(String nameForClub);
 	
 	public int giveMeIdUserForEmail (String email);
+	
+	
 }

@@ -4,8 +4,12 @@ import java.util.stream.Stream;
 
 import org.assertj.core.util.Arrays;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -17,7 +21,6 @@ import com.aeClub.entity.Account;
 import com.aeClub.enums.CountryList;
 import com.aeClub.enums.DenominationType;
 import com.aeClub.form.AccountForm;
-import com.aeClub.repository.AccountRepository;
 import com.aeClub.service.CreateNewUserService;
 import com.aeClub.service.FindService;
 import com.aeClub.util.AccountEmpty;
@@ -25,6 +28,7 @@ import com.aeClub.util.AccountEmpty;
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestPropertySource("/application-test.properties")
+@TestMethodOrder (OrderAnnotation.class)
 public class BusinessLogicByRegistration {
 	@Autowired
 	private CreateNewUserService createNewUserService;
@@ -33,20 +37,12 @@ public class BusinessLogicByRegistration {
 
 	@BeforeAll
 	private static void init(@Autowired CreateNewUserService createNewUserService,
-			@Autowired FindService findService, @Autowired AccountRepository accountRepository) {
-		findService.findAndDelete("qwe7@1.1");
-		findService.findAndDelete("qwe8@1.1");
-		findService.findAndDelete("qwe9@1.1");
-		
-		
+			@Autowired FindService findService) {
+		findService.findAndDeleteFromEmailPassTable("qwe7@1.1");
+		findService.findAndDeleteFromEmailPassTable("qwe8@1.1");
+		findService.findAndDeleteFromEmailPassTable("qwe9@1.1");
+		findService.findAndDeleteFromAccountTable("BeautifulSun");
 	}
-	
-		public static Stream<Object> dataForCreatingNewUsers() {
-		Arguments[] testData = { Arguments.of("qwe7@1.1", "Bgt56yhN"),
-				Arguments.of("qwe8@1.1", "Nhy67ujM") };
-		return Arrays.asList(testData).stream();
-	}
-	
 	
 		public static Stream<Object> dataForCreatingMainInfoUsers () {
 		AccountForm accountForm = new AccountForm();
@@ -61,11 +57,10 @@ public class BusinessLogicByRegistration {
 	}
 	
 
-
-
 	@ParameterizedTest
-	@MethodSource("dataForCreatingNewUsers")
-	public void testSavingNewEmailAndPassInDataBase(String email, String pass) {
+	@CsvSource (value= {"'qwe7@1.1', 'Bgt56yhN'", "'qwe8@1.1', 'Nhy67ujM'"})
+	@Order(1)
+	public void savingNewEmailAndPassInDataBase(String email, String pass) {
 		Assert.isTrue(!findService.isEmailRegistred(email),"email is not deleted");
 		createNewUserService.creatingNewPairEmailAndPass(email, pass);
 		Assert.isTrue(findService.isEmailRegistred(email),"email is not created");
@@ -75,6 +70,7 @@ public class BusinessLogicByRegistration {
 	
 	@ParameterizedTest
 	@MethodSource("dataForCreatingMainInfoUsers")
+	@Order(2)
 	public void usersMainInfoIsSavingInDataBank(AccountForm accountForm) {
 		int idUser = findService.giveMeIdUserForEmail("qwe7@1.1");
 			if (idUser!=0) {

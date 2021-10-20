@@ -20,8 +20,8 @@ import com.aeClub.util.AccountEmpty;
 import com.aeClub.util.CurrentProfile;
 
 @Service
-public class FindServiceImpl implements UserDetailsService, FindService {
-	private static final Logger LOGGER = LoggerFactory.getLogger(FindServiceImpl.class);
+public class findAndDeleteFromEmailPassTable implements UserDetailsService, FindService {
+	private static final Logger LOGGER = LoggerFactory.getLogger(findAndDeleteFromEmailPassTable.class);
 	@Autowired
 	private EmailPassRepository emailPassRepository;
 	@Autowired
@@ -85,11 +85,19 @@ public class FindServiceImpl implements UserDetailsService, FindService {
 
 	@Override
 	@Transactional
-	public void findAndDelete(String email) {
+	public void findAndDeleteFromEmailPassTable(String email) {
 		EmailPass emailPass = findEmailPass(email);
 		if (emailPass != null) {
 			emailPassRepository.removeByEmail(email);
 		}
 	}
+	
+	@Override
+	@Transactional
+	public void findAndDeleteFromAccountTable(String nameForClub) {
+		accountRepository.removeByNameForClub(nameForClub);
+	}
+	
+	
 
 }
