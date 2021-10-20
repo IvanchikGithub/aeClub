@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -43,17 +44,13 @@ public class NavigationTestsForHomePage {
 		if (!findService.isEmailRegistred("qwe1@1.1")) {
 			createNewUserService.creatingNewPairEmailAndPass("qwe1@1.1", "Zaq12wsX");
 		}
-		if (!findService.isEmailRegistred("qwe2@1.1")) {
-			createNewUserService.creatingNewPairEmailAndPass("qwe2@1.1", "Xsw23edC");
-		}
-		if (!findService.isEmailRegistred("qwe3@1.1")) {
-			createNewUserService.creatingNewPairEmailAndPass("qwe3@1.1", "Cde34rfV");
-		}
-		if (!findService.isEmailRegistred("qwe4@1.1")) {
-			createNewUserService.creatingNewPairEmailAndPass("qwe4@1.1", "Vfr45tgB");
-		}
 	}
 
+	@AfterAll
+	private static void deleting (@Autowired FindService findService) {
+		findService.findAndDeleteFromEmailPassTable("qwe1@1.1");
+	}
+	
 	@Test
 	@DisplayName(value = "/home to /home for not registrated users")
 	public void receiveHomePage() throws Exception {

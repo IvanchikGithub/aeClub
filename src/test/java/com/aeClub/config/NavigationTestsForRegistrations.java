@@ -9,6 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -64,6 +65,16 @@ public class NavigationTestsForRegistrations {
 
 		}
 
+	}
+	
+	@AfterAll
+	private static void deleting (@Autowired FindService findService) {
+		findService.findAndDeleteFromAccountTable("UserWithName1");
+		findService.findAndDeleteFromAccountTable("UserWithName2");
+		findService.findAndDeleteFromEmailPassTable("qwe1@1.1");
+		findService.findAndDeleteFromEmailPassTable("qwe2@1.1");
+		findService.findAndDeleteFromEmailPassTable("qwe3@1.1");
+		findService.findAndDeleteFromEmailPassTable("qwe4@1.1");
 	}
 
 	@Test

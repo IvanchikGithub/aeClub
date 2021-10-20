@@ -3,6 +3,7 @@ package com.aeClub.config;
 import java.util.stream.Stream;
 
 import org.assertj.core.util.Arrays;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
@@ -35,13 +36,11 @@ public class BusinessLogicByRegistration {
 	@Autowired
 	private FindService findService;
 
-	@BeforeAll
-	private static void init(@Autowired CreateNewUserService createNewUserService,
-			@Autowired FindService findService) {
+	@AfterAll
+	private static void deleting (@Autowired FindService findService) {
+		findService.findAndDeleteFromAccountTable("BeautifulSun");
 		findService.findAndDeleteFromEmailPassTable("qwe7@1.1");
 		findService.findAndDeleteFromEmailPassTable("qwe8@1.1");
-		findService.findAndDeleteFromEmailPassTable("qwe9@1.1");
-		findService.findAndDeleteFromAccountTable("BeautifulSun");
 	}
 	
 		public static Stream<Object> dataForCreatingMainInfoUsers () {

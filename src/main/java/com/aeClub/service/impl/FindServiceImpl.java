@@ -20,8 +20,8 @@ import com.aeClub.util.AccountEmpty;
 import com.aeClub.util.CurrentProfile;
 
 @Service
-public class findAndDeleteFromEmailPassTable implements UserDetailsService, FindService {
-	private static final Logger LOGGER = LoggerFactory.getLogger(findAndDeleteFromEmailPassTable.class);
+public class FindServiceImpl implements UserDetailsService, FindService {
+	private static final Logger LOGGER = LoggerFactory.getLogger(FindServiceImpl.class);
 	@Autowired
 	private EmailPassRepository emailPassRepository;
 	@Autowired
