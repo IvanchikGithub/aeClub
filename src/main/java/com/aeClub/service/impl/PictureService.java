@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.aeClub.entity.Picture;
-import com.aeClub.enums.PicturesType;
+import com.aeClub.enums.PicturesTypes;
 
 import net.coobird.thumbnailator.Thumbnails;
 
@@ -27,7 +27,7 @@ public class PictureService {
 		List<Picture> pictures = new ArrayList<Picture>();
 		for (int i = 0; i < filesWithUsersExtraPhoto.length; i++) {
 			Optional<String> recievedLinkOnPictureInAlbum = savePictureInStorage(
-					filesWithUsersExtraPhoto[i], PicturesType.PHOTO_IN_ALBUM);
+					filesWithUsersExtraPhoto[i], PicturesTypes.PHOTO_IN_ALBUM);
 			if (!recievedLinkOnPictureInAlbum.isEmpty()) {
 				Picture picture = new Picture(recievedLinkOnPictureInAlbum.get()+".jpg");
 				pictures.add(picture);
@@ -37,7 +37,7 @@ public class PictureService {
 	}
 
 	public Optional<String> savePictureInStorage(MultipartFile fileWithUsersPhoto,
-			PicturesType pictureType) {
+			PicturesTypes pictureType) {
 		if (fileWithUsersPhoto==null||fileWithUsersPhoto.isEmpty()) {
 			return Optional.empty();
 		}
@@ -62,7 +62,7 @@ public class PictureService {
 	}
 
 	private boolean savePictureFullSizeInStorage(MultipartFile fileWithUsersPhoto,
-			String generatedLinkOnPhotoProfile, PicturesType picturesType) {
+			String generatedLinkOnPhotoProfile, PicturesTypes picturesType) {
 		try {
 			fileWithUsersPhoto.transferTo(new File(
 					rootPath + picturesType.getDirectory() + generatedLinkOnPhotoProfile + ".jpg"));
@@ -79,7 +79,7 @@ public class PictureService {
 	}
 
 	private boolean savePictureSmallSizeInStorage(String generatedLinkOnPhotoProfile,
-			PicturesType picturesType) {
+			PicturesTypes picturesType) {
 		try {
 			Thumbnails.of(rootPath + picturesType.getDirectory() + generatedLinkOnPhotoProfile + ".jpg")
 					.size(110, 110).outputFormat("jpg").outputQuality(0.90).toFile(rootPath

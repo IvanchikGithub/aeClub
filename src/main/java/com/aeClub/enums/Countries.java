@@ -1,6 +1,6 @@
 package com.aeClub.enums;
 
-public enum CountryList {
+public enum Countries {
 	AFGHANISTAN("Afghanistan"), ALBANIA("Albania"), ALGERIA("Algeria"), ANDORRA("Andorra"), ANGOLA("Angola"),
 	ANTIGUA_AND_BARBUDA("Antigua and Barbuda"), ARGENTINA("Argentina"), ARMENIA("Armenia"), AUSTRALIA("Australia"),
 	AUSTRIA("Austria"), AZERBAIJAN("Azerbaijan"), THE_BAHAMAS("The Bahamas"), BAHRAIN("Bahrain"),
@@ -48,7 +48,7 @@ public enum CountryList {
 
 	private String name;
 
-	CountryList(String name) {
+	Countries(String name) {
 		this.name = name;
 	}
 

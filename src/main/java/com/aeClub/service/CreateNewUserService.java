@@ -15,7 +15,7 @@ import com.aeClub.form.AccountForm;
  * Email und Password </i> und <i> die Hauptinformation des Nutzersprofil </i> verknüpfen
  * sind.
  * 
- * @author ivasy
+ * @author ivan romani
  *
  */
 public interface CreateNewUserService {

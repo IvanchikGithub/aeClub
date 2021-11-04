@@ -15,7 +15,7 @@ import com.aeClub.form.CreateEmailPassForm;
  * JPA. Wir nutzen <b>idUser</b>, denn diese Attribute mit id des Nutzers verknupft ist. <b>Email</b>
  * und <b>Password</b> bekommen wir uber den CreateEmailPassForm
  * 
- * @author ivasy
+ * @author ivan romani
  * @see CreateEmailPassForm
  */
 

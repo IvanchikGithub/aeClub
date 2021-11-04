@@ -18,7 +18,7 @@ import com.aeClub.util.AccountExtraInfoBuilder;
  * <i>String aboutMe</i><br>
  * <i>String aboutYou</i><br>
  * 
- * @author ivasy
+ * @author ivan romani
  *
  */
 

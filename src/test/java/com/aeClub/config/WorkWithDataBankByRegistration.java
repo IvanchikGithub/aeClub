@@ -25,11 +25,11 @@ import com.aeClub.entity.Account;
 import com.aeClub.entity.Hobby;
 import com.aeClub.entity.Language;
 import com.aeClub.enums.AmmountChildrenType;
-import com.aeClub.enums.CountryList;
-import com.aeClub.enums.DenominationType;
-import com.aeClub.enums.EducationLevel;
-import com.aeClub.enums.HobbyType;
-import com.aeClub.enums.LanguageType;
+import com.aeClub.enums.Countries;
+import com.aeClub.enums.DenominationTypes;
+import com.aeClub.enums.EducationLevels;
+import com.aeClub.enums.HobbyTypes;
+import com.aeClub.enums.LanguageTypes;
 import com.aeClub.form.AccountForm;
 import com.aeClub.service.CreateNewUserService;
 import com.aeClub.service.FindService;
@@ -38,7 +38,7 @@ import com.aeClub.util.AccountEmpty;
 @SpringBootTest
 @TestPropertySource("/application-test.properties")
 @TestMethodOrder(OrderAnnotation.class)
-public class BusinessLogicByRegistration {
+public class WorkWithDataBankByRegistration {
 	@Autowired
 	private CreateNewUserService createNewUserService;
 	@Autowired
@@ -69,23 +69,23 @@ public class BusinessLogicByRegistration {
 	@ParameterizedTest
 	@MethodSource("dataForCreatingUserWithMainInfoOnly")
 	@Order(2)
-	public void usersMainInfoIsSavingInDataBank(String email, AccountForm accountForm) {
+	public void usersMainInfoIsSavedInDataBank(String email, AccountForm accountForm) {
 		int idUser = findService.giveMeIdUserForEmail(email);
 		if (idUser != 0) {
 			Account account = findService.getAccountById(idUser);
 			isInstanceOf(AccountEmpty.class, account, "account for " + email + "must not be null");
 			createNewUserService.createUsersMainInformation(idUser, accountForm, null, null);
-			account = findService.getAccountById(idUser);
-
+			account = findService.getAccountById(idUser);// diese Methode liefert Account oder
+															// AccountEmpty zurueck
 			isInstanceOf(Account.class, account, "account is not saved");
 			isTrue(account.getNameForClub().equals(NAME_USER_1), "the name for club is not saved");
 			isTrue(account.getGender().equals("woman"), "the gender is not saved");
 			isTrue(account.getBirthdate().equals(LocalDate.of(1968, 12, 25)),
 					"the birthday is not saved");
-			isTrue(account.getCountry().equals(CountryList.TURKEY.getName()),
+			isTrue(account.getCountry().equals(Countries.TURKEY.getName()),
 					"the country is not saved");
 			isTrue(account.getCity().equals("Stambul"), "the city is not saved");
-			isTrue(account.getDenomination().equals(DenominationType.CHARISMATIC_CHURCH.getName()),
+			isTrue(account.getDenomination().equals(DenominationTypes.CHARISMATIC_CHURCH.getName()),
 					"the denomination is not saved");
 
 		} else {
@@ -98,9 +98,9 @@ public class BusinessLogicByRegistration {
 		accountForm.setNameForClub(NAME_USER_1);
 		accountForm.setGender("woman");
 		accountForm.setBirthdateFromForm("1968-12-25");
-		accountForm.setCountry(CountryList.TURKEY.getName());
+		accountForm.setCountry(Countries.TURKEY.getName());
 		accountForm.setCity("Stambul");
-		accountForm.setDenomination(DenominationType.CHARISMATIC_CHURCH.getName());
+		accountForm.setDenomination(DenominationTypes.CHARISMATIC_CHURCH.getName());
 
 		Arguments[] testData = { Arguments.of(EMAIL_1, accountForm) };
 
@@ -122,10 +122,10 @@ public class BusinessLogicByRegistration {
 			isTrue(account.getGender().equals("man"), "the gender is not saved");
 			isTrue(account.getBirthdate().equals(LocalDate.of(1976, 04, 11)),
 					"the birthday is not saved");
-			isTrue(account.getCountry().equals(CountryList.BRAZIL.getName()),
+			isTrue(account.getCountry().equals(Countries.BRAZIL.getName()),
 					"the country is not saved");
 			isTrue(account.getCity().equals("Rio"), "the city is not saved");
-			isTrue(account.getDenomination().equals(DenominationType.NOT_PROTESTANT_CHURCH.getName()),
+			isTrue(account.getDenomination().equals(DenominationTypes.NOT_PROTESTANT_CHURCH.getName()),
 					"the denomination is not saved");
 			isTrue(account.getAccountExtraInfo().getRealName().equals("Piter"),
 					"the real name is not saved");
@@ -134,17 +134,17 @@ public class BusinessLogicByRegistration {
 			isTrue(account.getAccountExtraInfo().getAmountChildren()
 					.equals(AmmountChildrenType.NO_CHILDREN.getName()), "the real name is not saved");
 			isTrue(account.getAccountExtraInfo().getEducation()
-					.equals(EducationLevel.BACHELORS_DEGREE.getName()), "the real name is not saved");
+					.equals(EducationLevels.BACHELORS_DEGREE.getName()), "the real name is not saved");
 			isTrue(account.getAccountExtraInfo().getAboutMe().equals("I'm a good person"),
 					"the real name is not saved");
 			isTrue(account.getAccountExtraInfo().getAboutYou().equals("I want to meet very good woman"),
 					"the real name is not saved");
 			List<String> hobbies = getListStringFromListHobby(account.getHobbies());
 			List<String> hobbisWithTestData = getListStringHobbyWithTestValues();
-			isTrue(hobbies.equals(hobbisWithTestData),"list of hobbies is not correct saved");
+			isTrue(hobbies.equals(hobbisWithTestData), "list of hobbies is not correct saved");
 			List<String> languages = getListStringFromListLanguage(account.getLanguages());
 			List<String> languagesWithTestData = getListStringLanguageWithTestValues();
-			isTrue(languages.equals(languagesWithTestData),"list of languages is not correct saved");
+			isTrue(languages.equals(languagesWithTestData), "list of languages is not correct saved");
 		} else {
 			throw new IllegalArgumentException("idUser must not be 0");
 		}
@@ -155,58 +155,58 @@ public class BusinessLogicByRegistration {
 		accountForm.setNameForClub(NAME_USER_2);
 		accountForm.setGender("man");
 		accountForm.setBirthdateFromForm("1976-04-11");
-		accountForm.setCountry(CountryList.BRAZIL.getName());
+		accountForm.setCountry(Countries.BRAZIL.getName());
 		accountForm.setCity("Rio");
-		accountForm.setDenomination(DenominationType.NOT_PROTESTANT_CHURCH.getName());
+		accountForm.setDenomination(DenominationTypes.NOT_PROTESTANT_CHURCH.getName());
 		accountForm.setRealName("Piter");
 		accountForm.setRealSurname("Schmidt");
 		accountForm.setAmountChildren(AmmountChildrenType.NO_CHILDREN.getName());
-		accountForm.setEducation(EducationLevel.BACHELORS_DEGREE.getName());
+		accountForm.setEducation(EducationLevels.BACHELORS_DEGREE.getName());
 		accountForm.setAboutMe("I'm a good person");
 		accountForm.setAboutYou("I want to meet very good woman");
 		List<String> hobbies = new ArrayList<String>();
-		hobbies.add(HobbyType.COOKING.getName());
-		hobbies.add(HobbyType.HANDMADE.getName());
+		hobbies.add(HobbyTypes.COOKING.getName());
+		hobbies.add(HobbyTypes.HANDMADE.getName());
 		accountForm.setHobbiesFromForm(hobbies);
 		List<String> languages = new ArrayList<String>();
-		languages.add(LanguageType.ENGLISH.getName());
-		languages.add(LanguageType.GERMAN.getName());
-		languages.add(LanguageType.RUSSIAN.getName());
+		languages.add(LanguageTypes.ENGLISH.getName());
+		languages.add(LanguageTypes.GERMAN.getName());
+		languages.add(LanguageTypes.RUSSIAN.getName());
 		accountForm.setLanguagesFromForm(languages);
 
 		Arguments[] testData = { Arguments.of(EMAIL_2, accountForm) };
 		return Arrays.asList(testData).stream();
 	}
 
-	private List<String> getListStringFromListHobby (List<Hobby> hobbies) {
+	private List<String> getListStringFromListHobby(List<Hobby> hobbies) {
 		List<String> hobbiesAsString = new ArrayList<String>();
 		for (Hobby hobby : hobbies) {
 			hobbiesAsString.add(hobby.getHobbyType());
 		}
 		return hobbiesAsString;
 	}
-	
-	private List<String> getListStringHobbyWithTestValues () {
+
+	private List<String> getListStringHobbyWithTestValues() {
 		List<String> hobbiesWithTestData = new ArrayList<String>();
-		hobbiesWithTestData.add(HobbyType.COOKING.getName());
-		hobbiesWithTestData.add(HobbyType.HANDMADE.getName());
+		hobbiesWithTestData.add(HobbyTypes.COOKING.getName());
+		hobbiesWithTestData.add(HobbyTypes.HANDMADE.getName());
 		return hobbiesWithTestData;
 	}
-	
-	private List<String> getListStringFromListLanguage (List<Language> languages) {
+
+	private List<String> getListStringFromListLanguage(List<Language> languages) {
 		List<String> languagesAsString = new ArrayList<String>();
-		for (Language language: languages) {
+		for (Language language : languages) {
 			languagesAsString.add(language.getLanguageType());
 		}
 		return languagesAsString;
 	}
-	
-	private List<String> getListStringLanguageWithTestValues () {
+
+	private List<String> getListStringLanguageWithTestValues() {
 		List<String> languagesWithTestData = new ArrayList<String>();
-		languagesWithTestData.add(LanguageType.ENGLISH.getName());
-		languagesWithTestData.add(LanguageType.GERMAN.getName());
-		languagesWithTestData.add(LanguageType.RUSSIAN.getName());
+		languagesWithTestData.add(LanguageTypes.ENGLISH.getName());
+		languagesWithTestData.add(LanguageTypes.GERMAN.getName());
+		languagesWithTestData.add(LanguageTypes.RUSSIAN.getName());
 		return languagesWithTestData;
 	}
-	
+
 }

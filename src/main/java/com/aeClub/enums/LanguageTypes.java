@@ -1,6 +1,6 @@
 package com.aeClub.enums;
 
-public enum LanguageType {
+public enum LanguageTypes {
 	ALBANIAN("albanian"), ARMENIAN("armenian"), BELARUSIAN("belarusian"), BOSNIAN("bosnian"),
 	BULGARIAN("bulgarian"), CATALAN("catalan"), CRIMEAN_TATAR("crimean tatar"), CROATIAN("croatian"),
 	CZECH("czech"), DANISH("danish"), DUTCH("dutch"), ENGLISH("english"), ESTONIAN("estonian"),
@@ -14,7 +14,7 @@ public enum LanguageType {
 
 	private String name;
 
-	private LanguageType(String name) {
+	private LanguageTypes(String name) {
 		this.name = name;
 	}
 

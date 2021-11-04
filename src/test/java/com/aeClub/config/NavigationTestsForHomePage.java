@@ -25,7 +25,7 @@ import com.aeClub.service.FindService;
  * In dieser Klasse ueberpruefen wir nur richtige Navigation<br>
  * Man muss eine richtige Seite erhalten.<br>
  * 
- * @author ivasy
+ * @author ivan romani
  *
  */
 

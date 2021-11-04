@@ -1,6 +1,6 @@
 package com.aeClub.enums;
 
-public enum EducationLevel {
+public enum EducationLevels {
 	ELEMENTARY_SCHOOL("elementary school"),
 	HIGH_SCHOOL("high school"),
 	BACHELORS_DEGREE("bachelor's degree"),
@@ -8,7 +8,7 @@ public enum EducationLevel {
 	
 	private String name;
 	
-	private EducationLevel (String name) {
+	private EducationLevels (String name) {
 		this.name=name;
 	}
 

@@ -55,7 +55,7 @@
 									<label for="gendertype">Gender*</label> <select id="gendertype"
 										th:field="*{gender}">
 										<option value="">Get your gender</option>
-										<option th:each="item : ${listGender}"
+										<option th:each="item : ${genderTypes}"
 											th:value="${item.getName}" th:text="${item}"></option>
 									</select>
 									<div style="color: Tomato;"
@@ -81,7 +81,7 @@
 									<label for="gendertype">Country*</label> <select
 										id="gendertype" th:field="*{country}">
 										<option value="">Get your country</option>
-										<option th:each="item : ${listCountry}"
+										<option th:each="item : ${countries}"
 											th:value="${item.getName}" th:text="${item}"></option>
 									</select>
 									<div style="color: Tomato;"
@@ -105,7 +105,7 @@
 									<label for="gendertype">Religion Denomination*</label> <select
 										id="gendertype" th:field="*{denomination}">
 										<option value="">Get your denomination</option>
-										<option th:each="item : ${listDenomination}"
+										<option th:each="item : ${denominations}"
 											th:value="${item.getName}" th:text="${item}"></option>
 									</select>
 									<div style="color: Tomato;"
@@ -192,7 +192,7 @@
 						<label for="gendertype">Education</label> <select id="gendertype"
 							th:field="*{education}">
 							<option value="">Get your education</option>
-							<option th:each="item : ${educationLevelList}"
+							<option th:each="item : ${educationLevels}"
 								th:value="${item.getName}" th:text="${item}"></option>
 						</select>
 					</div>
@@ -211,7 +211,7 @@
 						<label for="gendertype">Amount of children</label> <select
 							id="gendertype" th:field="*{amountChildren}">
 							<option value="">Have you children?</option>
-							<option th:each="item : ${ammountChildrenTypeList}"
+							<option th:each="item : ${ammountChildrenTypes}"
 								th:value="${item.getName}" th:text="${item}"></option>
 						</select>
 					</div>

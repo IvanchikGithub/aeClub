@@ -5,7 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.aeClub.entity.Account;
-import com.aeClub.enums.WallType;
+import com.aeClub.enums.WallTypes;
 import com.aeClub.form.AccountForm;
 
 /**
@@ -13,7 +13,7 @@ import com.aeClub.form.AccountForm;
  * Es geht um die Veränderungen ein Objekt, einen Bestandteil von einem Objekt wobei die
  * massive Änderungen die Gruppe der Objekte
  * 
- * @author ivasy
+ * @author ivan romani
  *
  */
 @Service
@@ -27,7 +27,7 @@ public interface EditService {
 	 * @param wallType 0, 1, 2, 3 aber als eine Zeichenkette
 	 * @return
 	 */
-	public WallType changeActiveWall(String wallType);
+	public WallTypes changeActiveWall(String wallType);
 
 	/**
 	 * Diese Methode läuft die Auflistungen Hobbys und Sprachen aus den Katalogen durch, falls

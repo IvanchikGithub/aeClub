@@ -21,8 +21,8 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
-import com.aeClub.enums.CountryList;
-import com.aeClub.enums.DenominationType;
+import com.aeClub.enums.Countries;
+import com.aeClub.enums.DenominationTypes;
 import com.aeClub.form.AccountForm;
 import com.aeClub.service.CreateNewUserService;
 import com.aeClub.service.FindService;
@@ -58,8 +58,8 @@ public class NavigationTestsForRegistrations {
 			accountForm.setNameForClub("UserWithName1");
 			accountForm.setGender("man");
 			accountForm.setBirthdateFromForm("1978-06-25");
-			accountForm.setCountry(CountryList.UKRAINE.name());
-			accountForm.setDenomination(DenominationType.NOT_SPECIFIED.name());
+			accountForm.setCountry(Countries.UKRAINE.name());
+			accountForm.setDenomination(DenominationTypes.NOT_SPECIFIED.name());
 			accountForm.setCity("Kyiv");
 			createNewUserService.createUsersMainInformation(idUser, accountForm, null, null);
 
@@ -101,8 +101,8 @@ public class NavigationTestsForRegistrations {
 		MockHttpServletRequestBuilder multipart = multipart("/profile/registrationMainInfo")
 				.file("fileWithUsersPhoto", null).file("filesWithUsersExtraPhoto", null)
 				.param("nameForClub", "UserWithName2").param("gender", "woman")
-				.param("country", CountryList.AUSTRIA.name()).param("birthdateFromForm", "1991-09-11")
-				.param("denomination", DenominationType.OTHER_PROTESTANT_CHURCH.getName())
+				.param("country", Countries.AUSTRIA.name()).param("birthdateFromForm", "1991-09-11")
+				.param("denomination", DenominationTypes.OTHER_PROTESTANT_CHURCH.getName())
 				.param("city", "Salzburg").param("languagesFromForm", "[]")
 				.param("hobbiesFromForm", "[]");
 		this.mockMvc.perform(multipart).andExpect(authenticated())

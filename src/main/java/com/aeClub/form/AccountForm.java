@@ -25,7 +25,7 @@ import com.aeClub.entity.Account;
  * private List String <i>hobbiesFromForm</i>;<br>
  * private List String <i>languagesFromForm</i>;<br>
  * 
- * @author ivasy
+ * @author ivan romani
  *
  * @see Account
  */

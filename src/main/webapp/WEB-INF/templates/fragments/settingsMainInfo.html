@@ -42,7 +42,7 @@
 					<label for="gendertype" class="col-sm-4 col-form-label">Country</label>
 					<div class="col-sm-8">
 						<select id="country" name="country">
-							<option th:each="item : ${listCountry}"
+							<option th:each="item : ${countries}"
 								th:selected="${item.getName==account.country}"
 								th:value="${item.getName}" th:text="${item}"></option>
 						</select>
@@ -64,7 +64,7 @@
 						Denomination</label>
 					<div class="col-sm-8">
 						<select id="denomination" name="denomination">
-							<option th:each="item : ${listDenomination}"
+							<option th:each="item : ${denominations}"
 								th:selected="${item.getName==account.denomination}"
 								th:value="${item.getName}" th:text="${item}"></option>
 						</select>
@@ -94,7 +94,7 @@
 					<label for="gendertype" class="col-sm-4 col-form-label">Education</label>
 					<div class="col-sm-8">
 						<select id="education" name="education">
-							<option th:each="item : ${educationLevelList}"
+							<option th:each="item : ${educationLevels}"
 								th:selected="${item.getName==account.accountExtraInfo.education}"
 								th:value="${item.getName}" th:text="${item}"></option>
 						</select>
@@ -115,7 +115,7 @@
 					<label class="col-sm-4 col-form-label">Amount of children</label>
 					<div class="col-sm-8">
 						<select id="amountChildren" name="amountChildren">
-							<option th:each="item : ${ammountChildrenTypeList}"
+							<option th:each="item : ${ammountChildrenTypes}"
 								th:selected="${item.getName==account.accountExtraInfo.amountChildren}"
 								th:value="${item.getName}" th:text="${item}"></option>
 						</select>

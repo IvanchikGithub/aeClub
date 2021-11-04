@@ -24,7 +24,7 @@ import com.aeClub.util.ValidationMethod;
  * das Kennwort ist weniger als 8 Symbole oder nicht nur englische Buchschtabe oder keine
  * Ziffer oder keine eine kleine Buchschtabe oder keine grosse Buchstabe
  * 
- * @author ivasy
+ * @author ivan romani
  *
  * @see Validator
  */

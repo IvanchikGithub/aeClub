@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.aeClub.entity.Account;
 import com.aeClub.entity.EmailPass;
-import com.aeClub.enums.WallType;
+import com.aeClub.enums.WallTypes;
 import com.aeClub.repository.AccountRepository;
 import com.aeClub.repository.EmailPassRepository;
 import com.aeClub.service.FindService;
@@ -50,7 +50,7 @@ public class FindServiceImpl implements UserDetailsService, FindService {
 		if (account == null) {
 			return new AccountEmpty();
 		}
-		account.setActiveWall(WallType.EVERYDAY_LIVE_WALL);
+		account.setActiveWall(WallTypes.EVERYDAY_LIVE_WALL);
 		return account;
 	}
 

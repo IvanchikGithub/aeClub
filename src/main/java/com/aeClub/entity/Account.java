@@ -19,7 +19,7 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import com.aeClub.enums.SettingsWallType;
-import com.aeClub.enums.WallType;
+import com.aeClub.enums.WallTypes;
 import com.aeClub.util.AccountBilder;
 
 /**
@@ -37,7 +37,7 @@ import com.aeClub.util.AccountBilder;
  * <i>List(Language) languages</i><br>
  * 
  * 
- * @author ivasy
+ * @author ivan romani
  * @see AccountExtraInfo
  * @see Picture
  * @see Hobby
@@ -85,7 +85,7 @@ public class Account implements Serializable{
 	private List<Language> languages;
 
 	@Transient
-	private WallType activeWall;
+	private WallTypes activeWall;
 	@Transient
 	private SettingsWallType activeSettingsWall;
 
@@ -132,7 +132,7 @@ public class Account implements Serializable{
 		this.denomination = accountBuilder.getDenomination();
 		this.linkOnPhotoProfile = accountBuilder.getLinkOnPhotoProfile();
 		this.accountExtraInfo = accountBuilder.getAccountExtraInfo();
-		this.activeWall = WallType.EVERYDAY_LIVE_WALL;
+		this.activeWall = WallTypes.EVERYDAY_LIVE_WALL;
 	}
 
 	public List<Language> getLanguages() {
@@ -249,11 +249,11 @@ public class Account implements Serializable{
 		this.denomination = denomination;
 	}
 
-	public WallType getActiveWall() {
+	public WallTypes getActiveWall() {
 		return activeWall;
 	}
 
-	public void setActiveWall(WallType lastWall) {
+	public void setActiveWall(WallTypes lastWall) {
 		this.activeWall = lastWall;
 	}
 

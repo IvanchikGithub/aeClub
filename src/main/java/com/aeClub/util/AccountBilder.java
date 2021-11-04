@@ -4,13 +4,13 @@ import java.time.LocalDate;
 
 import com.aeClub.entity.Account;
 import com.aeClub.entity.AccountExtraInfo;
-import com.aeClub.enums.GenderType;
+import com.aeClub.enums.GenderTypes;
 
 /**
  * Die Klasse AccountBilder ist ein Erbauer für die Klasse Account, die laut das
  * Entwurfmuster Erbauer das Objekt der Klasse Account erstellen kann.
  * 
- * @author ivasy
+ * @author ivan romani
  * @see Account
  */
 public class AccountBilder {
@@ -40,12 +40,12 @@ public class AccountBilder {
 	}
 
 	public AccountBilder putManGender() {
-		this.gender = GenderType.MAN.getName();
+		this.gender = GenderTypes.MAN.getName();
 		return this;
 	}
 
 	public AccountBilder putWomanGender() {
-		this.gender = GenderType.WOMAN.getName();
+		this.gender = GenderTypes.WOMAN.getName();
 		return this;
 	}
 

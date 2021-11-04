@@ -18,7 +18,7 @@ import javax.persistence.Transient;
  * LanguageType<br>
  * <i>Account account</i><br>
  * <i>boolean isChecked</i><br> 
- * @author ivasy
+ * @author ivan romani
  *
  */
 @Entity

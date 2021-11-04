@@ -16,8 +16,8 @@ import com.aeClub.entity.EmailPass;
 import com.aeClub.entity.Hobby;
 import com.aeClub.entity.Language;
 import com.aeClub.entity.Picture;
-import com.aeClub.enums.PicturesType;
-import com.aeClub.enums.WallType;
+import com.aeClub.enums.PicturesTypes;
+import com.aeClub.enums.WallTypes;
 import com.aeClub.form.AccountForm;
 import com.aeClub.repository.AccountRepository;
 import com.aeClub.repository.EmailPassRepository;
@@ -40,13 +40,13 @@ public class EditServiceImpl implements EditService {
 	private PictureService pictureService;
 
 	@Override
-	public WallType changeActiveWall(String wallType) {
+	public WallTypes changeActiveWall(String wallType) {
 		int newWallType;
 		try {
 			newWallType = Integer.parseInt(wallType);
 			if (newWallType >= 0 && newWallType <= 3) {
 				//die Suche einen entsprechenden Wert
-				for (WallType value : WallType.values()) {
+				for (WallTypes value : WallTypes.values()) {
 					if (value.ordinal() == newWallType) {
 						return value;
 					}
@@ -55,7 +55,7 @@ public class EditServiceImpl implements EditService {
 		} catch (NumberFormatException e) {
 			//do nothing
 		}
-		return WallType.EVERYDAY_LIVE_WALL;
+		return WallTypes.EVERYDAY_LIVE_WALL;
 	}
 
 	public Model setCheckedInHobbiesAndLanguagesLists(Model model, Account account) {
@@ -89,7 +89,7 @@ public class EditServiceImpl implements EditService {
 			MultipartFile[] filesWithUsersExtraPhoto) {
 
 		Optional<String> recievedLinkOnProfilesAvatar = pictureService
-				.savePictureInStorage(fileWithUsersPhoto, PicturesType.USERS_AVATAR);
+				.savePictureInStorage(fileWithUsersPhoto, PicturesTypes.USERS_AVATAR);
 		if (!recievedLinkOnProfilesAvatar.isEmpty()) {
 			account.setLinkOnPhotoProfile(recievedLinkOnProfilesAvatar.get() + ".jpg");
 		}

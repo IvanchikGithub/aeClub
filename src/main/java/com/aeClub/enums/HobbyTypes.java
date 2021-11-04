@@ -1,6 +1,6 @@
 package com.aeClub.enums;
 
-public enum HobbyType {
+public enum HobbyTypes {
 	BAKING("baking"), BLOGGING("blogging"), COLLECTING_THINGS("collecting things"), COOKING("cooking"),
 	CREATING_THINGS("creating things"), HANDMADE("handmade"), CYCLING("cycling"), DANCING("dancing"),
 	EMBROIDERING("embroidering"), FISHING("fishing"), GARDENING("gardening"), HIKING("hiking"),
@@ -14,7 +14,7 @@ public enum HobbyType {
 
 	private String name;
 
-	HobbyType(String name) {
+	HobbyTypes(String name) {
 		this.name = name;
 	}
 

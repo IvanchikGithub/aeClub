@@ -1,11 +1,11 @@
 package com.aeClub.enums;
 
-public enum GenderType {
+public enum GenderTypes {
 	MAN("man"), WOMAN("woman");
 
 	private String name;
 
-	GenderType(String name) {
+	GenderTypes(String name) {
 		this.name = name;
 	}
 

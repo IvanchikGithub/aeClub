@@ -17,7 +17,7 @@ import javax.persistence.Transient;
  * <i>String hobbyType</i> - der Name eines Objekts von der aufzahlungen Klasse HobbyType<br>
  * <i>Account account</i><br>
  * <i>boolean isChecked</i><br> 
- * @author ivasy
+ * @author ivan romani
  *
  */
 @Entity

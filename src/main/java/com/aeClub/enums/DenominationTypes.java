@@ -3,11 +3,11 @@ package com.aeClub.enums;
 /**
  * Das Anzahltyp besteht aus bekannte protestantische Konfessionen 
  * 
- * @author ivasy
+ * @author ivan romani
  * @see {@link ReligionInfo}
  */
 
-public enum DenominationType {
+public enum DenominationTypes {
 	PENTECOSTAL_CHURCH("Pentecostal church"),
 	BAPTIST_CHURCH ("Baptist church"),
 	CHARISMATIC_CHURCH ("Charismatic church"),
@@ -17,7 +17,7 @@ public enum DenominationType {
 	NOT_SPECIFIED ("Not specified");
 	
 	private String name;
-	DenominationType(String name) {
+	DenominationTypes(String name) {
 		this.name=name;
 	}
 	public String getName() {

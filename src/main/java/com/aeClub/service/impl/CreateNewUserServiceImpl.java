@@ -17,8 +17,8 @@ import com.aeClub.entity.EmailPass;
 import com.aeClub.entity.Hobby;
 import com.aeClub.entity.Language;
 import com.aeClub.entity.Picture;
-import com.aeClub.enums.GenderType;
-import com.aeClub.enums.PicturesType;
+import com.aeClub.enums.GenderTypes;
+import com.aeClub.enums.PicturesTypes;
 import com.aeClub.form.AccountForm;
 import com.aeClub.repository.AccountRepository;
 import com.aeClub.repository.EmailPassRepository;
@@ -59,14 +59,14 @@ public class CreateNewUserServiceImpl implements CreateNewUserService {
 
 	/**
 	 * Jeder Nutzer bekommt eine zufällige Id. Die UsersId ist öffensichtlich, deswegen
-	 * möchten wir keine Abfolge Ids hintereinanderen erstellen
+	 * möchte ich keine Abfolge Ids hintereinanderen erstellen
 	 * 
 	 * @return idUser die zufällige ist und liegt zwieschen 1000-99000
 	 */
 	private int genereateIdForNewUser() {
 		Random rand = new Random();
 		int idUser;
-		// Wir suchen eine Id z, die in der Datenbank nicht angewesend ist
+		// Ich suche eine Id, die in der Datenbank noch nicht angewesend ist
 		do {
 			idUser = 1000 + rand.nextInt(99000);
 		} while (emailPassRepository.countByIdUser(idUser) != 0);
@@ -108,7 +108,7 @@ public class CreateNewUserServiceImpl implements CreateNewUserService {
 				.putBirthday(LocalDate.parse(accountForm.getBirthdateFromForm()))
 				.putCountry(accountForm.getCountry()).putCity(accountForm.getCity())
 				.putDenomination(accountForm.getDenomination());
-		if (accountForm.getGender().equals(GenderType.MAN.getName())) {
+		if (accountForm.getGender().equals(GenderTypes.MAN.getName())) {
 			accountBilder.putManGender();
 			accountBilder.putTemplateLinkOnPhotoProfileForMan();
 		} else {
@@ -116,7 +116,7 @@ public class CreateNewUserServiceImpl implements CreateNewUserService {
 			accountBilder.putTemplateLinkOnPhotoProfileForWoman();
 		}
 		Optional<String> recievedLinkOnProfilesAvatar = pictureService
-				.savePictureInStorage(fileWithUsersPhoto, PicturesType.USERS_AVATAR);
+				.savePictureInStorage(fileWithUsersPhoto, PicturesTypes.USERS_AVATAR);
 		if (!recievedLinkOnProfilesAvatar.isEmpty()) {
 			accountBilder.putLinkOnProfilesAvatar(recievedLinkOnProfilesAvatar.get() + ".jpg");
 		}

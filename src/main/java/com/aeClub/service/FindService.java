@@ -8,13 +8,13 @@ import com.aeClub.util.AccountEmpty;
 /**
  * FindService bekommt verschidene Information aus dem Datenbank
  * 
- * @author ivasy
+ * @author ivan romani
  *
  */
 @Service
 public interface FindService {
 	/**
-	 * Die Methode versucht ein Account über <i>id</i> aus der Datenbank zu empfangen. Falls die Profil nicht
+	 * Die Methode versucht ein Account über <i>id</i> aus der Datenbank zu empfangen. Falls das Profil nicht
 	 * gefunden ist, die Methode liefert das Objekt der Klasse AccountEmpty.
 	 * 
 	 * @param id

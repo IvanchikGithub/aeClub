@@ -1,7 +1,6 @@
 package com.aeClub.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,7 +14,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.aeClub.form.CreateEmailPassForm;
 import com.aeClub.service.CreateNewUserService;
-import com.aeClub.util.CurrentProfile;
 import com.aeClub.util.SecurityUtil;
 import com.aeClub.validator.CreateEmailPassValidator;
 
@@ -27,7 +25,7 @@ import com.aeClub.validator.CreateEmailPassValidator;
  * /registration POST<br>
  * 
  * 
- * @author ivasy
+ * @author ivan romani
  *
  */
 @Controller

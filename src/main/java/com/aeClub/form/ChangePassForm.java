@@ -15,7 +15,7 @@ import com.aeClub.entity.EmailPass;
  * fur die Kennworter gibt. Die Nutzer muss sein Kennwort zweite Mal eingeben, um sie sich
  * überzeugen, dass das Kennwort richtig(ohne falsche Buchstaben) aufgeschrieben ist.
  * 
- * @author ivasy
+ * @author ivan romani
  *
  * @see EmailPass
  */

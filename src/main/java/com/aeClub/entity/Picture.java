@@ -17,7 +17,7 @@ import javax.persistence.ManyToOne;
  * <i>String linkPicture</i> - der Link, der gibt an, wo der Bilder im Speicherplatz ist.<br>
  * <i>Account account</i><br>
  * 
- * @author ivasy
+ * @author ivan romani
  *
  */
 @Entity

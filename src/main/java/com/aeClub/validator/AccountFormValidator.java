@@ -15,7 +15,7 @@ import com.aeClub.form.AccountForm;
  * Das Folgendes lost das Fehler aus: <br>
  * ein Parametr ist leer <br>
  * 
- * @author ivasy
+ * @author ivan romani
  *
  * @see Validator
  */

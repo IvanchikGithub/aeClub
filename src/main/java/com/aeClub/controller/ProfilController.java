@@ -40,7 +40,7 @@ import com.aeClub.validator.ChangePassValidator;
  * /profile/settings/password GET und POST<br>
  * /profile/settings/other GET und POST<br>
  * 
- * @author ivasy
+ * @author ivan romani
  *
  */
 @Controller
