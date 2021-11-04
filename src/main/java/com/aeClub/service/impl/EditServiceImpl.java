@@ -4,6 +4,10 @@ import java.time.LocalDate;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -45,7 +49,7 @@ public class EditServiceImpl implements EditService {
 		try {
 			newWallType = Integer.parseInt(wallType);
 			if (newWallType >= 0 && newWallType <= 3) {
-				//die Suche einen entsprechenden Wert
+				// die Suche einen entsprechenden Wert
 				for (WallTypes value : WallTypes.values()) {
 					if (value.ordinal() == newWallType) {
 						return value;
@@ -53,7 +57,7 @@ public class EditServiceImpl implements EditService {
 				}
 			}
 		} catch (NumberFormatException e) {
-			//do nothing
+			// do nothing
 		}
 		return WallTypes.EVERYDAY_LIVE_WALL;
 	}
@@ -251,82 +255,70 @@ public class EditServiceImpl implements EditService {
 	}
 
 	private void changingListUsersHobbies(Account account, AccountForm form) {
-		// Deleting
+		// Deleting: Ich lösche alle Hobbys von Nutzer in der Datenbank, die nicht in der Form
+		// anwesend sind
 		List<Hobby> usersHobbiesInDataBase = account.getHobbies();
-		Iterator<Hobby> iterator = usersHobbiesInDataBase.iterator();
+		Stream<Hobby> streamHobbyInDataBase = usersHobbiesInDataBase.stream();
 		List<String> hobbiesInForm = form.getHobbiesFromForm();
+		Predicate<Hobby> isHobbyInForm = hobby -> hobbiesInForm.contains(hobby.getHobbyType());
+		Consumer<Hobby> preparingHobbyForDeleting = hobby -> hobby.setAccount(null);
 
-		while (iterator.hasNext()) {
-			Hobby hobby = iterator.next();
-			boolean hobbyIsPresentInForm = false;
-			if (hobbiesInForm != null) {
-				for (String hobbyFromForm : hobbiesInForm) {
-					if (hobbyFromForm.equals(hobby.getHobbyType())) {
-						hobbyIsPresentInForm = true;
-					}
-				}
-				if (!hobbyIsPresentInForm) {
-					hobby.setAccount(null);
-					iterator.remove();
-				}
-			} else {
-				hobby.setAccount(null);
-				iterator.remove();
-			}
+		if (hobbiesInForm == null) {
+			usersHobbiesInDataBase.removeAll(
+					streamHobbyInDataBase.peek(preparingHobbyForDeleting).collect(Collectors.toList()));
+			return;
 		}
-		// Adding
-		if (hobbiesInForm != null) {
-			for (String hobbyFromForm : hobbiesInForm) {
-				boolean hobbyIsPresentInUsersHobbiesInDataBank = false;
-				for (Hobby hobbyInUsersHobbiesInDataBank : usersHobbiesInDataBase) {
-					if (hobbyFromForm.equals(hobbyInUsersHobbiesInDataBank.getHobbyType())) {
-						hobbyIsPresentInUsersHobbiesInDataBank = true;
-					}
-				}
-				if (!hobbyIsPresentInUsersHobbiesInDataBank) {
-					account.addHobby(new Hobby(hobbyFromForm));
-				}
-			}
-		}
+
+		List<Hobby> hobbiesForDeleting = streamHobbyInDataBase.filter(isHobbyInForm.negate())
+				.peek(preparingHobbyForDeleting).collect(Collectors.toList());
+		usersHobbiesInDataBase.removeAll(hobbiesForDeleting);
+
+		// Adding: Ich ergänze alle Hobbys, die in der Form anwesend sind, aber in der Datenbank
+		// noch nicht gespeichert
+		List<String> usersHobbiesInDataBaseAsString = usersHobbiesInDataBase.stream()
+				.map(hobby -> hobby.getHobbyType()).collect(Collectors.toList());
+		Stream<String> streamHobbiesInForm = hobbiesInForm.stream();
+		Predicate<String> isHobbyFromFormInDatabase = hobby -> usersHobbiesInDataBaseAsString
+				.contains(hobby);
+		Consumer<String> addingHobbyWhichNotPresentInDatabank = hobby -> account
+				.addHobby(new Hobby(hobby));
+		
+		streamHobbiesInForm.filter(isHobbyFromFormInDatabase.negate())
+				.forEach(addingHobbyWhichNotPresentInDatabank);
 	}
 
 	private void changingListUsersLanguages(Account account, AccountForm form) {
 		// Deleting
 		List<Language> usersLanguagesInDataBase = account.getLanguages();
+		Stream<Language> streamLanguagesInDataBase = usersLanguagesInDataBase.stream();
 		List<String> languagesInForm = form.getLanguagesFromForm();
-		Iterator<Language> iterator2 = usersLanguagesInDataBase.iterator();
 
-		while (iterator2.hasNext()) {
-			Language language = iterator2.next();
-			boolean languageIsPresentInForm = false;
-			if (languagesInForm != null) {
-				for (String languageFromForm : languagesInForm) {
-					if (languageFromForm.equals(language.getLanguageType())) {
-						languageIsPresentInForm = true;
-					}
-				}
+		Predicate<Language> isLanguageInForm = language -> languagesInForm.contains(language.getLanguageType());
+		Consumer<Language> preparingLanguageForDeleting = language -> language.setAccount(null);
 
-				if (!languageIsPresentInForm) {
-					iterator2.remove();
-				}
-			} else {
-				iterator2.remove();
-			}
+		if (languagesInForm == null) {
+			usersLanguagesInDataBase.removeAll(
+					streamLanguagesInDataBase.peek(preparingLanguageForDeleting).collect(Collectors.toList()));
+			return;
 		}
+
+		List<Language> languagesForDeleting = streamLanguagesInDataBase.filter(isLanguageInForm.negate())
+				.peek(preparingLanguageForDeleting).collect(Collectors.toList());
+		usersLanguagesInDataBase.removeAll(languagesForDeleting);
+
 		// Adding
-		if (languagesInForm != null) {
-			for (String languageFromForm : languagesInForm) {
-				boolean languageIsPresentInUsersLanguagesInDataBank = false;
-				for (Language languageInDataBase : usersLanguagesInDataBase) {
-					if (languageFromForm.equals(languageInDataBase.getLanguageType())) {
-						languageIsPresentInUsersLanguagesInDataBank = true;
-					}
-				}
-				if (!languageIsPresentInUsersLanguagesInDataBank) {
-					account.addLanguage(new Language(languageFromForm));
-				}
-			}
-		}
+		
+		List<String> usersLanguagesInDataBaseAsString = usersLanguagesInDataBase.stream()
+				.map(language -> language.getLanguageType()).collect(Collectors.toList());
+		Stream<String> streamLanguagesInForm = languagesInForm.stream();
+		Predicate<String> isLanguageFromFormInDatabase = language -> usersLanguagesInDataBaseAsString
+				.contains(language);
+		Consumer<String> addingLanguagesWhichNotPresentInDatabank = language -> account
+				.addLanguage(new Language(language));
+		
+		streamLanguagesInForm.filter(isLanguageFromFormInDatabase.negate())
+				.forEach(addingLanguagesWhichNotPresentInDatabank);
+		
 	}
 
 }
