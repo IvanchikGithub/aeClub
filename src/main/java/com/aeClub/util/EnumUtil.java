@@ -1,6 +1,5 @@
 package com.aeClub.util;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,39 +15,33 @@ import com.aeClub.enums.LanguageTypes;
 
 public final class EnumUtil {
 	public static List<GenderTypes> getGenderTypes() {
-		return Arrays.stream(GenderTypes.values())
-				.collect(Collectors.toList());
+		return List.of(GenderTypes.values());
+		
 	}
 	
 	public static List<Countries> getCountries() {
-		return Arrays.stream(Countries.values())
-				.collect(Collectors.toList());
+		return List.of(Countries.values());
 	}
 	
 	public static List<DenominationTypes> getDenominations() {
-		return Arrays.stream(DenominationTypes.values())
-				.collect(Collectors.toList());
+		return List.of(DenominationTypes.values());
 	}
 	
 	public static List<EducationLevels> getEducationLevels() {
-		return Arrays.stream(EducationLevels.values())
-				.collect(Collectors.toList());
+		return List.of(EducationLevels.values());
 	}
 	
 	public static List<AmmountChildrenType> getAmmountChildrenTypes() {
-		return Arrays.stream(AmmountChildrenType.values())
-				.collect(Collectors.toList());
+		return List.of(AmmountChildrenType.values());
 	}
 	
 	public static List<Hobby> getHobbies() {
-		List<HobbyTypes> hobbyTypes = Arrays.stream(HobbyTypes.values())
-				.collect(Collectors.toList());
+		List<HobbyTypes> hobbyTypes = List.of(HobbyTypes.values());
 		return hobbyTypes.stream().map(hobbyTyp->new Hobby(hobbyTyp.name())).collect(Collectors.toList());
 	}
 	
 	public static List<Language> getLanguages() {
-		List<LanguageTypes> languagesTypes = Arrays.stream(LanguageTypes.values())
-				.collect(Collectors.toList());
+		List<LanguageTypes> languagesTypes = List.of(LanguageTypes.values());
 		return languagesTypes.stream().map(languageTyp->new Language(languageTyp.name())).collect(Collectors.toList());
 	}
 	
