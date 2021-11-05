@@ -12,11 +12,8 @@ import org.springframework.stereotype.Component;
 public class ApplicationListener implements ServletContextListener {
 	private static final Logger log = LoggerFactory.getLogger(ApplicationListener.class);
 	
-//	@Value("${application.production}")
-//	private boolean production;
 	@Override
 	public void contextInitialized(ServletContextEvent sce) {
-		//sce.getServletContext().setAttribute("production", production);
 		log.info("-------------------Application A@E started-------------------------");
 	}
 	@Override
