@@ -1,0 +1,27 @@
+2021-11-09 12:09:10 [main] INFO  com.aeClub.config.AEApplication - Starting AEApplication using Java 16.0.2 on DESKTOP-KUURTQU with PID 49780 (C:\Java\NewRepo\aeClub\target\classes started by ivasy in C:\Java\NewRepo\aeClub)
+2021-11-09 12:09:10 [main] INFO  com.aeClub.config.AEApplication - No active profile set, falling back to default profiles: default
+2021-11-09 12:09:11 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-11-09 12:09:11 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 72 ms. Found 2 JPA repository interfaces.
+2021-11-09 12:09:13 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2021-11-09 12:09:13 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2021-11-09 12:09:13 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2021-11-09 12:09:13 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.48]
+2021-11-09 12:09:13 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2021-11-09 12:09:13 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2590 ms
+2021-11-09 12:09:13 [main] INFO  c.a.listener.ApplicationListener - -------------------Application A@E started-------------------------
+2021-11-09 12:09:13 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-11-09 12:09:13 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.4.32.Final
+2021-11-09 12:09:14 [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2021-11-09 12:09:14 [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL94Dialect
+2021-11-09 12:09:16 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-11-09 12:09:16 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-11-09 12:09:16 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-11-09 12:09:17 [main] INFO  o.s.s.w.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@58932d08, org.springframework.security.web.context.SecurityContextPersistenceFilter@3713bedc, org.springframework.security.web.header.HeaderWriterFilter@7fd32c56, org.springframework.security.web.authentication.logout.LogoutFilter@3dc39412, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@6cb3463b, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@29d33f1, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@3e5cbcfe, org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter@4536a09a, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@45648e75, org.springframework.security.web.session.SessionManagementFilter@3465edf9, org.springframework.security.web.access.ExceptionTranslationFilter@65bb4cb9, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@69e8b711]
+2021-11-09 12:09:18 [main] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2021-11-09 12:09:18 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2021-11-09 12:09:18 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+2021-11-09 12:09:18 [main] INFO  com.aeClub.config.AEApplication - Started AEApplication in 8.88 seconds (JVM running for 10.221)
+2021-11-09 12:09:42 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-11-09 12:09:42 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2021-11-09 12:09:42 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2021-11-09 12:09:42 [http-nio-8080-exec-1] INFO  c.aeClub.controller.HomeController - Not user in memory...............................

@@ -1,5 +1,7 @@
 package com.aeClub.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,8 +32,7 @@ import com.aeClub.validator.CreateEmailPassValidator;
  */
 @Controller
 public class HomeController {
-	// private static final Logger LOGGER =
-	// LoggerFactory.getLogger(HomeController.class);
+	private static final Logger LOG = LoggerFactory.getLogger(HomeController.class);
 
 	@Autowired
 	private CreateNewUserService createNewUserService;
@@ -62,6 +63,7 @@ public class HomeController {
 		if (SecurityUtil.isCurrentProfileAuthentificated()) {
 			return new ModelAndView("redirect:/profile/home");
 		} else {
+			LOG.info("Not user in memory...............................");
 			return new ModelAndView("/home");
 		}
 	}
