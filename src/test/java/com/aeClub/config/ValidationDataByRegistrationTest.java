@@ -1,13 +1,15 @@
 package com.aeClub.config;
 
 import static org.hamcrest.CoreMatchers.containsString;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 
 import java.util.stream.Stream;
 
 import org.assertj.core.util.Arrays;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -18,6 +20,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 
+import com.aeClub.service.FindService;
+
 @SpringBootTest
 @TestPropertySource("/application-test.properties")
 @AutoConfigureMockMvc
@@ -25,11 +29,19 @@ public class ValidationDataByRegistrationTest {
 
 	@Autowired
 	private MockMvc mockMvc;
+	
+	@BeforeAll
+	@AfterAll
+	private static void deleting (@Autowired FindService findService) {
+		findService.findAndDeleteFromEmailPassTable("qwe1@i.ua");
+		findService.findAndDeleteFromEmailPassTable("qwe2@i.ua");
+		findService.findAndDeleteFromEmailPassTable("qwe3@i.ua");
+	}
 
 	private static Stream<Object> correctEmailAndPasswordForRegistration() {
-		Arguments[] data = { Arguments.of("qwe1@1.1", "Zaq12wsX", "Zaq12wsX"),
-				Arguments.of("qwe2@1.1", "Xsw23edC", "Xsw23edC"),
-				Arguments.of("qwe3@1.1", "Vfr45tgB", "Vfr45tgB"), };
+		Arguments[] data = { Arguments.of("qwe1@i.ua", "Zaq12wsX", "Zaq12wsX"),
+				Arguments.of("qwe2@i.ua", "Xsw23edC", "Xsw23edC"),
+				Arguments.of("qwe3@i.ua", "Vfr45tgB", "Vfr45tgB"), };
 		return Arrays.asList(data).stream();
 	}
 
@@ -62,7 +74,7 @@ public class ValidationDataByRegistrationTest {
 				.perform(post("/registration").param("email", email).param("password1", password1)
 						.param("password2", password2))
 				.andExpect(content().string(
-						containsString("form method=\"post\" th:object=\"${createEmailPassForm}")));
+						containsString("<label for=\"email\">Email address</label>")));
 	}
 
 }

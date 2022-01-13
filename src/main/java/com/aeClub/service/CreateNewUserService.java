@@ -1,9 +1,6 @@
 package com.aeClub.service;
 
-import java.time.LocalDate;
-
-import javax.persistence.Column;
-
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.aeClub.entity.Account;
@@ -18,6 +15,7 @@ import com.aeClub.form.AccountForm;
  * @author ivan romani
  *
  */
+@Service
 public interface CreateNewUserService {
 	/**
 	 * Jeder Nutzer hat sein Paar, das aus Email and Password besteht. Diese Information ist

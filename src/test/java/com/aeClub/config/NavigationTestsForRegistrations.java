@@ -26,6 +26,7 @@ import com.aeClub.enums.DenominationTypes;
 import com.aeClub.form.AccountForm;
 import com.aeClub.service.CreateNewUserService;
 import com.aeClub.service.FindService;
+import com.aeClub.util.AccountEmpty;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -53,7 +54,7 @@ public class NavigationTestsForRegistrations {
 //wir erstellen einen Account mit der Email "qwe1@1.1", falls dieser Account nicht existiert ist
 		
 		int idUser = findService.giveMeIdUserForEmail("qwe1@1.1");
-		if (idUser != 0 && findService.getAccountById(idUser) == null) {
+		if (idUser != 0 && findService.getAccountById(idUser).getClass()==AccountEmpty.class) {
 			AccountForm accountForm = new AccountForm();
 			accountForm.setNameForClub("UserWithName1");
 			accountForm.setGender("man");

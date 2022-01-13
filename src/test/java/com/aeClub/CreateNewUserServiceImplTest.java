@@ -5,10 +5,9 @@ import java.lang.reflect.Method;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.Assert;
 
-import com.aeClub.config.NavigationTestsForHomePage;
+import com.aeClub.config.AEApplication;
 import com.aeClub.enums.Countries;
 import com.aeClub.enums.DenominationTypes;
 import com.aeClub.enums.GenderTypes;
@@ -18,7 +17,7 @@ import com.aeClub.service.impl.CreateNewUserServiceImpl;
 import com.aeClub.util.AccountExtraInfoBuilder;
 
 
-@SpringBootTest(classes=NavigationTestsForHomePage.class)
+@SpringBootTest(classes=AEApplication.class)
 public class CreateNewUserServiceImplTest {
 
 	CreateNewUserServiceImpl createNewUserServiceImpl = new CreateNewUserServiceImpl();
@@ -39,12 +38,6 @@ public class CreateNewUserServiceImplTest {
 		accountForm.setDenomination(DenominationTypes.PENTECOSTAL_CHURCH.getName());
 		Object result = method.invoke(createNewUserServiceImpl, accountForm);
 		Assert.notNull((AccountExtraInfoBuilder) result, "AccountExtraInfoBuilder is null");
-	}
-
-	@Test
-	public void testCreatingNewPairEmailAndPass() {
-		createNewUserService.creatingNewPairEmailAndPass("", "");
-		
 	}
 
 }

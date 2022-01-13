@@ -1,5 +1,6 @@
 package com.aeClub.service;
 
+import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 /**
  * GetService versorgt die Information, die mit den Anwendungsdaten verknüpfet sind<br>
@@ -7,6 +8,7 @@ import org.springframework.ui.Model;
  * @author ivan romani
  *
  */
+@Service
 public interface GetService {
 	
 	
